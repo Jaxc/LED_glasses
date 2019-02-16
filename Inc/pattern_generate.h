@@ -8,7 +8,7 @@
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
 
-#define N_LEDS 1
+#define N_LEDS 3
 #define FRAME_SIZE 8 + (N_LEDS * 4)
 
 void tx_led_buffer(void);
@@ -18,11 +18,23 @@ void pattern_new_frame (void);
 void pattern_gen_data(uint8_t buffer[4]);
 
 typedef enum patterns {
-    PATTERN_OFF,
+    LED_OFF,
     FLASH_WHITE,
     CYCLE_COLOURS,
     FLASH_COLOURS,
-    STROBE
+    STROBE,
+    N_EFFECTS
 } pattern;
+
+
+/* Declarations for effect functions */
+void led_off_new_frame (void);
+void led_off_gen_data(uint8_t buffer[4]);
+void white_flash_new_frame (void);
+void white_flash_gen_data(uint8_t buffer[4]);
+void strobe_new_frame (void);
+void strobe_gen_data(uint8_t buffer[4]);
+void cycle_colour_new_frame (void);
+void cycle_colour_gen_data(uint8_t buffer[4]);
 
 #endif /* INC_PATTERN_GENERATE_H_ */

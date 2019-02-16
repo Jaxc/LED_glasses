@@ -4,10 +4,12 @@
  *  Created on: Feb 16, 2019
  *      Author: jaxc
  */
+#include "main.h"
+
 uint32_t pattern_counter;
 uint8_t white_level;
 
-void pattern_new_frame (void) {
+void white_flash_new_frame (void) {
     if (pattern_counter > 64) {
         pattern_counter = 0;
         white_level = 0;
@@ -20,10 +22,9 @@ void pattern_new_frame (void) {
     }
 }
 
-void pattern_gen_data(uint8_t buffer[4]) {
+void white_flash_gen_data(uint8_t buffer[4]) {
     buffer[0] = 0xff;
     buffer[1] = white_level << 3;
     buffer[2] = white_level << 3;
     buffer[3] = white_level << 3;
-    break;
 }

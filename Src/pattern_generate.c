@@ -10,11 +10,11 @@
 
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
-pattern current_pattern = FLASH_WHITE;
+pattern current_effect = FLASH_WHITE;
 
-uint8_t red_level;
-uint8_t blue_level;
-uint8_t green_level;
+
+void (*effect_new_frame)(void) = &strobe_new_frame;
+void (*effect_gen_data)(uint8_t buffer[4]) = &strobe_gen_data;
 
 
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
@@ -41,11 +41,40 @@ void tx_led_buffer(void) {
     create_payload(spi_buffer[active_buffer]);
 }
 
+void cycle_effects (void) {
+    if (current_effect == N_EFFECTS) {
+        current_effect = LED_OFF;
+    } else {
+        current_effect += 1;
+    }
+    switch (current_effect) {
+        case LED_OFF:
+            effect_new_frame = &led_off_new_frame;
+            effect_gen_data = &led_off_gen_data;
+            break;
+
+        case FLASH_WHITE:
+            effect_new_frame= &white_flash_new_frame;
+            effect_gen_data = &white_flash_gen_data;
+            break;
+
+        case CYCLE_COLOURS:
+            effect_new_frame= &white_flash_new_frame;
+            effect_gen_data = &white_flash_gen_data;
+            break;
+
+        default:
+            effect_new_frame = &cycle_colour_new_frame;
+            effect_gen_data = &cycle_colour_gen_data;
+            break;
+
+    }
+}
 
 void get_current_led(uint8_t buffer[4], uint16_t buffer_index) {
     if (buffer_index == 1) {
         /*i == 1 means that it is the first led of a new frame. */
-        pattern_new_frame();
+        (effect_new_frame)();
     }
-    pattern_gen_data(buffer);
+    (effect_gen_data)(buffer);
 }
