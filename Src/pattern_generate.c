@@ -12,10 +12,50 @@ uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 pattern current_effect = FLASH_WHITE;
 
-
-void (*effect_new_frame)(void) = &strobe_new_frame;
-void (*effect_gen_data)(uint8_t buffer[4]) = &strobe_gen_data;
-
+struct Presets presets[] = {
+    {
+        /* LED_OFF */
+        .light_new_frame = &lights_led_off_new_frame,
+        .light_gen_data = &lights_led_off_gen_data,
+        .colour_new_frame = &colour_white_new_frame,
+        .colour_gen_data = &colour_white_gen_data,
+    },
+    {
+        /* FLASH_WHITE */
+        .light_new_frame = &lights_flash_new_frame,
+        .light_gen_data = &lights_flash_gen_data,
+        .colour_new_frame = &colour_white_new_frame,
+        .colour_gen_data = &colour_white_gen_data,
+    },
+    {
+        /* CYCLE_COLOURS */
+        .light_new_frame = &lights_led_on_new_frame,
+        .light_gen_data = &lights_led_on_gen_data,
+        .colour_new_frame = &colour_cycle_new_frame,
+        .colour_gen_data = &colour_cycle_gen_data,
+    },
+    {
+        /* FLASH_COLOURS */
+        .light_new_frame = &lights_flash_new_frame,
+        .light_gen_data = &lights_flash_gen_data,
+        .colour_new_frame = &colour_cycle_new_frame,
+        .colour_gen_data = &colour_cycle_gen_data,
+    },
+    {
+        /* STROBE */
+        .light_new_frame =&lights_strobe_new_frame,
+        .light_gen_data = &lights_strobe_gen_data,
+        .colour_new_frame = &colour_white_new_frame,
+        .colour_gen_data = &colour_white_gen_data,
+    },
+    {
+        /* SINGLE_FLOW */
+        .light_new_frame = &lights_single_flow_new_frame,
+        .light_gen_data = &lights_single_flow_gen_data,
+        .colour_new_frame = &colour_white_new_frame,
+        .colour_gen_data = &colour_white_gen_data,
+    },
+};
 
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
     uint16_t i = 0;
@@ -42,39 +82,18 @@ void tx_led_buffer(void) {
 }
 
 void cycle_effects (void) {
-    if (current_effect == N_EFFECTS) {
+    current_effect += 1;
+    if (current_effect >= N_EFFECTS) {
         current_effect = LED_OFF;
-    } else {
-        current_effect += 1;
-    }
-    switch (current_effect) {
-        case LED_OFF:
-            effect_new_frame = &led_off_new_frame;
-            effect_gen_data = &led_off_gen_data;
-            break;
-
-        case FLASH_WHITE:
-            effect_new_frame= &white_flash_new_frame;
-            effect_gen_data = &white_flash_gen_data;
-            break;
-
-        case CYCLE_COLOURS:
-            effect_new_frame= &cycle_colour_new_frame;
-            effect_gen_data = &cycle_colour_gen_data;
-            break;
-
-        default:
-            effect_new_frame = &led_off_new_frame;
-            effect_gen_data = &led_off_gen_data;
-            break;
-
     }
 }
 
-void get_current_led(uint8_t buffer[4], uint16_t buffer_index) {
-    if (buffer_index == 1) {
+void get_current_led(uint8_t buffer[4], uint16_t current_led) {
+    if (current_led == 1) {
         /*i == 1 means that it is the first led of a new frame. */
-        (effect_new_frame)();
+        presets[current_effect].light_new_frame();
+        presets[current_effect].colour_new_frame();
     }
-    (effect_gen_data)(buffer);
+    presets[current_effect].light_gen_data(&buffer[0], current_led);
+    presets[current_effect].colour_gen_data(&buffer[1], current_led);
 }

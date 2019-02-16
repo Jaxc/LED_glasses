@@ -23,18 +23,43 @@ typedef enum patterns {
     CYCLE_COLOURS,
     FLASH_COLOURS,
     STROBE,
+    SINGLE_FLOW,
     N_EFFECTS
 } pattern;
 
+typedef void (*new_frame)(void);
+typedef void (*gen_data)(uint8_t buffer[4], uint16_t buffer_index);
+
+struct Presets {
+    new_frame   light_new_frame;
+    gen_data    light_gen_data;
+    new_frame   colour_new_frame;
+    gen_data    colour_gen_data;
+};
 
 /* Declarations for effect functions */
-void led_off_new_frame (void);
-void led_off_gen_data(uint8_t buffer[4]);
-void white_flash_new_frame (void);
-void white_flash_gen_data(uint8_t buffer[4]);
-void strobe_new_frame (void);
-void strobe_gen_data(uint8_t buffer[4]);
-void cycle_colour_new_frame (void);
-void cycle_colour_gen_data(uint8_t buffer[4]);
+/* Lights */
+void lights_flash_new_frame (void);
+void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void lights_led_off_new_frame (void);
+void lights_led_off_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void lights_led_on_new_frame (void);
+void lights_led_on_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void lights_single_flow_new_frame (void);
+void lights_single_flow_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void lights_strobe_new_frame (void);
+void lights_strobe_gen_data(uint8_t buffer[3], uint16_t buffer_index);
+/* Colour */
+void colour_cycle_new_frame (void);
+void colour_cycle_gen_data (uint8_t buffer[3], uint16_t buffer_index);
+void colour_white_new_frame (void);
+void colour_white_gen_data(uint8_t buffer[3], uint16_t buffer_index);
+
+
+
+
+
+
+
 
 #endif /* INC_PATTERN_GENERATE_H_ */

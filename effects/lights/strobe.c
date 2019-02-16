@@ -10,7 +10,7 @@
 uint32_t pattern_counter;
 uint8_t white_level;
 
-void strobe_new_frame (void) {
+void lights_strobe_new_frame (void) {
     if (pattern_counter > 4) {
         pattern_counter = 0;
     } else {
@@ -18,17 +18,11 @@ void strobe_new_frame (void) {
     }
 }
 
-void strobe_gen_data(uint8_t buffer[4]) {
+void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index){
     if (pattern_counter == 0) {
-        buffer[0] = 0xff;
-        buffer[1] = 0xff;
-        buffer[2] = 0xff;
-        buffer[3] = 0xff;
+        *buffer = 0xff;
     } else {
-        buffer[0] = 0x00;
-        buffer[1] = 0x00;
-        buffer[2] = 0x00;
-        buffer[3] = 0x00;
+        *buffer = 0x00;
     }
 }
 

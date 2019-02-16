@@ -17,10 +17,10 @@ typedef enum State {
 uint8_t red_level = 0;
 uint8_t blue_level = 0;
 uint8_t green_level = 0xff;
-state colour_state = 0;
+state colour_state = YELLOW;
 
 
-void cycle_colour_new_frame (void) {
+void colour_cycle_new_frame (void) {
     switch (colour_state) {
         case YELLOW:
             red_level += 1;
@@ -50,11 +50,10 @@ void cycle_colour_new_frame (void) {
     }
 }
 
-void cycle_colour_gen_data(uint8_t buffer[4]) {
-    buffer[0] = 0xff;
-    buffer[1] = blue_level;
-    buffer[2] = green_level;
-    buffer[3] = red_level;
+void colour_cycle_gen_data(uint8_t buffer[3], uint16_t buffer_index) {
+    buffer[0] = blue_level;
+    buffer[1] = green_level;
+    buffer[2] = red_level;
 }
 
 
