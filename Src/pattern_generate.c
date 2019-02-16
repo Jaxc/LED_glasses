@@ -59,13 +59,13 @@ void cycle_effects (void) {
             break;
 
         case CYCLE_COLOURS:
-            effect_new_frame= &white_flash_new_frame;
-            effect_gen_data = &white_flash_gen_data;
+            effect_new_frame= &cycle_colour_new_frame;
+            effect_gen_data = &cycle_colour_gen_data;
             break;
 
         default:
-            effect_new_frame = &cycle_colour_new_frame;
-            effect_gen_data = &cycle_colour_gen_data;
+            effect_new_frame = &led_off_new_frame;
+            effect_gen_data = &led_off_gen_data;
             break;
 
     }

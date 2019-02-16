@@ -105,10 +105,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
   /* USER CODE BEGIN TIM6_MspInit 1 */
-    if (HAL_TIM_Base_Start_IT(&htim6) != HAL_OK)
-    {
-     // _Error_Handler(__FILE__, __LINE__);
-    }
+    HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END TIM6_MspInit 1 */
   }
   else if(tim_baseHandle->Instance==TIM7)
@@ -158,8 +155,11 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM6) {
-        HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
-        tx_led_buffer ();
+            HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
+            tx_led_buffer ();
+    } else if (htim->Instance == TIM7) {
+            HAL_TIM_Base_Stop_IT(&htim7);
+            HAL_NVIC_EnableIRQ(EXTI0_IRQn);
     }
 }
 /* USER CODE END 1 */

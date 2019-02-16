@@ -40,7 +40,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
 /* USER CODE BEGIN 0 */
-
+#include "tim.h"
+#include "pattern_generate.h"
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -91,11 +92,18 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
 }
 
 /* USER CODE BEGIN 2 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == Button_Pin) {
+        HAL_NVIC_DisableIRQ(EXTI0_IRQn);
+        HAL_TIM_Base_Start_IT(&htim7);
+        cycle_effects();
 
     }
 }

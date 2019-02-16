@@ -88,6 +88,7 @@ void Error_Handler(void);
 #define PH1_OSC_OUT_GPIO_Port GPIOH
 #define Button_Pin GPIO_PIN_0
 #define Button_GPIO_Port GPIOA
+#define Button_EXTI_IRQn EXTI0_IRQn
 #define Boot_Pin GPIO_PIN_2
 #define Boot_GPIO_Port GPIOB
 #define LD4_Pin GPIO_PIN_12
