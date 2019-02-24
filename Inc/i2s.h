@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : SPI.h
+  * File Name          : I2S.h
   * Description        : This file provides code for the configuration
-  *                      of the SPI instances.
+  *                      of the I2S instances.
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -37,8 +37,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __spi_H
-#define __spi_H
+#ifndef __i2s_H
+#define __i2s_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -50,13 +50,13 @@
 
 /* USER CODE END Includes */
 
-extern SPI_HandleTypeDef hspi1;
+extern I2S_HandleTypeDef hi2s2;
 
 /* USER CODE BEGIN Private defines */
-
+#define WINDOWSIZE 256
 /* USER CODE END Private defines */
 
-void MX_SPI1_Init(void);
+void MX_I2S2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -65,7 +65,7 @@ void MX_SPI1_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ spi_H */
+#endif /*__ i2s_H */
 
 /**
   * @}
