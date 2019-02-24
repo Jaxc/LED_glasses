@@ -1,9 +1,7 @@
 /* Coefficients taken from http://www.micromodeler.com/dsp/ */
 
-#include "main.h"
-#include "filter.h"
+#include "../../audio_stuff/inc/filter.h"
 
-int16_t last_out = 0;
 
 filter_type filter_state = {0};
 
@@ -28,7 +26,7 @@ int16_t filter_coefficients[10] =
     executionState.pInput = samples_in;                 // Pointers to the input and output buffers that each call to filterBiquad() will use
     executionState.pOutput = samples_out;               // - pInput and pOutput can be equal, allowing reuse of the same memory.
     executionState.count = count;                   // The number of samples to be processed
-    executionState.pState = filter_state->state;
+    executionState.pState = filter_state.state;
     executionState.pCoefficients = filter_coefficients;    // Each call to filterBiquad() will advance pState and pCoefficients to the next biquad
 
     filter1_filterBiquad_14_14( &executionState );      // Run biquad #0

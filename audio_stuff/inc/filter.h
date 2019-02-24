@@ -18,6 +18,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #ifndef FILTER1_H_ // Include guards
 #define FILTER1_H_
 
+#include "main.h"
+
 static const int filter1_numStages = 2;
 static const int filter1_coefficientLength = 10;
 extern short filter1_coefficients[10];
@@ -37,18 +39,13 @@ typedef struct
     short count;
 } filter1_executionState;
 
-
-filter1Type *filter1_create( void );
-void filter1_destroy( filter1Type *pObject );
- void filter1_init( filter1Type * pThis );
- void filter1_reset( filter1Type * pThis );
 #define filter1_writeInput( pThis, input )  \
     filter1_filterBlock( pThis, &(input), &(pThis)->output, 1 );
 
 #define filter1_readOutput( pThis )  \
     (pThis)->output
 
- int filter1_filterBlock( filter1Type * pThis, short * pInput, short * pOutput, unsigned int count );
+ int filter_filterBlock( int16_t * pInput, int16_t * pOutput, uint16_t count );
 #define filter1_outputToFloat( output )  \
     (( (1.0f/16384) * (output) ))
 

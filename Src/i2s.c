@@ -41,8 +41,8 @@
 #include "i2s.h"
 
 /* USER CODE BEGIN 0 */
-uint32_t i2s_buffer[2][WINDOWSIZE];
-uint8_t active_buffer = 0;
+uint16_t i2s_buffer[2][WINDOWSIZE];
+uint8_t active_i2s_buffer = 0;
 /* USER CODE END 0 */
 
 I2S_HandleTypeDef hi2s2;
@@ -55,7 +55,7 @@ void MX_I2S2_Init(void)
   hi2s2.Instance = SPI2;
   hi2s2.Init.Mode = I2S_MODE_MASTER_RX;
   hi2s2.Init.Standard = I2S_STANDARD_PHILIPS;
-  hi2s2.Init.DataFormat = I2S_DATAFORMAT_16B;
+  hi2s2.Init.DataFormat = I2S_DATAFORMAT_32B;
   hi2s2.Init.MCLKOutput = I2S_MCLKOUTPUT_DISABLE;
   hi2s2.Init.AudioFreq = I2S_AUDIOFREQ_32K;
   hi2s2.Init.CPOL = I2S_CPOL_LOW;
@@ -163,12 +163,12 @@ void HAL_I2S_MspDeInit(I2S_HandleTypeDef* i2sHandle)
 /* USER CODE BEGIN 1 */
 void start_mic(void) {
     HAL_I2S_Receive_DMA(&hi2s2, i2s_buffer[0], WINDOWSIZE);
-    active_buffer = 0;
+    active_i2s_buffer = 1;
 }
 
 void HAL_I2S_RxCpltCallback(I2S_HandleTypeDef *hi2s) {
-    HAL_I2S_Receive_DMA(&hi2s2, i2s_buffer[active_buffer], WINDOWSIZE);
-    active_buffer = !active_buffer;
+    HAL_I2S_Receive_DMA(&hi2s2, i2s_buffer[active_i2s_buffer], WINDOWSIZE);
+    active_i2s_buffer = !active_i2s_buffer;
 
 }
 /* USER CODE END 1 */
