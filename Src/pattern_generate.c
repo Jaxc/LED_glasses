@@ -8,6 +8,8 @@
 #include "pattern_generate.h"
 #include "spi.h"
 
+#include "colours.h"
+
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 pattern current_effect = FLASH_WHITE;
@@ -95,5 +97,9 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
         presets[current_effect].colour_new_frame();
     }
     presets[current_effect].light_gen_data(&buffer[0], current_led);
-    presets[current_effect].colour_gen_data(&buffer[1], current_led);
+    struct colours colour = {0};
+    presets[current_effect].colour_gen_data(&colour, current_led);
+    buffer[1] = colour.blue;
+    buffer[2] = colour.green;
+    buffer[3] = colour.red;
 }

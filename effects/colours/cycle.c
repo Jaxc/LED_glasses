@@ -6,54 +6,17 @@
  */
 
 #include "main.h"
+#include "colours.h"
 
-typedef enum State {
-    YELLOW,
-    MAGENTA,
-    CYAN
-} state;
-
-
-uint8_t red_level = 0;
-uint8_t blue_level = 0;
-uint8_t green_level = 0xff;
-state colour_state = YELLOW;
+uint16_t hue = 0;
 
 
 void colour_cycle_new_frame (void) {
-    switch (colour_state) {
-        case YELLOW:
-            red_level += 1;
-            green_level -= 1;
-            blue_level = 0;
-            if (red_level == 0xff) {
-                colour_state = MAGENTA;
-            }
-            break;
-        case MAGENTA:
-            red_level -= 1;
-            green_level = 0;
-            blue_level += 1;
-            if (blue_level == 0xff) {
-                colour_state = CYAN;
-            }
-            break;
-        case CYAN:
-            red_level = 0;
-            blue_level -= 1;
-            green_level += 1;
-            if (green_level == 0xff) {
-                colour_state = YELLOW;
-            }
-            break;
-
-    }
+    hue = (hue + 2) % 1536;
 }
 
-void colour_cycle_gen_data(uint8_t buffer[3], uint16_t buffer_index) {
-    buffer[0] = blue_level;
-    buffer[1] = green_level;
-    buffer[2] = red_level;
+void colour_cycle_gen_data(struct colours *buffer, uint16_t buffer_index) {
+    get_colour(buffer, hue, 0xff);
 }
 
 

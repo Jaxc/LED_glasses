@@ -5,6 +5,8 @@
  *      Author: jaxc
  */
 
+#include "colours.h"
+
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
 
@@ -16,6 +18,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]);
 void get_current_led(uint8_t buffer[4], uint16_t i);
 void pattern_new_frame (void);
 void pattern_gen_data(uint8_t buffer[4]);
+void cycle_effects (void);
 
 typedef enum patterns {
     LED_OFF,
@@ -28,13 +31,14 @@ typedef enum patterns {
 } pattern;
 
 typedef void (*new_frame)(void);
-typedef void (*gen_data)(uint8_t buffer[4], uint16_t buffer_index);
+typedef void (*gen_light_data)(uint8_t *buffer, uint16_t buffer_index);
+typedef void (*gen_colour_data)(struct colours *buffer, uint16_t buffer_index);
 
 struct Presets {
     new_frame   light_new_frame;
-    gen_data    light_gen_data;
+    gen_light_data    light_gen_data;
     new_frame   colour_new_frame;
-    gen_data    colour_gen_data;
+    gen_colour_data    colour_gen_data;
 };
 
 /* Declarations for effect functions */
@@ -48,12 +52,12 @@ void lights_led_on_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_single_flow_new_frame (void);
 void lights_single_flow_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_strobe_new_frame (void);
-void lights_strobe_gen_data(uint8_t buffer[3], uint16_t buffer_index);
+void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index);
 /* Colour */
 void colour_cycle_new_frame (void);
-void colour_cycle_gen_data (uint8_t buffer[3], uint16_t buffer_index);
+void colour_cycle_gen_data (struct colours *buffer, uint16_t buffer_index);
 void colour_white_new_frame (void);
-void colour_white_gen_data(uint8_t buffer[3], uint16_t buffer_index);
+void colour_white_gen_data (struct colours *buffer, uint16_t buffer_index);
 
 
 

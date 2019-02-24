@@ -6,14 +6,13 @@
  */
 
 #include "main.h"
+#include "colours.h"
 
 void colour_white_new_frame (void) {
 
 }
 
 
-void colour_white_gen_data(uint8_t buffer[3], uint16_t buffer_index) {
-    buffer[0] = 0xff;
-    buffer[1] = 0xff;
-    buffer[2] = 0xff;
+void colour_white_gen_data(struct colours *buffer, uint16_t buffer_index) {
+    get_colour(buffer, 0, 0);
 }
