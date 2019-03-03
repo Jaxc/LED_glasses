@@ -116,7 +116,7 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_SPI1_Init();
-  //MX_I2S2_Init();
+  MX_I2S2_Init();
   MX_TIM1_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
@@ -127,7 +127,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   //start_mic();
-  //start_adc();
+  start_adc();
+  HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   while (1)
   {
     /* USER CODE END WHILE */

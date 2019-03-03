@@ -41,7 +41,7 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-#define N_SAMPLES 1
+#define N_SAMPLES 16
 
 uint32_t adc_buffer[N_SAMPLES] = {0};
 uint16_t adc_avg = 1;
@@ -58,7 +58,7 @@ void MX_ADC1_Init(void)
   /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV8;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = ENABLE;
@@ -77,7 +77,7 @@ void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_15CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -115,7 +115,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     hdma_adc1.Init.MemInc = DMA_MINC_ENABLE;
     hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
     hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    hdma_adc1.Init.Mode = DMA_NORMAL;
+    hdma_adc1.Init.Mode = DMA_CIRCULAR;
     hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
     hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
@@ -163,32 +163,29 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 uint16_t adc_get_value(void) {
-    HAL_ADC_Start(&hadc1);
+    /*HAL_ADC_Start(&hadc1);
     if (HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK) {
         adc_avg = HAL_ADC_GetValue(&hadc1);
     }
-    HAL_ADC_Stop(&hadc1);
+    HAL_ADC_Stop(&hadc1);*/
+
+    uint64_t sum = 0;//HAL_ADC_GetValue(hadc) << 4;
+    for (uint16_t i = 0; i < N_SAMPLES; i++) {
+        sum += adc_buffer[i];
+    }
+    adc_avg = (uint16_t)sum;
     return adc_avg;
 }
 
-uint8_t semaphore = 0;
 void start_adc (void) {
-    if (semaphore == 0) {
-        HAL_ADC_Start_IT(&hadc1);
-        semaphore = 1;
-    }
+    HAL_ADC_Start_DMA(&hadc1,adc_buffer,N_SAMPLES);
     //HAL_ADC_Start(&hadc1);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     if (hadc->Instance == ADC1) {
-        HAL_ADC_Stop_IT(&hadc1);
-        uint32_t sum = HAL_ADC_GetValue(hadc) << 4;
-        /*for (uint16_t i = 0; i < N_SAMPLES; i++) {
-            sum += adc_buffer[i];
-        }*/
-        adc_avg = (uint16_t)sum;
-        semaphore = 0;
+        //HAL_ADC_Stop_IT(&hadc1);
+        HAL_ADC_Stop_DMA(hadc);
         //start_adc();
     }
 }
