@@ -113,12 +113,12 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_ADC1_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_SPI1_Init();
-  MX_I2S2_Init();
-  MX_TIM4_Init();
+  //MX_I2S2_Init();
+  MX_TIM1_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -126,7 +126,8 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  start_mic();
+  //start_mic();
+  //start_adc();
   while (1)
   {
     /* USER CODE END WHILE */
@@ -199,7 +200,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+    while (1);
   /* USER CODE END Error_Handler_Debug */
 }
 

@@ -1,6 +1,6 @@
 [PreviousGenFiles]
 HeaderPath=/home/jaxc/workspace/Glasses/Inc
-HeaderFiles=gpio.h;adc.h;dma.h;spi.h;tim.h;stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;i2s.h;crc.h;pdm2pcm.h;
+HeaderFiles=gpio.h;adc.h;dma.h;spi.h;tim.h;stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;i2s.h;crc.h;pdm2pcm.h;stm32_assert.h;
 SourcePath=/home/jaxc/workspace/Glasses/Src
 SourceFiles=gpio.c;adc.c;dma.c;spi.c;tim.c;stm32f4xx_it.c;stm32f4xx_hal_msp.c;main.c;i2s.c;crc.c;pdm2pcm.c;
 
