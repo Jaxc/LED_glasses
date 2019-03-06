@@ -6,8 +6,9 @@ void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out);
 uint32_t bpm_detect(uint32_t window_in[WINDOW_SIZE]);
 
 typedef enum detection_state {
-    NO_SIGNAL,
     WAIT_FOR_FIRST_SAMPLE,
+    NO_SIGNAL,
     SIGNAL
+    
 }detection_states;
     
