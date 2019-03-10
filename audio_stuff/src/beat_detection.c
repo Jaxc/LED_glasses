@@ -10,9 +10,9 @@ uint8_t old_values_pnt = 0;
 #define MEDIAN_ATTACK 20
 #define MEDIAN_DECAY 300
 
-uint32_t beat_buffer[WINDOW_SIZE] = {0};
-uint32_t pwr_sum_buffer[WINDOW_SIZE*2] = {0};
-uint32_t beat_buffer_pnt = 0;
+//uint32_t beat_buffer[WINDOW_SIZE] = {0};
+//uint32_t pwr_sum_buffer[WINDOW_SIZE*2] = {0};
+//uint32_t beat_buffer_pnt = 0;
 
 detection_states state = WAIT_FOR_FIRST_SAMPLE;
 uint8_t trans_state_cnt = 0;
@@ -30,7 +30,7 @@ void calc_power (int32_t new_sample) {
         pwr_sum += old_values[i] * old_values[i];
     }
     
-    pwr_sum_buffer[beat_buffer_pnt % (212)] = pwr_sum;
+    //pwr_sum_buffer[beat_buffer_pnt % (212)] = pwr_sum;
     
     //*debug_out = pwr_sum;
 
@@ -60,8 +60,8 @@ void calc_power (int32_t new_sample) {
         median_pwr += median_slope;
     }
     
-    beat_buffer[beat_buffer_pnt] = (uint32_t)pwr_sum;
-    beat_buffer_pnt = (beat_buffer_pnt + 1) % WINDOW_SIZE;
+    //beat_buffer[beat_buffer_pnt] = (uint32_t)pwr_sum;
+    //beat_buffer_pnt = (beat_buffer_pnt + 1) % WINDOW_SIZE;
     switch (state) {
         case WAIT_FOR_FIRST_SAMPLE:
             if (0 != pwr_sum){

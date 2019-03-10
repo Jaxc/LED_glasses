@@ -61,9 +61,7 @@ extern TIM_HandleTypeDef htim7;
 void MX_TIM1_Init(void);
 void MX_TIM6_Init(void);
 void MX_TIM7_Init(void);
-                        
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-                    
+
 /* USER CODE BEGIN Prototypes */
 void set_pwm_duty_cycle(uint16_t level) ;
 /* USER CODE END Prototypes */
