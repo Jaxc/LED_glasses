@@ -128,12 +128,16 @@ void cycle_effects (void) {
 void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     if (current_led == 1) {
         /*i == 1 means that it is the first led of a new frame. */
-        presets[current_effect].light_new_frame();
-        presets[current_effect].colour_new_frame();
+        /* presets[current_effect].light_new_frame();
+        presets[current_effect].colour_new_frame(); */
+        lights_led_on_new_frame();
+        colour_cycle_new_frame();
     }
-    presets[current_effect].light_gen_data(&buffer[0], current_led);
+    //presets[current_effect].light_gen_data(&buffer[0], current_led);
+    lights_led_off_gen_data(&buffer[0], current_led);
     struct colours colour = {0};
-    presets[current_effect].colour_gen_data(&colour, current_led);
+    //presets[current_effect].colour_gen_data(&colour, current_led);
+    colour_cycle_gen_data(&colour, current_led);
     buffer[1] = colour.blue;
     buffer[2] = colour.green;
     buffer[3] = colour.red;
@@ -142,11 +146,13 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
 void beat_start(void) {
     presets[current_effect].light_beat_start();
     presets[current_effect].colour_beat_start();
+    HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, GPIO_PIN_RESET);
     return;
 }
 
 void beat_stop(void) {
     presets[current_effect].light_beat_stop();
     presets[current_effect].colour_beat_stop();
+    HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, GPIO_PIN_SET);
     return;
 }

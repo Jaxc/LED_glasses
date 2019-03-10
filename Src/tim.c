@@ -60,7 +60,7 @@ void MX_TIM1_Init(void)
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 1;
+  htim1.Init.Prescaler = 15;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim1.Init.Period = 8192;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -299,7 +299,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     } else if (htim->Instance == TIM1) {
 
         set_pwm_duty_cycle(adc_get_value());//(WINDOWSIZE/32) ;
-        calc_power(adc_get_value());//(WINDOWSIZE/32) ;
+        calc_power((uint32_t)adc_get_value());//(WINDOWSIZE/32) ;
         start_adc();
         //set_pwm_duty_cycle((duty_cycle));
         //HAL_ADC_Start(&hadc1);

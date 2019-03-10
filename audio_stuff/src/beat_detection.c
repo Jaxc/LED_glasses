@@ -21,7 +21,7 @@ int32_t median_slope = 0;
 uint32_t median_max = 0;
 
 void calc_power (int32_t new_sample) {
-    old_values[old_values_pnt] = new_sample >> 8;
+    old_values[old_values_pnt] = new_sample >> 7;
     old_values_pnt = (old_values_pnt + 1) % N_AVG;
     
     uint64_t pwr_sum = 0; 
