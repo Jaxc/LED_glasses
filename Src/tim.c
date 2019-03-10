@@ -44,6 +44,7 @@
 #include "pattern_generate.h"
 #include "i2s.h"
 #include "adc.h"
+#include "beat_detection.h"
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim1;
@@ -298,6 +299,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     } else if (htim->Instance == TIM1) {
 
         set_pwm_duty_cycle(adc_get_value());//(WINDOWSIZE/32) ;
+        calc_power(adc_get_value());//(WINDOWSIZE/32) ;
         start_adc();
         //set_pwm_duty_cycle((duty_cycle));
         //HAL_ADC_Start(&hadc1);

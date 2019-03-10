@@ -17,45 +17,80 @@ pattern current_effect = FLASH_WHITE;
 struct Presets presets[] = {
     {
         /* LED_OFF */
-        .light_new_frame = &lights_led_off_new_frame,
-        .light_gen_data = &lights_led_off_gen_data,
-        .colour_new_frame = &colour_white_new_frame,
-        .colour_gen_data = &colour_white_gen_data,
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_off_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
     },
     {
         /* FLASH_WHITE */
-        .light_new_frame = &lights_flash_new_frame,
-        .light_gen_data = &lights_flash_gen_data,
-        .colour_new_frame = &colour_white_new_frame,
-        .colour_gen_data = &colour_white_gen_data,
+        .light_new_frame    = &lights_flash_new_frame,
+        .light_gen_data     = &lights_flash_gen_data,
+        .light_beat_start   = &lights_flash_beat_start,
+        .light_beat_stop    = &lights_flash_beat_stop,
+        .colour_new_frame   = &colour_white_new_frame,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
     },
     {
         /* CYCLE_COLOURS */
-        .light_new_frame = &lights_led_on_new_frame,
-        .light_gen_data = &lights_led_on_gen_data,
-        .colour_new_frame = &colour_cycle_new_frame,
-        .colour_gen_data = &colour_cycle_gen_data,
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &colour_cycle_new_frame,
+        .colour_gen_data    = &colour_cycle_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
     },
     {
         /* FLASH_COLOURS */
-        .light_new_frame = &lights_flash_new_frame,
-        .light_gen_data = &lights_flash_gen_data,
-        .colour_new_frame = &colour_cycle_new_frame,
-        .colour_gen_data = &colour_cycle_gen_data,
+        .light_new_frame    = &lights_flash_new_frame,
+        .light_gen_data     = &lights_flash_gen_data,
+        .light_beat_start   = &lights_flash_beat_start,
+        .light_beat_stop    = &lights_flash_beat_stop,
+        .colour_new_frame   = &colour_cycle_new_frame,
+        .colour_gen_data    = &colour_cycle_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
     },
     {
         /* STROBE */
-        .light_new_frame =&lights_strobe_new_frame,
-        .light_gen_data = &lights_strobe_gen_data,
-        .colour_new_frame = &colour_white_new_frame,
-        .colour_gen_data = &colour_white_gen_data,
+        .light_new_frame    = &lights_strobe_new_frame,
+        .light_gen_data     = &lights_strobe_gen_data,
+        .light_beat_start   = &lights_strobe_beat_start,
+        .light_beat_stop    = &lights_strobe_beat_stop,
+        .colour_new_frame   = &colour_white_new_frame,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
     },
     {
         /* SINGLE_FLOW */
-        .light_new_frame = &lights_single_flow_new_frame,
-        .light_gen_data = &lights_single_flow_gen_data,
-        .colour_new_frame = &colour_white_new_frame,
-        .colour_gen_data = &colour_white_gen_data,
+        .light_new_frame    = &lights_single_flow_new_frame,
+        .light_gen_data     = &lights_single_flow_gen_data,
+        .light_beat_start   = &lights_single_flow_beat_start,
+        .light_beat_stop    = &lights_single_flow_beat_stop,
+        .colour_new_frame   = &colour_white_new_frame,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* CYCLE_COLOURS_BEATS */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &colour_cycle_beats_new_frame,
+        .colour_gen_data    = &colour_cycle_beats_gen_data,
+        .colour_beat_start  = &colour_cycle_beats_beat_start,
+        .colour_beat_stop   = &do_nothing,
     },
 };
 
@@ -102,4 +137,16 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     buffer[1] = colour.blue;
     buffer[2] = colour.green;
     buffer[3] = colour.red;
+}
+
+void beat_start(void) {
+    presets[current_effect].light_beat_start();
+    presets[current_effect].colour_beat_start();
+    return;
+}
+
+void beat_stop(void) {
+    presets[current_effect].light_beat_stop();
+    presets[current_effect].colour_beat_stop();
+    return;
 }

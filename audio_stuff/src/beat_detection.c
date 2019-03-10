@@ -1,4 +1,5 @@
 #include "beat_detection.h"
+#include "pattern_generate.h"
 
 #define N_AVG 64
 int32_t old_values[64] = {0};
@@ -19,7 +20,7 @@ uint32_t median_pwr = 0;
 int32_t median_slope = 0;
 uint32_t median_max = 0;
 
-void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out) {
+void calc_power (int32_t new_sample) {
     old_values[old_values_pnt] = new_sample >> 8;
     old_values_pnt = (old_values_pnt + 1) % N_AVG;
     
@@ -31,7 +32,7 @@ void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out) {
     
     pwr_sum_buffer[beat_buffer_pnt % (212)] = pwr_sum;
     
-    *debug_out = pwr_sum;
+    //*debug_out = pwr_sum;
 
     
     if (pwr_sum > median_pwr) {
@@ -67,6 +68,7 @@ void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out) {
                 if (16 == trans_state_cnt) {
                     state = SIGNAL;
                     trans_state_cnt = 0;
+                    beat_start();
                 } else {
                     trans_state_cnt ++;
                 }
@@ -89,6 +91,7 @@ void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out) {
             if (0 == pwr_sum ) {
                 if (16 == trans_state_cnt) {
                     state = WAIT_FOR_FIRST_SAMPLE;
+                    beat_stop();
                     trans_state_cnt = 0;
                 } else {
                     trans_state_cnt++;
@@ -103,7 +106,7 @@ void calc_power (int32_t new_sample, uint32_t *power_out, uint32_t *debug_out) {
     }
     
     
-    *power_out = (state) * 180000 ;
+    //*power_out = (state) * 180000 ;
     //*power_out = median_pwr; 
     
     
