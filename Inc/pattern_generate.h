@@ -10,7 +10,7 @@
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
 
-#define N_LEDS 3
+#define N_LEDS 36
 #define FRAME_SIZE 8 + (N_LEDS * 4)
 
 void tx_led_buffer(void);

@@ -76,7 +76,15 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == BTN_1_Pin) {
+        HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
+        HAL_TIM_Base_Start_IT(&htim7);
+        cycle_effects();
+        //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
 
+    }
+}
 /* USER CODE END 2 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
