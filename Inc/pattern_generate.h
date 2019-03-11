@@ -31,6 +31,8 @@ typedef enum patterns {
     STROBE,
     SINGLE_FLOW,
     CYCLE_COLOURS_BEATS,
+    FLOWING_HUE,
+    RANDOM_OFFSET_HUE,
     N_EFFECTS
 } pattern;
 
@@ -93,11 +95,10 @@ void colour_cycle_beats_new_frame(void);
 void colour_cycle_beats_gen_data(struct colours *buffer, uint16_t buffer_index);
 void colour_cycle_beats_beat_start(void);
 
+void colour_flowing_hue_new_frame(void);
+void colour_flowing_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
 
-
-
-
-
-
+void colour_random_offset_hue_new_frame(void);
+void colour_random_offset_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
 
 #endif /* INC_PATTERN_GENERATE_H_ */

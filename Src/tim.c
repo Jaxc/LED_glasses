@@ -43,7 +43,6 @@
 /* USER CODE BEGIN 0 */
 #include "pattern_generate.h"
 #include "i2s.h"
-//#include "adc.h"
 #include "beat_detection.h"
 /* USER CODE END 0 */
 
@@ -56,6 +55,7 @@ void MX_TIM1_Init(void)
 {
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
   htim1.Instance = TIM1;

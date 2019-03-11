@@ -12,7 +12,7 @@
 
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
-pattern current_effect = FLASH_WHITE;
+pattern current_effect = RANDOM_OFFSET_HUE;
 
 struct Presets presets[] = {
     {
@@ -92,19 +92,42 @@ struct Presets presets[] = {
         .colour_beat_start  = &colour_cycle_beats_beat_start,
         .colour_beat_stop   = &do_nothing,
     },
+    {
+        /* FLOWING_HUE */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &colour_flowing_hue_new_frame,
+        .colour_gen_data    = &colour_flowing_hue_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* RANDOM_OFFSET_HUE */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &colour_random_offset_hue_new_frame,
+        .colour_gen_data    = &colour_random_offset_hue_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
 };
 
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
     uint16_t i = 0;
 
-    buffer[0] = 0;
-    buffer[1] = 0;
-    buffer[2] = 0;
-    buffer[3] = 0;
+    buffer[0] = 0x00;
+    buffer[1] = 0x00;
+    buffer[2] = 0x00;
+    buffer[3] = 0x00;
 
-    for (i = 4;i < N_LEDS * 4 + 4; i += 4) {
+    for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], i >> 2);
-        buffer[i] |= 0xe0;
+        //buffer[i] |= 0xe0;
+        buffer[i] = 0xe0 | (buffer[i] >> 4);
     }
     buffer[i] = 0xff;
     buffer[i+1] = 0xff;
@@ -134,6 +157,7 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     presets[current_effect].light_gen_data(&buffer[0], current_led);
     struct colours colour = {0};
     presets[current_effect].colour_gen_data(&colour, current_led);
+    buffer[0] &= 0x1F;
     buffer[1] = colour.blue;
     buffer[2] = colour.green;
     buffer[3] = colour.red;
