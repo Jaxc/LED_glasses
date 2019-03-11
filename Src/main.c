@@ -40,8 +40,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
-#include "dma.h"
 #include "i2s.h"
 #include "spi.h"
 #include "tim.h"
@@ -113,13 +111,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
-  MX_ADC1_Init();
-  MX_SPI2_Init();
   MX_I2S1_Init();
   MX_TIM1_Init();
+  MX_SPI2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -131,8 +127,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
   //start_mic();
-  start_adc();
+  //start_adc();
   HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   while (1)
   {
@@ -187,10 +184,8 @@ void SystemClock_Config(void)
   }
   /**Initializes the peripherals clocks 
   */
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2S1|RCC_PERIPHCLK_ADC
-                              |RCC_PERIPHCLK_TIM1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2S1|RCC_PERIPHCLK_TIM1;
   PeriphClkInit.I2s1ClockSelection = RCC_I2S1CLKSOURCE_SYSCLK;
-  PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLADC;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -221,12 +216,6 @@ static void MX_NVIC_Init(void)
   /* TIM6_DAC_LPTIM1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM6_DAC_LPTIM1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM6_DAC_LPTIM1_IRQn);
-  /* SPI1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(SPI1_IRQn);
-  /* SPI2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SPI2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(SPI2_IRQn);
 }
 
 /* USER CODE BEGIN 4 */

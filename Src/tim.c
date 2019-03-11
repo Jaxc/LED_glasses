@@ -43,7 +43,7 @@
 /* USER CODE BEGIN 0 */
 #include "pattern_generate.h"
 #include "i2s.h"
-#include "adc.h"
+//#include "adc.h"
 #include "beat_detection.h"
 /* USER CODE END 0 */
 
@@ -64,7 +64,7 @@ void MX_TIM1_Init(void)
   htim1.Init.Period = 8192;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
   {
     Error_Handler();
@@ -98,7 +98,7 @@ void MX_TIM6_Init(void)
   htim6.Init.Prescaler = 64000;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim6.Init.Period = 39;
-  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
     Error_Handler();
@@ -120,7 +120,7 @@ void MX_TIM7_Init(void)
   htim7.Init.Prescaler = 64000;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 500;
-  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
   {
     Error_Handler();
@@ -234,8 +234,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     } else if (htim->Instance == TIM1) {
 
         //set_pwm_duty_cycle(adc_get_value());//(WINDOWSIZE/32) ;
-        calc_power(adc_get_value());//(WINDOWSIZE/32) ;
-        start_adc();
+        //calc_power(adc_get_value());//(WINDOWSIZE/32) ;
+        //start_adc();
         //set_pwm_duty_cycle((duty_cycle));
         //HAL_ADC_Start(&hadc1);
     }

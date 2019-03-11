@@ -124,8 +124,6 @@ void HAL_I2S_MspDeInit(I2S_HandleTypeDef* i2sHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0);
 
-    /* I2S1 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(SPI1_IRQn);
   /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
   /* USER CODE END SPI1_MspDeInit 1 */
