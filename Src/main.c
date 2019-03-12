@@ -40,6 +40,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "i2s.h"
 #include "spi.h"
 #include "tim.h"
@@ -111,11 +112,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_I2S1_Init();
   MX_TIM1_Init();
   MX_SPI2_Init();
+  MX_TIM14_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -130,6 +133,7 @@ int main(void)
   //start_adc();
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Base_Start_IT(&htim6);
+  HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   while (1)
   {

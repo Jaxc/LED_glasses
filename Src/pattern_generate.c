@@ -12,7 +12,7 @@
 
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
-pattern current_effect = RANDOM_OFFSET_HUE;
+pattern current_effect = STROBE;
 
 struct Presets presets[] = {
     {
@@ -76,8 +76,8 @@ struct Presets presets[] = {
         .light_gen_data     = &lights_single_flow_gen_data,
         .light_beat_start   = &lights_single_flow_beat_start,
         .light_beat_stop    = &lights_single_flow_beat_stop,
-        .colour_new_frame   = &colour_white_new_frame,
-        .colour_gen_data    = &colour_white_gen_data,
+        .colour_new_frame   = &colour_flowing_hue_new_frame,
+        .colour_gen_data    = &colour_flowing_hue_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
@@ -124,8 +124,11 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     buffer[2] = 0x00;
     buffer[3] = 0x00;
 
+    presets[current_effect].light_new_frame();
+    presets[current_effect].colour_new_frame();
+
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
-        get_current_led(&buffer[i], i >> 2);
+        get_current_led(&buffer[i], (i >> 2) - 1);
         //buffer[i] |= 0xe0;
         buffer[i] = 0xe0 | (buffer[i] >> 4);
     }
@@ -149,11 +152,6 @@ void cycle_effects (void) {
 }
 
 void get_current_led(uint8_t buffer[4], uint16_t current_led) {
-    if (current_led == 1) {
-        /*i == 1 means that it is the first led of a new frame. */
-        presets[current_effect].light_new_frame();
-        presets[current_effect].colour_new_frame();
-    }
     presets[current_effect].light_gen_data(&buffer[0], current_led);
     struct colours colour = {0};
     presets[current_effect].colour_gen_data(&colour, current_led);

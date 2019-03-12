@@ -53,6 +53,7 @@
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim7;
+extern TIM_HandleTypeDef htim14;
 
 /* USER CODE BEGIN Private defines */
 
@@ -61,6 +62,7 @@ extern TIM_HandleTypeDef htim7;
 void MX_TIM1_Init(void);
 void MX_TIM6_Init(void);
 void MX_TIM7_Init(void);
+void MX_TIM14_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void set_pwm_duty_cycle(uint16_t level) ;

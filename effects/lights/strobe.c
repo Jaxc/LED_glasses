@@ -23,7 +23,7 @@ void lights_strobe_new_frame (void) {
 }
 
 void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index){
-    if (pattern_counter == 0) {
+    if (strobe_active != 0) {
         *buffer = 0xff;
     } else {
         *buffer = 0x00;
@@ -31,7 +31,7 @@ void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index){
 }
 
 void lights_strobe_beat_start(void) {
-    strobe_active = 4;
+    strobe_active = 2;
     return;
 }
 
