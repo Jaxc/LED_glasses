@@ -49,6 +49,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g0xx_hal.h"
+#include "stm32g0xx_ll_system.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -81,9 +82,6 @@ void Error_Handler(void);
 #define BTN_1_Pin GPIO_PIN_3
 #define BTN_1_GPIO_Port GPIOB
 #define BTN_1_EXTI_IRQn EXTI2_3_IRQn
-#define BTN_2_Pin GPIO_PIN_4
-#define BTN_2_GPIO_Port GPIOB
-#define BTN_2_EXTI_IRQn EXTI4_15_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
