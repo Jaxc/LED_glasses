@@ -130,7 +130,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
         //buffer[i] |= 0xe0;
-        buffer[i] = 0xe0 | (buffer[i] >> 4);
+        buffer[i] = 0xe0 | (buffer[i] >> 3);
     }
     buffer[i] = 0xff;
     buffer[i+1] = 0xff;

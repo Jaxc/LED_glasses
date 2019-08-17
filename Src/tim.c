@@ -140,7 +140,7 @@ void MX_TIM14_Init(void)
   htim14.Instance = TIM14;
   htim14.Init.Prescaler = 637;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim14.Init.Period = 30000;
+  htim14.Init.Period = 46154;
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
@@ -275,6 +275,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     } else if (htim->Instance == TIM7) {
             HAL_TIM_Base_Stop_IT(&htim7);
             HAL_NVIC_EnableIRQ(BTN_1_EXTI_IRQn);
+            HAL_NVIC_EnableIRQ(BTN_2_EXTI_IRQn);
             //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
     } else if (htim->Instance == TIM1) {
 

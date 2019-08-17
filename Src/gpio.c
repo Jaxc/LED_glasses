@@ -48,7 +48,12 @@
 /* Configure GPIO                                                             */
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
-
+const uint16_t bpm_settings[] = {43478, 34483, 21739, 17241};
+/*const uint16_t bpm_settings[] = {46154, 45455, 44776, 44118, 43478, 42857,
+        42254, 41379, 40000, 38710, 37500, 36364, 35294, 34884, 34483, 34091,
+        33333, 31579, 30000};*/
+uint8_t current_bpm = 0;
+uint8_t len_bpm = 4;
 /* USER CODE END 1 */
 
 /** Configure pins as 
@@ -79,10 +84,17 @@ void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == BTN_1_Pin) {
         HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
+        HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
         HAL_TIM_Base_Start_IT(&htim7);
         cycle_effects();
         //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
 
+    } else if (GPIO_Pin == BTN_2_Pin) {
+        HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
+        HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
+        HAL_TIM_Base_Start_IT(&htim7);
+        current_bpm = (current_bpm + 1) % len_bpm;
+        __HAL_TIM_SET_AUTORELOAD(&htim14, bpm_settings[current_bpm] - 1);
     }
 }
 /* USER CODE END 2 */
