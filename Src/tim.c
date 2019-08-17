@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "pattern_generate.h"
-#include "i2s.h"
+//#include "i2s.h"
 #include "beat_detection.h"
 /* USER CODE END 0 */
 
