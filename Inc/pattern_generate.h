@@ -11,7 +11,7 @@
 #define INC_PATTERN_GENERATE_H_
 
 #define N_LEDS 86
-#define FRAME_SIZE 8 + (N_LEDS * 4)
+#define FRAME_SIZE 12 + (N_LEDS * 4)
 
 void tx_led_buffer(void);
 void create_payload(uint8_t buffer[FRAME_SIZE]);
@@ -22,6 +22,22 @@ void cycle_effects (void);
 
 void beat_start(void);
 void beat_stop(void);
+
+#ifdef COMPILE_TESTS
+typedef enum patterns {
+    LED_OFF,
+    test_1,
+    test_2,
+    test_3,
+    test_4,
+    test_5,
+    test_6,
+    test_7,
+    test_8,
+    test_9,
+    N_EFFECTS
+} pattern;
+#else
 
 typedef enum patterns {
     LED_OFF,
@@ -35,6 +51,8 @@ typedef enum patterns {
     RANDOM_OFFSET_HUE,
     N_EFFECTS
 } pattern;
+
+#endif
 
 typedef void (*new_frame)(void);
 typedef void (*gen_light_data)(uint8_t *buffer, uint16_t buffer_index);
@@ -74,6 +92,13 @@ void test_5_gen_data(struct colours *buffer, uint16_t buffer_index);
 
 void test_6_new_frame (void);
 void test_6_gen_data(struct colours *buffer, uint16_t buffer_index);
+
+void test_7_new_frame (void);
+void test_7_gen_data(struct colours *buffer, uint16_t buffer_index);
+
+void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_9_gen_data(struct colours *buffer, uint16_t buffer_index);
 
 
 void lights_flash_new_frame (void);

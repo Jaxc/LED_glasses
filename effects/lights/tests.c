@@ -103,3 +103,52 @@ void test_6_new_frame (void) {
 void test_6_gen_data(struct colours *buffer, uint16_t buffer_index) {
     get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 22 )) % 1536, 0xff);
 }
+
+/* colour test */
+uint8_t active_colour = 0;
+uint8_t frame_cnt_colour = 0;
+void test_7_new_frame (void) {
+
+    if (10 == frame_cnt_colour) {
+        frame_cnt_colour = 0;
+        if ((3 - 1) == active_colour ) {
+            active_colour = 0;
+        } else {
+            active_colour++;
+        }
+    } else {
+        frame_cnt_colour++;
+    }
+
+}
+
+void test_7_gen_data(struct colours *buffer, uint16_t buffer_index) {
+
+    buffer->red = 0x00;
+    buffer->green = 0x00;
+    buffer->blue = 0x00;
+
+    if (0 == active_colour ) {
+        buffer->red = 0xff;
+    } else if (1 == active_colour ) {
+        buffer->green = 0xff;
+    } else {
+        buffer->blue = 0xff;
+    }
+}
+
+/* Checkerboard pattern */
+void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+    if (0 == buffer_index % 2) {
+        *buffer = 0x00;
+    } else {
+        *buffer = 0xff;
+    }
+}
+
+/* Colour gradient */
+
+void test_9_gen_data(struct colours *buffer, uint16_t buffer_index) {
+
+    get_colour(buffer, (buffer_index << 4) % 1536, 0xff);
+}
