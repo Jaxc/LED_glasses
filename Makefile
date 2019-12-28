@@ -144,6 +144,10 @@ endif
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
+# check if tests are to be built
+ifeq ($(MAKECMDGOALS),test)
+CFLAGS += -DCOMPILE_TESTS
+endif	
 
 #######################################
 # LDFLAGS
@@ -187,6 +191,11 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	
 $(BUILD_DIR):
 	mkdir $@		
+	
+#######################################
+# test
+#######################################
+test: all
 
 #######################################
 # clean up

@@ -12,9 +12,37 @@
 
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
-pattern current_effect = STROBE;
+#ifdef COMPILE_TESTS
+pattern current_effect = 0x01;
+#else
+pattern current_effect = CYCLE_COLOURS_BEATS;
+#endif
 
 struct Presets presets[] = {
+#ifdef COMPILE_TESTS
+    {
+        /* test_1 */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &test_1_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_2 */
+        .light_new_frame    = &test_2_new_frame,
+        .light_gen_data     = &test_2_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+#else
     {
         /* LED_OFF */
         .light_new_frame    = &do_nothing,
@@ -114,6 +142,7 @@ struct Presets presets[] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
+#endif
 };
 
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
@@ -130,7 +159,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
         //buffer[i] |= 0xe0;
-        buffer[i] = 0xe0 | (buffer[i] >> 3);
+        buffer[i] = 0xe0 | (buffer[i] >> 4);
     }
     buffer[i] = 0xff;
     buffer[i+1] = 0xff;

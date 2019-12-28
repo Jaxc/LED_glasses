@@ -10,7 +10,7 @@
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
 
-#define N_LEDS 36
+#define N_LEDS 86
 #define FRAME_SIZE 8 + (N_LEDS * 4)
 
 void tx_led_buffer(void);
@@ -58,6 +58,12 @@ static inline void do_nothing(void) {
     return;
 }
 /* Lights */
+void test_1_new_frame (void);
+void test_1_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_2_new_frame (void);
+void test_2_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
 void lights_flash_new_frame (void);
 void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_flash_beat_start (void);
