@@ -13,7 +13,7 @@
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
-pattern current_effect = 0x01;
+pattern current_effect = 0x05;
 #else
 pattern current_effect = CYCLE_COLOURS_BEATS;
 #endif
@@ -39,6 +39,50 @@ struct Presets presets[] = {
         .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_3 */
+        .light_new_frame    = &test_3_new_frame,
+        .light_gen_data     = &test_3_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_4 */
+        .light_new_frame    = &test_4_new_frame,
+        .light_gen_data     = &test_4_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_5 */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &test_5_new_frame,
+        .colour_gen_data    = &test_5_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_6 */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &test_6_new_frame,
+        .colour_gen_data    = &test_6_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },

@@ -58,11 +58,23 @@ static inline void do_nothing(void) {
     return;
 }
 /* Lights */
-void test_1_new_frame (void);
 void test_1_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
 void test_2_new_frame (void);
 void test_2_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_3_new_frame (void);
+void test_3_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_4_new_frame (void);
+void test_4_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_5_new_frame (void);
+void test_5_gen_data(struct colours *buffer, uint16_t buffer_index);
+
+void test_6_new_frame (void);
+void test_6_gen_data(struct colours *buffer, uint16_t buffer_index);
+
 
 void lights_flash_new_frame (void);
 void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index);
