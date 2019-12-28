@@ -42,6 +42,7 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "i2s.h"
 #include "spi.h"
 #include "tim.h"
 #include "gpio.h"
@@ -120,7 +121,7 @@ int main(void)
   MX_SPI2_Init();
   MX_TIM14_Init();
   MX_ADC1_Init();
-  MX_SPI1_Init();
+  MX_I2S1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -190,7 +191,9 @@ void SystemClock_Config(void)
   }
   /** Initializes the peripherals clocks 
   */
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_TIM1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2S1|RCC_PERIPHCLK_ADC
+                              |RCC_PERIPHCLK_TIM1;
+  PeriphClkInit.I2s1ClockSelection = RCC_I2S1CLKSOURCE_SYSCLK;
   PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLADC;
   PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
