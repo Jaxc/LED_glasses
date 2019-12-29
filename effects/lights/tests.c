@@ -101,7 +101,8 @@ void test_6_new_frame (void) {
 }
 
 void test_6_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 22 )) % 1536, 0xff);
+    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 21 )) % 1536, 0xff);
+    for(uint32_t i = 0; i < 1000; i++);
 }
 
 /* colour test */

@@ -71,12 +71,22 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == BTN_1_Pin) {
-        HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
-        HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
-        HAL_TIM_Base_Start_IT(&htim7);
-        cycle_effects();
+
+    }
+}
+
+
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
+
+    if (GPIO_Pin == BTN_1_Pin) {
+        if (GPIO_PIN_RESET == HAL_GPIO_ReadPin(BTN_1_GPIO_Port, BTN_1_Pin)) {
+            HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
+            HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
+            HAL_TIM_Base_Start_IT(&htim7);
+            cycle_effects();
+        }
         //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
 
     } else if (GPIO_Pin == BTN_2_Pin) {
