@@ -33,13 +33,14 @@
 extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
-
+#define ADC_WINDOW_SIZE 160
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void adc_start_sampling(void);
+uint32_t get_audio_power(void);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -20,5 +20,5 @@ void colour_cycle_beats_gen_data(struct colours *buffer, uint16_t buffer_index) 
 }
 
 void colour_cycle_beats_beat_start (void) {
-    hue_beats = (hue_beats + 128) % 1536;
+    hue_beats = (hue_beats + 128) % 1024;
 }

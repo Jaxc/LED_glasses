@@ -15,7 +15,7 @@ uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
 pattern current_effect = 0x6;
 #else
-pattern current_effect = CYCLE_COLOURS_BEATS;
+pattern current_effect = RADIAL_HUE;
 #endif
 
 struct Presets presets[] = {
@@ -130,6 +130,17 @@ struct Presets presets[] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
+    {
+        /* test_10 */
+        .light_new_frame    = &test_10_new_frame,
+        .light_gen_data     = &test_10_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &do_nothing,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
 #else
     {
         /* LED_OFF */
@@ -139,6 +150,17 @@ struct Presets presets[] = {
         .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* HYPNOSIS */
+        .light_new_frame    = &do_nothing,
+        .light_gen_data     = &lights_led_on_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &colour_hypnosis_new_frame,
+        .colour_gen_data    = &colour_hypnosis_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
@@ -155,10 +177,7 @@ struct Presets presets[] = {
     },
     {
         /* CYCLE_COLOURS */
-        .ligh    buffer[i]   = 0xff;
-        buffer[i+1] = 0xff;
-        buffer[i+2] = 0xff;
-        buffer[i+3] = 0xff;t_new_frame    = &do_nothing,
+        .light_new_frame    = &do_nothing,
         .light_gen_data     = &lights_led_on_gen_data,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,
@@ -167,10 +186,7 @@ struct Presets presets[] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
-    {    buffer[i]   = 0xff;
-    buffer[i+1] = 0xff;
-    buffer[i+2] = 0xff;
-    buffer[i+3] = 0xff;
+    {
         /* FLASH_COLOURS */
         .light_new_frame    = &lights_flash_new_frame,
         .light_gen_data     = &lights_flash_gen_data,
@@ -236,6 +252,17 @@ struct Presets presets[] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
+    {
+        /* RADIAL_HUE */
+        .light_new_frame    = &lights_flash_new_frame,
+        .light_gen_data     = &lights_flash_gen_data,
+        .light_beat_start   = &lights_flash_beat_start,
+        .light_beat_stop    = &lights_flash_beat_stop,
+        .colour_new_frame   = &colour_radial_hue_new_frame,
+        .colour_gen_data    = &colour_radial_hue_gen_data,
+        .colour_beat_start  = &colour_radial_hue_beat_start,
+        .colour_beat_stop   = &do_nothing,
+    },
 #endif
 };
 
@@ -253,7 +280,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
         //buffer[i] |= 0xe0;
-        buffer[i] = 0xe0 | (buffer[i] >> 4);
+        buffer[i] = 0xe0 | ((buffer[i] & 0x0F) >> 2);
     }
 
     buffer[i]   = 0xff;

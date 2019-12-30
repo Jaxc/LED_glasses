@@ -88,21 +88,20 @@ void test_4_gen_data(uint8_t *buffer, uint16_t buffer_index) {
 /* radius test */
 uint32_t test_flow_hue = 0;
 void test_5_new_frame (void) {
-    test_flow_hue = (test_flow_hue + 20) % 1536;
+    test_flow_hue = (test_flow_hue + 20) % 1024;
 }
 
 void test_5_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (test_flow_hue + (led_pos_pol_rad[buffer_index] >> 22 )) % 1536, 0xff);
+    get_colour(buffer, (test_flow_hue + (led_pos_pol_rad[buffer_index] >> 22 )) % 1024, 0xff);
 }
 
 /* angle test */
 void test_6_new_frame (void) {
-    test_flow_hue = (test_flow_hue + 20) % 1536;
+    test_flow_hue = (test_flow_hue + 20) % 1024;
 }
 
 void test_6_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 21 )) % 1536, 0xff);
-    for(uint32_t i = 0; i < 1000; i++);
+    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 21 )) % 1024, 0xff);
 }
 
 /* colour test */
@@ -151,5 +150,21 @@ void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index) {
 
 void test_9_gen_data(struct colours *buffer, uint16_t buffer_index) {
 
-    get_colour(buffer, (buffer_index << 4) % 1536, 0xff);
+    get_colour(buffer, (buffer_index * 12) % 1024, 0xff);
+}
+
+/* Microphone test */
+uint32_t current_power = 0;
+void test_10_new_frame (void) {
+    current_power = get_audio_power();
+
+}
+
+void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+
+    if(current_power < buffer_index) {
+        *buffer = 0xff;
+    } else {
+        *buffer = 0x00;
+    }
 }

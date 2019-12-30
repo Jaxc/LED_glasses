@@ -21,41 +21,43 @@ void get_colour (struct colours *colours_out, uint32_t hue, uint32_t saturation)
         saturation = 255;
     }
 
-    if (hue > 1535) {
-        hue = 1535;
+    if (hue > 1024) {
+        hue = 1024;
     }
 
 
-    switch (hue >> 8) {
+    switch (hue >> 7) {
     case 0:
+    case 1:
         colours_out->red = 0xff;
         colours_out->green = hue % 256;
         colours_out->blue = 0x00;
         break;
-    case 1:
+    case 2:
+    case 3:
         colours_out->red = 0xff - (hue % 256);
         colours_out->green = 0xff;
         colours_out->blue = 0x00;
         break;
-    case 2:
+    case 4:
         colours_out->red = 0x00;
         colours_out->green = 0xff;
-        colours_out->blue = hue % 256;
+        colours_out->blue = (hue % 128) << 1;
         break;
-    case 3:
+    case 5:
         colours_out->red = 0x00;
-        colours_out->green = 0xff - (hue % 256);
+        colours_out->green = 0xff - ((hue % 128) << 1);
         colours_out->blue = 0xff;
         break;
-    case 4:
-        colours_out->red = hue % 256;
+    case 6:
+        colours_out->red = (hue % 128) << 1;
         colours_out->green = 0x00;
         colours_out->blue = 0xff;
         break;
     default :
         colours_out->red = 0xff;
         colours_out->green = 0x00;
-        colours_out->blue = 0xff - (hue % 256);
+        colours_out->blue = 0xff - ((hue % 128) << 1);
         break;
     }
 }

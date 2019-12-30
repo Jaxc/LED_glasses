@@ -116,10 +116,11 @@ int main(void)
   MX_DMA_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
-  MX_TIM1_Init();
   MX_SPI2_Init();
   MX_TIM14_Init();
   MX_ADC1_Init();
+  MX_TIM15_Init();
+  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -132,10 +133,13 @@ int main(void)
 
   //start_mic();
   //start_adc();
-  HAL_TIM_Base_Start_IT(&htim1);
+  adc_start_sampling();
+  HAL_TIM_Base_Start_IT(&htim15);
+  //HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim14);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  //HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+
   //HAL_TIM_Base_Start_IT(&htim17);
   while (1)
   {
@@ -190,9 +194,9 @@ void SystemClock_Config(void)
   }
   /** Initializes the peripherals clocks 
   */
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_TIM1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC|RCC_PERIPHCLK_TIM15;
   PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLADC;
-  PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLKSOURCE_PCLK1;
+  PeriphClkInit.Tim15ClockSelection = RCC_TIM15CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -212,12 +216,6 @@ static void MX_NVIC_Init(void)
   /* EXTI4_15_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
-  /* TIM1_BRK_UP_TRG_COM_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM1_BRK_UP_TRG_COM_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(TIM1_BRK_UP_TRG_COM_IRQn);
-  /* TIM1_CC_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
   /* TIM7_LPTIM2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM7_LPTIM2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM7_LPTIM2_IRQn);

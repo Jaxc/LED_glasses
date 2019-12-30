@@ -20,7 +20,7 @@ uint32_t random_hue[N_LEDS] = {0, 43, 85, 128, 171, 213, 256, 299, 341, 384,
 
 void colour_random_offset_hue_new_frame (void) {
     for (uint16_t i; i < N_LEDS; ++i) {
-        random_hue[i] = (random_hue[i] + 10) % 1536;
+        random_hue[i] = (random_hue[i] + 10) % 1024;
     }
 
 }

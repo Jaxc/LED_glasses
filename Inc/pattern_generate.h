@@ -35,12 +35,14 @@ typedef enum patterns {
     test_7,
     test_8,
     test_9,
+    test_10,
     N_EFFECTS
 } pattern;
 #else
 
 typedef enum patterns {
     LED_OFF,
+    HYPNOSIS,
     FLASH_WHITE,
     CYCLE_COLOURS,
     FLASH_COLOURS,
@@ -49,6 +51,7 @@ typedef enum patterns {
     CYCLE_COLOURS_BEATS,
     FLOWING_HUE,
     RANDOM_OFFSET_HUE,
+    RADIAL_HUE,
     N_EFFECTS
 } pattern;
 
@@ -100,6 +103,9 @@ void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
 void test_9_gen_data(struct colours *buffer, uint16_t buffer_index);
 
+void test_10_new_frame (void);
+void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
 
 void lights_flash_new_frame (void);
 void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index);
@@ -143,5 +149,12 @@ void colour_flowing_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
 
 void colour_random_offset_hue_new_frame(void);
 void colour_random_offset_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
+
+void colour_radial_hue_new_frame (void);
+void colour_radial_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
+void colour_radial_hue_beat_start(void);
+
+void colour_hypnosis_new_frame (void) ;
+void colour_hypnosis_gen_data(struct colours *buffer, uint16_t buffer_index) ;
 
 #endif /* INC_PATTERN_GENERATE_H_ */
