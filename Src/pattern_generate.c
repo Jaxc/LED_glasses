@@ -13,7 +13,7 @@
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
-pattern current_effect = 0x6;
+pattern current_effect = test_11;
 #else
 pattern current_effect = RADIAL_HUE;
 #endif
@@ -137,7 +137,18 @@ struct Presets presets[] = {
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* test_11 */
+        .light_new_frame    = &test_11_new_frame,
+        .light_gen_data     = &test_11_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
@@ -280,7 +291,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
         //buffer[i] |= 0xe0;
-        buffer[i] = 0xe0 | ((buffer[i] & 0x0F) >> 2);
+        buffer[i] = 0xe0 | ((buffer[i] & 0x0F) >> 3);
     }
 
     buffer[i]   = 0xff;

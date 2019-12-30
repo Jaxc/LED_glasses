@@ -36,6 +36,7 @@ typedef enum patterns {
     test_8,
     test_9,
     test_10,
+    test_11,
     N_EFFECTS
 } pattern;
 #else
@@ -105,6 +106,9 @@ void test_9_gen_data(struct colours *buffer, uint16_t buffer_index);
 
 void test_10_new_frame (void);
 void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
+void test_11_new_frame (void);
+void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
 
 void lights_flash_new_frame (void);

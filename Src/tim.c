@@ -27,42 +27,11 @@
 #include "cpu_load_calc.h"
 /* USER CODE END 0 */
 
-TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
 TIM_HandleTypeDef htim14;
 TIM_HandleTypeDef htim15;
 
-/* TIM2 init function */
-void MX_TIM2_Init(void)
-{
-  TIM_SlaveConfigTypeDef sSlaveConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 100;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_TRIGGER;
-  sSlaveConfig.InputTrigger = TIM_TS_ITR1;
-  if (HAL_TIM_SlaveConfigSynchro(&htim2, &sSlaveConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-}
 /* TIM6 init function */
 void MX_TIM6_Init(void)
 {
@@ -132,7 +101,7 @@ void MX_TIM15_Init(void)
   htim15.Instance = TIM15;
   htim15.Init.Prescaler = 0;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 16000;
+  htim15.Init.Period = 1600;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -157,22 +126,7 @@ void MX_TIM15_Init(void)
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
-  if(tim_baseHandle->Instance==TIM2)
-  {
-  /* USER CODE BEGIN TIM2_MspInit 0 */
-
-  /* USER CODE END TIM2_MspInit 0 */
-    /* TIM2 clock enable */
-    __HAL_RCC_TIM2_CLK_ENABLE();
-
-    /* TIM2 interrupt Init */
-    HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM2_IRQn);
-  /* USER CODE BEGIN TIM2_MspInit 1 */
-
-  /* USER CODE END TIM2_MspInit 1 */
-  }
-  else if(tim_baseHandle->Instance==TIM6)
+  if(tim_baseHandle->Instance==TIM6)
   {
   /* USER CODE BEGIN TIM6_MspInit 0 */
 
@@ -229,21 +183,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 
-  if(tim_baseHandle->Instance==TIM2)
-  {
-  /* USER CODE BEGIN TIM2_MspDeInit 0 */
-
-  /* USER CODE END TIM2_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_TIM2_CLK_DISABLE();
-
-    /* TIM2 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(TIM2_IRQn);
-  /* USER CODE BEGIN TIM2_MspDeInit 1 */
-
-  /* USER CODE END TIM2_MspDeInit 1 */
-  }
-  else if(tim_baseHandle->Instance==TIM6)
+  if(tim_baseHandle->Instance==TIM6)
   {
   /* USER CODE BEGIN TIM6_MspDeInit 0 */
 
@@ -315,7 +255,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //            HAL_TIM_Base_Start_IT(&htim16);
 //            idle_cnt += htim17.Instance->CNT;
 //            htim17.Instance->CNT = 0;
-
+//        tx_led_buffer();
 //            if (24 == second_cnt) {
 //                HAL_TIM_Base_Stop_IT(&htim16);
 //                active_cnt += htim16.Instance->CNT;
@@ -338,8 +278,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             HAL_NVIC_EnableIRQ(BTN_2_EXTI_IRQn);
             //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
     } else if (htim->Instance == TIM15) {
-        uint8_t test;
-        test++;
+
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
         //set_pwm_duty_cycle(adc_get_value());//(WINDOWSIZE/32) ;
         //calc_power(adc_get_value());//(WINDOWSIZE/32) ;
         //start_adc();

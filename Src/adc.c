@@ -44,16 +44,19 @@ void MX_ADC1_Init(void)
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIG_T15_TRGO;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_12CYCLES_5;
   hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
-  hadc1.Init.OversamplingMode = DISABLE;
+  hadc1.Init.OversamplingMode = ENABLE;
+  hadc1.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_16;
+  hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_NONE;
+  hadc1.Init.Oversampling.TriggeredMode = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -150,6 +153,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 uint32_t audio_in[2][ADC_WINDOW_SIZE] = {0};
 uint32_t power = 0;
 void adc_start_sampling(void) {
+
     HAL_ADC_Start_DMA(&hadc1, audio_in[active_adc_buffer], ADC_WINDOW_SIZE);
 }
 
@@ -158,15 +162,17 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     active_adc_buffer = !active_adc_buffer;
     adc_start_sampling();
     int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
+    power = 0;
 
     for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
         int32_t bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
-        audio_processed[i] = bipolar_audio * bipolar_audio;
-        power += audio_processed[i];
+        audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
+        power += audio_processed[i] >> 8;
     }
 
     tx_led_buffer();
 
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
 
 uint32_t get_audio_power(void) {

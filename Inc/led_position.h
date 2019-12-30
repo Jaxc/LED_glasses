@@ -14,7 +14,7 @@
 #define N_ROWS 7
 #define N_COLS 8
 
-#define led_pos_eye 0
+#define led_pos_eye(x) ((x) < (N_LEDS / 2) ? (0) : (1))
 
 extern uint8_t led_pos_cart_x [N_LEDS];
 

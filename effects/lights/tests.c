@@ -162,9 +162,35 @@ void test_10_new_frame (void) {
 
 void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index) {
 
-    if(current_power < buffer_index) {
+    if((current_power >> 15) > buffer_index) {
         *buffer = 0xff;
     } else {
         *buffer = 0x00;
+    }
+}
+
+/* Microphone test 2 */
+uint16_t vu_power = 0;
+void test_11_new_frame (void) {
+    current_power = get_audio_power();
+
+    vu_power = current_power >> 20;
+
+}
+
+void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+
+    if (0 == led_pos_eye(buffer_index)) {
+        if(vu_power > led_pos_cart_x[buffer_index]) {
+            *buffer = 0xff;
+        } else {
+            *buffer = 0x00;
+        }
+    } else {
+        if((vu_power >> 3) > (7 - led_pos_cart_x[buffer_index])) {
+            *buffer = 0xff;
+        } else {
+            *buffer = 0x00;
+        }
     }
 }
