@@ -16,12 +16,6 @@ jobs:
           command: apt-get -y install make gcc-arm-none-eabi wget unzip
 
       - run:
-           name: Install sonarqube
-           command: |
-             wget https://sonarcloud.io/projects/static/cpp/build-wrapper-linux-x86.zip
-             unzip build-wrapper-linux-x86.zip  
-
-      - run:
           name: build all
           command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir sonar_info make all
 
