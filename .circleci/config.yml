@@ -13,7 +13,7 @@ jobs:
 
       - run: 
           name: install tools
-          command: apt-get -y install build-essential gcc-arm-none-eabi
+          command: apt-get -y install make gcc-arm-none-eabi
 
       - run:
           name: build all
