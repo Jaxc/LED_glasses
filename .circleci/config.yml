@@ -11,8 +11,11 @@ jobs:
           name: install dependencies
 
       - run:
-          name: build project
+          name: build all
           command: make all
+
+      - run:
+          name: build test
           command: make test
 
       - sonarcloud/scan
