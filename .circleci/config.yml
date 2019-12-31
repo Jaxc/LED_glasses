@@ -18,12 +18,12 @@ jobs:
       - run:
            name: Install sonarqube
            command: |
-             wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
-             unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+             wget https://sonarcloud.io/projects/static/cpp/build-wrapper-linux-x86.zip
+             unzip build-wrapper-linux-x86.zip  
 
       - run:
           name: build all
-          command: ./sonar-scanner-4.2.0.1873-linux/bin/sonar-scanner -Dproject.settings=sonar-project.properties make all
+          command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir sonar_info make all
 
       - run:
           name: build test
