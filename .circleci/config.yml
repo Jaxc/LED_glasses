@@ -13,7 +13,7 @@ jobs:
 
       - run: 
           name: install tools
-          command: apt-get -y install make gcc-arm-none-eabi wget
+          command: apt-get -y install make gcc-arm-none-eabi wget unzip
 
       - run:
            name: Install sonarqube
