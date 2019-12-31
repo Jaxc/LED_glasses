@@ -8,10 +8,12 @@ jobs:
       - checkout
 
       - run:
-          name: install dependencies
+          name: update apt
           command: apt-get update
 
-      - run: apt-get install make
+      - run: 
+          name: install tools
+          command: apt-get install build-essential gcc-arm-none-eabi
 
       - run:
           name: build all
