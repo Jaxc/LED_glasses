@@ -16,8 +16,14 @@ jobs:
           command: apt-get -y install make gcc-arm-none-eabi
 
       - run:
+           name: Install sonarqube
+           command: |
+             wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+             unzip sonar-scanner-cli-3.3.0.1492-linux.zip
+
+      - run:
           name: build all
-          command: make all
+          command: ./sonar-scanner-4.2.0.1873-linux/bin/sonar-scanner -Dproject.settings=sonar-project.properties make all
 
       - run:
           name: build test
