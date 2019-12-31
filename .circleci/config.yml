@@ -23,6 +23,10 @@ jobs:
           name: build test
           command: make test
 
+      - sonarcloud/scan
+
+
+
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
 
