@@ -8,9 +8,20 @@ jobs:
       - checkout
 
       - run:
-          name: Greeting
-          command: echo Hello, world.
+          name: install dependencies
 
       - run:
-          name: Print the Current Time
-          command: date
+          name: build project
+          command: make all
+          command: make test
+
+      - sonarcloud/scan
+
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+
+workflows:
+  main:
+    jobs:
+      - build:
+          context: SonarCloud
