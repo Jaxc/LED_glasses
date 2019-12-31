@@ -15,7 +15,7 @@ uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
 pattern current_effect = test_11;
 #else
-pattern current_effect = RADIAL_HUE;
+pattern current_effect = HYPNOSIS;
 #endif
 
 struct Presets presets[] = {

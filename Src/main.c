@@ -120,6 +120,8 @@ int main(void)
   MX_TIM14_Init();
   MX_ADC1_Init();
   MX_TIM15_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -137,13 +139,14 @@ int main(void)
   //HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim14);
+  HAL_TIM_Base_Start(&htim2);
   //HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
 
   //HAL_TIM_Base_Start_IT(&htim17);
   while (1)
   {
     /* USER CODE END WHILE */
-
+      HAL_TIM_Base_Start(&htim3);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
