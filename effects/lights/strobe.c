@@ -18,6 +18,7 @@ void lights_strobe_new_frame (void) {
 }
 
 void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index){
+    UNUSED(buffer_index);
     if ( (strobe_active % 2) != 0) {
         *buffer = 0xff;
     } else {

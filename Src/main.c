@@ -132,17 +132,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  //start_mic();
-  //start_adc();
   adc_start_sampling();
   HAL_TIM_Base_Start_IT(&htim15);
-  //HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start(&htim2);
-  //HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
 
-  //HAL_TIM_Base_Start_IT(&htim17);
   while (1)
   {
     /* USER CODE END WHILE */

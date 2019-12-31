@@ -10,12 +10,8 @@
 
 uint16_t hue_beats = 0;
 
-
-void colour_cycle_beats_new_frame (void) {
-
-}
-
 void colour_cycle_beats_gen_data(struct colours *buffer, uint16_t buffer_index) {
+    UNUSED(buffer_index);
     get_colour(buffer, hue_beats, 0xff);
 }
 

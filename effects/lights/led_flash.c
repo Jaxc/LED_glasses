@@ -20,13 +20,10 @@ void lights_flash_new_frame (void) {
 }
 
 void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+    UNUSED(buffer_index);
     *buffer = white_level;
 }
 
 void lights_flash_beat_start (void) {
     pattern_counter = 31;
-}
-
-void lights_flash_beat_stop (void) {
-
 }

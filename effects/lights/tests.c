@@ -6,6 +6,7 @@
  */
 #include "main.h"
 #include "led_position.h"
+#include "adc.h"
 
 uint32_t pattern_counter;
 uint8_t white_level;
@@ -30,6 +31,7 @@ void test_2_new_frame (void) {
 }
 
 void test_2_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+    UNUSED(buffer_index);
     if (0 == test_2_status) {
         *buffer = 0x00;
     } else {
@@ -123,6 +125,8 @@ void test_7_new_frame (void) {
 }
 
 void test_7_gen_data(struct colours *buffer, uint16_t buffer_index) {
+
+    UNUSED(buffer_index);
 
     buffer->red = 0x00;
     buffer->green = 0x00;

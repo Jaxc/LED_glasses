@@ -59,6 +59,8 @@ void flash_colour_new_frame (void) {
                 flash_green_level = 0xff;
                 flash_colour_state = YELLOW;
                 break;
+            default:
+                break;
             }
     } else if (pattern_counter >= 31){
         flash_white_level = 62 - pattern_counter;

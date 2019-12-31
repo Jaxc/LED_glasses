@@ -159,20 +159,22 @@ void adc_start_sampling(void) {
 
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
-    active_adc_buffer = !active_adc_buffer;
-    adc_start_sampling();
-    int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
-    power = 0;
+    if (ADC1 == hadc->Instance) {
+        active_adc_buffer = !active_adc_buffer;
+        adc_start_sampling();
+        int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
+        power = 0;
 
-    for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
-        int32_t bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
-        audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
-        power += audio_processed[i] >> 8;
+        for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
+            int32_t bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
+            audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
+            power += audio_processed[i] >> 8;
+        }
+
+        tx_led_buffer();
+
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     }
-
-    tx_led_buffer();
-
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
 
 uint32_t get_audio_power(void) {

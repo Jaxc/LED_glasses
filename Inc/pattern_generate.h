@@ -110,22 +110,17 @@ void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void test_11_new_frame (void);
 void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
-
+/* Tests */
 void lights_flash_new_frame (void);
 void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_flash_beat_start (void);
-void lights_flash_beat_stop (void);
 
-void lights_led_off_new_frame (void);
 void lights_led_off_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
-void lights_led_on_new_frame (void);
 void lights_led_on_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
-void lights_single_flow_new_frame (void);
 void lights_single_flow_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_single_flow_beat_start (void);
-void lights_single_flow_beat_stop (void);
 
 void lights_strobe_new_frame (void);
 void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index);
@@ -141,10 +136,8 @@ void colour_beat_change_gen_data (struct colours *buffer, uint16_t buffer_index)
 void lights_beat_change_beat_start (void);
 void lights_beat_change_beat_stop (void);
 
-void colour_white_new_frame (void);
 void colour_white_gen_data (struct colours *buffer, uint16_t buffer_index);
 
-void colour_cycle_beats_new_frame(void);
 void colour_cycle_beats_gen_data(struct colours *buffer, uint16_t buffer_index);
 void colour_cycle_beats_beat_start(void);
 

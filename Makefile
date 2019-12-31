@@ -68,7 +68,6 @@ Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c \
 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_rcc.c \
 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_exti.c \
 Src/sys.c \
-Src/cpu_load_calc.c \
 Src/led_position.c
 
 # ASM sources

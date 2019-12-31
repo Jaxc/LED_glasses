@@ -180,8 +180,8 @@ struct Presets presets[] = {
         .light_new_frame    = &lights_flash_new_frame,
         .light_gen_data     = &lights_flash_gen_data,
         .light_beat_start   = &lights_flash_beat_start,
-        .light_beat_stop    = &lights_flash_beat_stop,
-        .colour_new_frame   = &colour_white_new_frame,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_white_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
@@ -202,7 +202,7 @@ struct Presets presets[] = {
         .light_new_frame    = &lights_flash_new_frame,
         .light_gen_data     = &lights_flash_gen_data,
         .light_beat_start   = &lights_flash_beat_start,
-        .light_beat_stop    = &lights_flash_beat_stop,
+        .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &colour_cycle_new_frame,
         .colour_gen_data    = &colour_cycle_gen_data,
         .colour_beat_start  = &do_nothing,
@@ -214,17 +214,17 @@ struct Presets presets[] = {
         .light_gen_data     = &lights_strobe_gen_data,
         .light_beat_start   = &lights_strobe_beat_start,
         .light_beat_stop    = &lights_strobe_beat_stop,
-        .colour_new_frame   = &colour_white_new_frame,
+        .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_white_gen_data,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
     {
         /* SINGLE_FLOW */
-        .light_new_frame    = &lights_single_flow_new_frame,
+        .light_new_frame    = &do_nothing,
         .light_gen_data     = &lights_single_flow_gen_data,
         .light_beat_start   = &lights_single_flow_beat_start,
-        .light_beat_stop    = &lights_single_flow_beat_stop,
+        .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &colour_flowing_hue_new_frame,
         .colour_gen_data    = &colour_flowing_hue_gen_data,
         .colour_beat_start  = &do_nothing,
@@ -236,7 +236,7 @@ struct Presets presets[] = {
         .light_gen_data     = &lights_led_on_gen_data,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,
-        .colour_new_frame   = &colour_cycle_beats_new_frame,
+        .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_cycle_beats_gen_data,
         .colour_beat_start  = &colour_cycle_beats_beat_start,
         .colour_beat_stop   = &do_nothing,
@@ -268,7 +268,7 @@ struct Presets presets[] = {
         .light_new_frame    = &lights_flash_new_frame,
         .light_gen_data     = &lights_flash_gen_data,
         .light_beat_start   = &lights_flash_beat_start,
-        .light_beat_stop    = &lights_flash_beat_stop,
+        .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &colour_radial_hue_new_frame,
         .colour_gen_data    = &colour_radial_hue_gen_data,
         .colour_beat_start  = &colour_radial_hue_beat_start,
@@ -290,7 +290,6 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
 
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
-        //buffer[i] |= 0xe0;
         buffer[i] = 0xe0 | ((buffer[i] & 0x0F) >> 3);
     }
 

@@ -16,6 +16,7 @@ void colour_cycle_new_frame (void) {
 }
 
 void colour_cycle_gen_data(struct colours *buffer, uint16_t buffer_index) {
+    UNUSED(buffer_index);
     get_colour(buffer, hue, 0xff);
 }
 

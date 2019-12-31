@@ -24,7 +24,7 @@
 
 //#include "i2s.h"
 #include "beat_detection.h"
-#include "cpu_load_calc.h"
+#include "pattern_generate.h"
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim2;
@@ -377,38 +377,24 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             HAL_TIM_Base_Stop_IT(&htim7);
             HAL_NVIC_EnableIRQ(BTN_1_EXTI_IRQn);
             HAL_NVIC_EnableIRQ(BTN_2_EXTI_IRQn);
-            //HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
-    } else if (htim->Instance == TIM15) {
 
+    } else if (htim->Instance == TIM15) {
         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
-        //set_pwm_duty_cycle(adc_get_value());//(WINDOWSIZE/32) ;
-        //calc_power(adc_get_value());//(WINDOWSIZE/32) ;
-        //start_adc();
-        //set_pwm_duty_cycle((duty_cycle));
-        //HAL_ADC_Start(&hadc1);
+
     } else if (htim->Instance == TIM14) {
         beat_start();
+
     } else if (htim->Instance == TIM16) {
         active_cnt += 1 << 16;
+
     } else if (htim->Instance == TIM17) {
         idle_cnt += 1 << 16;
+
     } else {
         idle_cnt += 1;
+
     }
 }
-
-/*void set_pwm_duty_cycle(uint16_t level) {
-    TIM_OC_InitTypeDef sConfigOC = {0};
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = level;
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
-    {
-      Error_Handler();
-    }
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-}*/
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
