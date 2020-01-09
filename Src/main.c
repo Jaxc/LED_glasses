@@ -102,13 +102,22 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
+  /* Freeze all timers when code is paused during debug*/
+  __HAL_DBGMCU_FREEZE_TIM2();
+  __HAL_DBGMCU_FREEZE_TIM3();
+  __HAL_DBGMCU_FREEZE_TIM6();
+  __HAL_DBGMCU_FREEZE_TIM7();
+  __HAL_DBGMCU_FREEZE_TIM14();
+  __HAL_DBGMCU_FREEZE_TIM15();
+
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  //DBG_TypeDef *DGB_test;
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -127,6 +136,8 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -137,12 +148,18 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_Base_Start(&htim3);
+
+  uint32_t i = 0;
 
   while (1)
   {
+    i++;
     /* USER CODE END WHILE */
-      HAL_TIM_Base_Start(&htim3);
+
     /* USER CODE BEGIN 3 */
+    HAL_TIM_Base_Start(&htim3);
+    htim3.Instance->EGR |= 0x01;
   }
   /* USER CODE END 3 */
 }

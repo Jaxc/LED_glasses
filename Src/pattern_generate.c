@@ -13,7 +13,7 @@
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
-pattern current_effect = test_11;
+pattern current_effect = test_2;
 #else
 pattern current_effect = HYPNOSIS;
 #endif

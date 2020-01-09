@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -79,7 +79,7 @@ void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 10;
+  htim3.Init.Period = 5000;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -371,6 +371,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         HAL_TIM_Base_Stop(&htim2);
         uint32_t idle_time = htim2.Instance->CNT;
         htim2.Instance->CNT = 0;
+        htim2.Instance->EGR |= 0x01;
         HAL_TIM_Base_Start(&htim2);
 
     } else if (htim->Instance == TIM7) {
@@ -385,6 +386,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         beat_start();
 
     } else if (htim->Instance == TIM16) {
+        active_cnt += 1 << 16;
+
+    } else if (htim->Instance == TIM3) {
         active_cnt += 1 << 16;
 
     } else if (htim->Instance == TIM17) {
