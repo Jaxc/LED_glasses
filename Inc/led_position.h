@@ -8,7 +8,6 @@
 #ifndef INC_LED_POSITION_H_
 #define INC_LED_POSITION_H_
 
-#include "main.h"
 #include "pattern_generate.h"
 
 #define N_ROWS 7

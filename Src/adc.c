@@ -152,6 +152,10 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 /* USER CODE BEGIN 1 */
 uint32_t audio_in[2][ADC_WINDOW_SIZE] = {0};
 uint32_t power = 0;
+
+/*#define debug_buffer_size 1000
+uint32_t buffer_cnt = 0;
+uint32_t super_power_buffer[debug_buffer_size] = {0};*/
 void adc_start_sampling(void) {
 
     HAL_ADC_Start_DMA(&hadc1, audio_in[active_adc_buffer], ADC_WINDOW_SIZE);
@@ -170,6 +174,14 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
             audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
             power += audio_processed[i] >> 8;
         }
+
+        /*if (buffer_cnt < debug_buffer_size){
+            super_power_buffer[buffer_cnt] = power;
+            buffer_cnt++;
+        } else {
+            buffer_cnt++;
+        }*/
+        calculate_max(&power);
 
         tx_led_buffer();
 

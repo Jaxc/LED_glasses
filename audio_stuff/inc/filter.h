@@ -1,5 +1,5 @@
 /******************************* SOURCE LICENSE *********************************
-Copyright (c) 2018 MicroModeler.
+Copyright (c) 2019 MicroModeler.
 
 A non-exclusive, nontransferable, perpetual, royalty-free license is granted to the Licensee to
 use the following Information for academic, non-profit, or government-sponsored research purposes.
@@ -52,6 +52,6 @@ typedef struct
 #define filter1_inputFromFloat( input )  \
     ((short)(32768f * (input)))
 
- void filter1_filterBiquad_14_14( filter1_executionState * pExecState );
+ void filter1_filterBiquad_3_14_15( filter1_executionState * pExecState );
 #endif // FILTER1_H_
 

@@ -102,13 +102,8 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  /* Freeze all timers when code is paused during debug*/
-  __HAL_DBGMCU_FREEZE_TIM2();
-  __HAL_DBGMCU_FREEZE_TIM3();
-  __HAL_DBGMCU_FREEZE_TIM6();
-  __HAL_DBGMCU_FREEZE_TIM7();
-  __HAL_DBGMCU_FREEZE_TIM14();
-  __HAL_DBGMCU_FREEZE_TIM15();
+
+
 
 
   /* USER CODE END Init */
@@ -117,7 +112,19 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  //DBG_TypeDef *DGB_test;
+
+  /* Freeze all timers when code is paused during debug*/
+  __HAL_RCC_DBGMCU_CLK_ENABLE();
+  __HAL_DBGMCU_FREEZE_TIM1();
+  __HAL_DBGMCU_FREEZE_TIM2();
+  __HAL_DBGMCU_FREEZE_TIM3();
+  __HAL_DBGMCU_FREEZE_TIM6();
+  __HAL_DBGMCU_FREEZE_TIM7();
+  __HAL_DBGMCU_FREEZE_TIM14();
+  __HAL_DBGMCU_FREEZE_TIM15();
+  __HAL_DBGMCU_FREEZE_TIM16();
+  __HAL_DBGMCU_FREEZE_TIM17();
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -158,8 +165,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_TIM_Base_Start(&htim3);
-    htim3.Instance->EGR |= 0x01;
+//    HAL_TIM_OC_Start(&htim3,TIM_TRGO_OC1REF);
+//    htim3.Instance->EGR |= 0x01;
   }
   /* USER CODE END 3 */
 }

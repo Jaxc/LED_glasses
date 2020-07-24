@@ -6,6 +6,7 @@
  */
 #include "main.h"
 #include "colours.h"
+#include "led_position.h"
 
 uint32_t flow_hue = 0;
 
@@ -14,5 +15,10 @@ void colour_flowing_hue_new_frame (void) {
 }
 
 void colour_flowing_hue_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (flow_hue + (buffer_index << 7)) % 1024, 0xff);
+    if(led_pos_eye(buffer_index)){
+        get_colour(buffer, (flow_hue - (((16 - led_pos_cart_x[buffer_index]) - led_pos_cart_y[buffer_index] ) << 7)) % 1024, 0xff);
+    } else {
+        get_colour(buffer, (flow_hue + ((led_pos_cart_x[buffer_index] + led_pos_cart_y[buffer_index]) << 7)) % 1024, 0xff);
+    }
+
 }

@@ -9,8 +9,9 @@
 
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
-
+#ifndef N_LEDS
 #define N_LEDS 86
+#endif
 #define FRAME_SIZE 12 + (N_LEDS * 4)
 
 void tx_led_buffer(void);
@@ -44,11 +45,9 @@ typedef enum patterns {
 typedef enum patterns {
     LED_OFF,
     HYPNOSIS,
-    FLASH_WHITE,
     CYCLE_COLOURS,
     FLASH_COLOURS,
     STROBE,
-    SINGLE_FLOW,
     CYCLE_COLOURS_BEATS,
     FLOWING_HUE,
     RANDOM_OFFSET_HUE,
@@ -127,6 +126,10 @@ void lights_strobe_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void lights_strobe_beat_start (void);
 void lights_strobe_beat_stop (void);
 
+void rain_new_frame (void);
+void rain_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void rain_beat_start (void);
+
 /* Colour */
 void colour_cycle_new_frame (void);
 void colour_cycle_gen_data (struct colours *buffer, uint16_t buffer_index);
@@ -144,14 +147,16 @@ void colour_cycle_beats_beat_start(void);
 void colour_flowing_hue_new_frame(void);
 void colour_flowing_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
 
-void colour_random_offset_hue_new_frame(void);
 void colour_random_offset_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
+void colour_random_offset_hue_beat_start(void);
 
 void colour_radial_hue_new_frame (void);
 void colour_radial_hue_gen_data(struct colours *buffer, uint16_t buffer_index);
 void colour_radial_hue_beat_start(void);
 
 void colour_hypnosis_new_frame (void) ;
-void colour_hypnosis_gen_data(struct colours *buffer, uint16_t buffer_index) ;
+void colour_hypnosis_gen_data(struct colours *buffer, uint16_t buffer_index);
+
+void green_gen_data (struct colours *buffer, uint16_t buffer_index);
 
 #endif /* INC_PATTERN_GENERATE_H_ */

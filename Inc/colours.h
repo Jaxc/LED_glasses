@@ -8,7 +8,7 @@
 #ifndef INC_COLOURS_H_
 #define INC_COLOURS_H_
 
-#include "main.h"
+#include <stdint.h>
 
 struct colours {
     uint8_t red;

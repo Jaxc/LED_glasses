@@ -29,24 +29,25 @@ int16_t filter_coefficients[10] =
     executionState.pState = filter_state.state;
     executionState.pCoefficients = filter_coefficients;    // Each call to filterBiquad() will advance pState and pCoefficients to the next biquad
 
-    filter1_filterBiquad_14_14( &executionState );      // Run biquad #0
-    executionState.pInput = executionState.pOutput;         // The remaining biquads will now re-use the same output buffer.
+     // The 1st call to filter1_filterBiquad() reads from the caller supplied input buffer and writes to the output buffer.
+     // The remaining calls to filterBiquad() recycle the same output buffer, so that multiple intermediate buffers are not required.
 
-    filter1_filterBiquad_14_14( &executionState );      // Run biquad #1
+     filter1_filterBiquad_3_14_15( &executionState );        // Run biquad #0
+     executionState.pInput = executionState.pOutput;         // The remaining biquads will now re-use the same output buffer.
 
-    return count;       // Return the number of samples processed, the same as the number of input samples
+     filter1_filterBiquad_3_14_15( &executionState );        // Run biquad #1
 
-}
+     // At this point, the caller-supplied output buffer will contain the filtered samples and the input buffer will contain the unmodified input samples.
+     return count;       // Return the number of samples processed, the same as the number of input samples
 
- void filter1_filterBiquad_14_14( filter1_executionState * pExecState )
+ }
+
+  void filter1_filterBiquad_3_14_15( filter1_executionState * pExecState )
  {
-
      // Read state variables
-     short x0;
-     short x1 = pExecState->pState[0];
-     short x2 = pExecState->pState[1];
-     short y1 = pExecState->pState[2];
-     short y2 = pExecState->pState[3];
+     short w0, x0;
+     short w1 = pExecState->pState[0];
+     short w2 = pExecState->pState[1];
 
      // Read coefficients into work registers
      short b0 = *(pExecState->pCoefficients++);
@@ -59,32 +60,36 @@ int16_t filter_coefficients[10] =
      short *pInput  = pExecState->pInput;
      short *pOutput = pExecState->pOutput;
      short count = pExecState->count;
-     long long accumulator;
+     long accumulator;
 
+     // Loop for all samples in the input buffer
      while( count-- )
      {
+         // Read input sample
          x0 = *(pInput++);
 
-         accumulator  = (long long)x2 * b2;
-         accumulator += (long long)x1 * b1;
-         accumulator += (long long)x0 * b0;
+         // Run feedback part of filter
+         accumulator  = (long)w2 * a2;
+         accumulator += (long)w1 * a1;
+         accumulator += (long)x0  << 3;
 
-         x2 = x1;        // Shuffle left history buffer
-         x1 = x0;
+         w0 = accumulator  >> 14;
 
-         accumulator += (long long)y2 * a2;
-         accumulator += (long long)y1 * a1;
+         // Run feedforward part of filter
+         accumulator  = (long)w0 * b0;
+         accumulator += (long)w1 * b1;
+         accumulator += (long)w2 * b2;
 
-         y2 = y1;        // Shuffle right history buffer
-         y1 = accumulator  >> 14;
+         w2 = w1;        // Shuffle history buffer
+         w1 = w0;
 
-         *(pOutput++) = accumulator  >> 14;
+         // Write output
+         *(pOutput++) = accumulator  >> 15;
      }
 
-     *(pExecState->pState++) = x1;
-     *(pExecState->pState++) = x2;
-     *(pExecState->pState++) = y1;
-     *(pExecState->pState++) = y2;
+     // Write state variables
+     *(pExecState->pState++) = w1;
+     *(pExecState->pState++) = w2;
 
 
  }

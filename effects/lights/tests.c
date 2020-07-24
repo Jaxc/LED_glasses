@@ -4,9 +4,8 @@
  *  Created on: Dec 28, 2019
  *      Author: jaxc
  */
-#include "main.h"
+#include "stdint.h"
 #include "led_position.h"
-#include "adc.h"
 
 uint32_t pattern_counter;
 uint8_t white_level;
@@ -178,7 +177,7 @@ uint16_t vu_power = 0;
 void test_11_new_frame (void) {
     current_power = get_audio_power();
 
-    vu_power = current_power >> 20;
+    vu_power = (current_power >> 28);
 
 }
 

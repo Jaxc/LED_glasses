@@ -4,16 +4,14 @@
  *  Created on: Feb 16, 2019
  *      Author: jaxc
  */
-#include "main.h"
+
 #include "pattern_generate.h"
 #include "spi.h"
-
-#include "colours.h"
 
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
-pattern current_effect = test_2;
+pattern current_effect = test_11;
 #else
 pattern current_effect = HYPNOSIS;
 #endif
@@ -176,17 +174,6 @@ struct Presets presets[] = {
         .colour_beat_stop   = &do_nothing,
     },
     {
-        /* FLASH_WHITE */
-        .light_new_frame    = &lights_flash_new_frame,
-        .light_gen_data     = &lights_flash_gen_data,
-        .light_beat_start   = &lights_flash_beat_start,
-        .light_beat_stop    = &do_nothing,
-        .colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
-        .colour_beat_start  = &do_nothing,
-        .colour_beat_stop   = &do_nothing,
-    },
-    {
         /* CYCLE_COLOURS */
         .light_new_frame    = &do_nothing,
         .light_gen_data     = &lights_led_on_gen_data,
@@ -220,17 +207,6 @@ struct Presets presets[] = {
         .colour_beat_stop   = &do_nothing,
     },
     {
-        /* SINGLE_FLOW */
-        .light_new_frame    = &do_nothing,
-        .light_gen_data     = &lights_single_flow_gen_data,
-        .light_beat_start   = &lights_single_flow_beat_start,
-        .light_beat_stop    = &do_nothing,
-        .colour_new_frame   = &colour_flowing_hue_new_frame,
-        .colour_gen_data    = &colour_flowing_hue_gen_data,
-        .colour_beat_start  = &do_nothing,
-        .colour_beat_stop   = &do_nothing,
-    },
-    {
         /* CYCLE_COLOURS_BEATS */
         .light_new_frame    = &do_nothing,
         .light_gen_data     = &lights_led_on_gen_data,
@@ -258,9 +234,9 @@ struct Presets presets[] = {
         .light_gen_data     = &lights_led_on_gen_data,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,
-        .colour_new_frame   = &colour_random_offset_hue_new_frame,
+        .colour_new_frame   = &do_nothing,
         .colour_gen_data    = &colour_random_offset_hue_gen_data,
-        .colour_beat_start  = &do_nothing,
+        .colour_beat_start  = &colour_random_offset_hue_beat_start,
         .colour_beat_stop   = &do_nothing,
     },
     {
@@ -272,6 +248,17 @@ struct Presets presets[] = {
         .colour_new_frame   = &colour_radial_hue_new_frame,
         .colour_gen_data    = &colour_radial_hue_gen_data,
         .colour_beat_start  = &colour_radial_hue_beat_start,
+        .colour_beat_stop   = &do_nothing,
+    },
+    {
+        /* MATRIX*/
+        .light_new_frame    = &rain_new_frame,
+        .light_gen_data     = &rain_gen_data,
+        .light_beat_start   = &rain_beat_start,
+        .light_beat_stop    = &do_nothing,
+        .colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &green_gen_data,
+        .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
 #endif
