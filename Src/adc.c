@@ -51,11 +51,11 @@ void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_12CYCLES_5;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
   hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
-  hadc1.Init.OversamplingMode = ENABLE;
-  hadc1.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_16;
-  hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_NONE;
+  hadc1.Init.OversamplingMode = ENABLE ;
+  hadc1.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_2;
+  hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_1;
   hadc1.Init.Oversampling.TriggeredMode = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -71,7 +71,6 @@ void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-
 }
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
@@ -153,9 +152,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 uint32_t audio_in[2][ADC_WINDOW_SIZE] = {0};
 uint32_t power = 0;
 
-/*#define debug_buffer_size 1000
+#define debug_buffer_size ADC_WINDOW_SIZE * 7
 uint32_t buffer_cnt = 0;
-uint32_t super_power_buffer[debug_buffer_size] = {0};*/
+uint16_t super_power_buffer[debug_buffer_size] = {0};
 void adc_start_sampling(void) {
 
     HAL_ADC_Start_DMA(&hadc1, audio_in[active_adc_buffer], ADC_WINDOW_SIZE);
@@ -168,19 +167,27 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
         adc_start_sampling();
         int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
         power = 0;
+        int32_t bipolar_audio;
+
 
         for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
-            int32_t bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
+            bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
             audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
             power += audio_processed[i] >> 8;
+
+            if (buffer_cnt < debug_buffer_size){
+                super_power_buffer[buffer_cnt + i] =  bipolar_audio;
+            }
+
         }
 
-        /*if (buffer_cnt < debug_buffer_size){
-            super_power_buffer[buffer_cnt] = power;
-            buffer_cnt++;
+        if (buffer_cnt < debug_buffer_size){
+
+            buffer_cnt += ADC_WINDOW_SIZE;
         } else {
-            buffer_cnt++;
-        }*/
+            buffer_cnt = debug_buffer_size + 1;
+        }
+
         calculate_max(&power);
 
         tx_led_buffer();

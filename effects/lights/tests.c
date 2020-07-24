@@ -7,6 +7,8 @@
 #include "stdint.h"
 #include "led_position.h"
 
+#define UNUSED(X) (void)X
+
 uint32_t pattern_counter;
 uint8_t white_level;
 

@@ -52,6 +52,7 @@ typedef enum patterns {
     FLOWING_HUE,
     RANDOM_OFFSET_HUE,
     RADIAL_HUE,
+    MATRIX,
     N_EFFECTS
 } pattern;
 

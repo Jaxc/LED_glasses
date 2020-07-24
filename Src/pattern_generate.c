@@ -8,12 +8,15 @@
 #include "pattern_generate.h"
 #include "spi.h"
 
+#define GLOBAL_POWER_RANGE_REDUCTION 1
+#define COLOUR_POWER_RANGE_REDUCTION 2
+
 uint8_t spi_buffer[2][FRAME_SIZE];
 uint8_t active_buffer = 0;
 #ifdef COMPILE_TESTS
 pattern current_effect = test_11;
 #else
-pattern current_effect = HYPNOSIS;
+pattern current_effect = MATRIX;
 #endif
 
 struct Presets presets[] = {
@@ -257,8 +260,8 @@ struct Presets presets[] = {
         .light_beat_start   = &rain_beat_start,
         .light_beat_stop    = &do_nothing,
         .colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &green_gen_data,
-        .colour_beat_start  = &do_nothing,
+        .colour_gen_data    = &colour_cycle_beats_gen_data,
+        .colour_beat_start  = &colour_cycle_beats_beat_start,
         .colour_beat_stop   = &do_nothing,
     },
 #endif
@@ -277,7 +280,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
 
     for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
-        buffer[i] = 0xe0 | ((buffer[i] & 0x0F) >> 3);
+        buffer[i] = 0xe0 | ((buffer[i] & 0x1F));
     }
 
     buffer[i]   = 0xff;
@@ -307,10 +310,10 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     presets[current_effect].light_gen_data(&buffer[0], current_led);
     struct colours colour = {0};
     presets[current_effect].colour_gen_data(&colour, current_led);
-    buffer[0] &= 0x1F;
-    buffer[1] = colour.blue;
-    buffer[2] = colour.green;
-    buffer[3] = colour.red;
+    buffer[0] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
+    buffer[1] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
+    buffer[2] = colour.green >> COLOUR_POWER_RANGE_REDUCTION;
+    buffer[3] = colour.red >> COLOUR_POWER_RANGE_REDUCTION;
 }
 
 void beat_start(void) {
