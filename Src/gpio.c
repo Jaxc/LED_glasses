@@ -22,6 +22,7 @@
 /* USER CODE BEGIN 0 */
 #include "tim.h"
 #include "pattern_generate.h"
+#include "debounce_settings.h"
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -66,35 +67,44 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BTN_2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(BTN_2_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = BTN_1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(BTN_1_GPIO_Port, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 2 */
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin) {
+    if (GPIO_Pin == BTN_1_Pin) {
+        if((LONG_PRESS_TIME > __HAL_TIM_GET_COUNTER(&htim7)) && (DEBOUNCE_TIME < __HAL_TIM_GET_COUNTER(&htim7))){
+            cycle_effects();
+        }
+    } else if (GPIO_Pin == BTN_2_Pin) {
+        if((LONG_PRESS_TIME > __HAL_TIM_GET_COUNTER(&htim6)) && (DEBOUNCE_TIME < __HAL_TIM_GET_COUNTER(&htim6))){
+            current_bpm = (current_bpm + 1) % len_bpm;
+            __HAL_TIM_SET_AUTORELOAD(&htim14, bpm_settings[current_bpm] - 1);
+        }
+    }
+}
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin) {
 
     if (GPIO_Pin == BTN_1_Pin) {
-        if (GPIO_PIN_RESET == HAL_GPIO_ReadPin(BTN_1_GPIO_Port, BTN_1_Pin)) {
-            HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
-            HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
-            HAL_TIM_Base_Start_IT(&htim7);
-            cycle_effects();
-        }
+        HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
+        __HAL_TIM_SET_AUTORELOAD(&htim7, DEBOUNCE_TIME);
+        __HAL_TIM_SET_COUNTER(&htim7, 0);
+        HAL_TIM_Base_Start_IT(&htim7);
 
     } else if (GPIO_Pin == BTN_2_Pin) {
-        HAL_NVIC_DisableIRQ(BTN_1_EXTI_IRQn);
         HAL_NVIC_DisableIRQ(BTN_2_EXTI_IRQn);
-        HAL_TIM_Base_Start_IT(&htim7);
-        current_bpm = (current_bpm + 1) % len_bpm;
-        __HAL_TIM_SET_AUTORELOAD(&htim14, bpm_settings[current_bpm] - 1);
+        __HAL_TIM_SET_AUTORELOAD(&htim6, DEBOUNCE_TIME);
+        __HAL_TIM_SET_COUNTER(&htim6, 0);
+        HAL_TIM_Base_Start_IT(&htim6);
     }
 }
 /* USER CODE END 2 */

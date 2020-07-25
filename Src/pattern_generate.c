@@ -259,9 +259,9 @@ struct Presets presets[] = {
         .light_gen_data     = &rain_gen_data,
         .light_beat_start   = &rain_beat_start,
         .light_beat_stop    = &do_nothing,
-        .colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_cycle_beats_gen_data,
-        .colour_beat_start  = &colour_cycle_beats_beat_start,
+        .colour_new_frame   = &colour_cycle_new_frame,
+        .colour_gen_data    = &colour_cycle_gen_data,
+        .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,
     },
 #endif
@@ -307,8 +307,9 @@ void cycle_effects (void) {
 }
 
 void get_current_led(uint8_t buffer[4], uint16_t current_led) {
-    presets[current_effect].light_gen_data(&buffer[0], current_led);
     struct colours colour = {0};
+
+    presets[current_effect].light_gen_data(&buffer[0], current_led);
     presets[current_effect].colour_gen_data(&colour, current_led);
     buffer[0] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
     buffer[1] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
