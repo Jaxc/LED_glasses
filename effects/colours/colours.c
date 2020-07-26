@@ -7,7 +7,7 @@
 
 
 /* Inspiration take from http://www.vagrearg.org/content/hsvrgb */
-#include "colours.h"
+#include "../../Inc/colours_palette.h"
 
 
 void get_colour (struct colours *colours_out, uint32_t hue, uint32_t saturation) {

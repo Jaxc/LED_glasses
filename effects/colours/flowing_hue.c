@@ -4,8 +4,8 @@
  *  Created on: Mar 10, 2019
  *  Author: jaxc
  */
+#include "../../Inc/colours_palette.h"
 #include "main.h"
-#include "colours.h"
 #include "led_position.h"
 
 uint32_t flow_hue = 0;

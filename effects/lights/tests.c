@@ -5,6 +5,7 @@
  *      Author: jaxc
  */
 #include "stdint.h"
+#include "adc.h"
 #include "led_position.h"
 
 #define UNUSED(X) (void)X

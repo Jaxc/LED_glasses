@@ -7,8 +7,8 @@
 
 
 
+#include "../../Inc/colours_palette.h"
 #include "main.h"
-#include "colours.h"
 #include "pattern_generate.h"
 
 uint32_t random_hue[N_LEDS] = {0};

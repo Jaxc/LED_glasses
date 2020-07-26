@@ -5,8 +5,8 @@
  *      Author: jaxc
  */
 
-#ifndef INC_COLOURS_H_
-#define INC_COLOURS_H_
+#ifndef INC_COLOURS_PALETTE_H_
+#define INC_COLOURS_PALETTE_H_
 
 #include <stdint.h>
 
@@ -18,4 +18,6 @@ struct colours {
 
 void get_colour (struct colours *colours_out, uint32_t hue, uint32_t saturation);
 
-#endif /* INC_COLOURS_H_ */
+
+
+#endif /* INC_COLOURS_PALETTE_H_ */

@@ -5,8 +5,8 @@
  *      Author: jaxc
  */
 
+#include "../../Inc/colours_palette.h"
 #include "main.h"
-#include "colours.h"
 
 uint16_t hue_beats = 0;
 

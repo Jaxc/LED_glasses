@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "colours.h"
+#include "../../Inc/colours_palette.h"
 #include "led_position.h"
 
 uint32_t radial_flow_hue = 0;

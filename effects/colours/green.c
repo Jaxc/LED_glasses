@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "colours.h"
+#include "../../Inc/colours_palette.h"
 
 
 void green_gen_data(struct colours *buffer, uint16_t buffer_index) {
