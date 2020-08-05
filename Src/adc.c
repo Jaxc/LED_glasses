@@ -22,6 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "pattern_generate.h"
+#include "process_data.h"
 
 uint8_t active_adc_buffer = 0;
 /* USER CODE END 0 */
@@ -111,7 +112,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc1);
 
     /* ADC1 interrupt Init */
-    HAL_NVIC_SetPriority(ADC1_COMP_IRQn, 2, 0);
+    HAL_NVIC_SetPriority(ADC1_COMP_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(ADC1_COMP_IRQn);
   /* USER CODE BEGIN ADC1_MspInit 1 */
 
@@ -148,9 +149,10 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 uint32_t audio_in[2][ADC_WINDOW_SIZE] = {0};
+
 uint32_t power = 0;
 
-#define debug_buffer_size ADC_WINDOW_SIZE * 7
+#define debug_buffer_size ADC_WINDOW_SIZE * 4
 uint32_t buffer_cnt = 0;
 uint16_t super_power_buffer[debug_buffer_size] = {0};
 void adc_start_sampling(void) {
@@ -161,41 +163,43 @@ void adc_start_sampling(void) {
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
     if (ADC1 == hadc->Instance) {
+
         active_adc_buffer = !active_adc_buffer;
         adc_start_sampling();
-        int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
-        power = 0;
-        int32_t bipolar_audio;
+        start_process_data();
 
-
-        for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
-            bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
-            audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
-            power += audio_processed[i] >> 8;
-
-            if (buffer_cnt < debug_buffer_size){
-                super_power_buffer[buffer_cnt + i] =  bipolar_audio;
-            }
-
-        }
-
-        if (buffer_cnt < debug_buffer_size){
-
-            buffer_cnt += ADC_WINDOW_SIZE;
-        } else {
-            buffer_cnt = debug_buffer_size + 1;
-        }
-
-        calculate_max(&power);
-
-        tx_led_buffer();
-
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     }
 }
 
 uint32_t get_audio_power(void) {
     return power;
+}
+
+uint32_t process_audio(void) {
+    int32_t audio_processed[ADC_WINDOW_SIZE] = {0};
+    power = 0;
+    int32_t bipolar_audio;
+
+
+    for ( uint16_t i = 0; i < ADC_WINDOW_SIZE; i++) {
+        bipolar_audio = ((int32_t)audio_in[!active_adc_buffer][i] - 0x0800);
+        audio_processed[i] = (uint32_t)(bipolar_audio * bipolar_audio);
+        power += audio_processed[i] >> 8;
+
+        if (buffer_cnt < debug_buffer_size){
+            super_power_buffer[buffer_cnt + i] =  bipolar_audio;
+        }
+
+    }
+
+    if (buffer_cnt < debug_buffer_size){
+
+        buffer_cnt += ADC_WINDOW_SIZE;
+    } else {
+        buffer_cnt = debug_buffer_size + 1;
+    }
+
+    calculate_max(&power);
 }
 /* USER CODE END 1 */
 

@@ -10,7 +10,7 @@
 #include "colour.h"
 #include "lights.h"
 
-#define GLOBAL_POWER_RANGE_REDUCTION 1
+#define GLOBAL_POWER_RANGE_REDUCTION 2
 #define COLOUR_POWER_RANGE_REDUCTION 2
 
 uint8_t spi_buffer[2][FRAME_SIZE];

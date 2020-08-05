@@ -1,0 +1,30 @@
+
+
+Breakpoint=1944941271: 84: 0, State=BP_STATE_DISABLED
+Breakpoint=855008434: 406: 0, State=BP_STATE_DISABLED
+OpenDocument="stm32g0xx_it.c", FilePath="/home/jaxc/workspace/Glasses/Src/stm32g0xx_it.c", Line=0
+OpenDocument="tim.c", FilePath="/home/jaxc/workspace/Glasses/Src/tim.c", Line=365
+OpenDocument="gpio.c", FilePath="/home/jaxc/workspace/Glasses/Src/gpio.c", Line=62
+OpenDocument="stm32g0xx_hal_gpio.c", FilePath="/home/jaxc/workspace/Glasses/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.c", Line=417
+OpenDocument="main.c", FilePath="/home/jaxc/workspace/Glasses/Src/main.c", Line=77
+OpenDocument="stm32g0xx_hal_adc_ex.c", FilePath="/home/jaxc/workspace/Glasses/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c", Line=267
+OpenDocument="startup_stm32g071xx.s", FilePath="/home/jaxc/workspace/Glasses/startup_stm32g071xx.s", Line=38
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=1, w=399, h=179, FilterBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=4, w=399, h=92, FilterBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=2, w=399, h=93, FilterBarShown=0, ToolBarShown=0, ExecCountersShown=0, InstEncodingsShown=0
+OpenWindow="Source", x=0, y=0, w=0, h=0, FilterBarShown=0, ToolBarShown=0, ExecCountersShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=956, h=168, FilterBarShown=0, ToolBarShown=0, EditorAddress=0x7FFFFFA0
+OpenWindow="Global Data", DockArea=RIGHT, x=0, y=3, w=399, h=181, FilterBarShown=1, ToolBarShown=0
+OpenWindow="Local Data", DockArea=RIGHT, x=0, y=0, w=399, h=200, FilterBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data", DockArea=BOTTOM, x=1, y=0, w=956, h=168, FilterBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=207, h=769, FilterBarShown=1, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=958, h=185, FilterBarShown=0, ToolBarShown=0
+TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[178;55;70;48;51;140]
+TableHeader="Watched Data", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[147;42;77;690]
+TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[126;55;77;48;56;98]
+TableHeader="Call Stack", SortCol="Function", SortOrder="ASCENDING", VisibleCols=["Function";"Stack Frame";"Source";"PC";"Return Address";"Stack Used"], ColWidths=[357;112;189;77;168;73]
+TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[139;105;259]
+TableHeader="RegisterSelectionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Auto";"Name";"Address";"Description"], ColWidths=[27;27;27;27]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[273;77;49;57;203]

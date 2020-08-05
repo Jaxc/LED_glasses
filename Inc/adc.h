@@ -41,6 +41,9 @@ void MX_ADC1_Init(void);
 /* USER CODE BEGIN Prototypes */
 void adc_start_sampling(void);
 uint32_t get_audio_power(void);
+uint32_t process_audio(void);
+
+extern uint32_t audio_in[2][ADC_WINDOW_SIZE];
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -47,7 +47,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "process_data.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -133,9 +133,8 @@ int main(void)
   MX_TIM14_Init();
   MX_ADC1_Init();
   MX_TIM15_Init();
-  MX_TIM3_Init();
-  MX_TIM16_Init();
   MX_TIM6_Init();
+  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
@@ -151,13 +150,10 @@ int main(void)
   adc_start_sampling();
   HAL_TIM_Base_Start_IT(&htim15);
   HAL_TIM_Base_Start_IT(&htim14);
-  HAL_TIM_Base_Start(&htim3);
-
-  uint32_t i = 0;
 
   while (1)
   {
-    i++;
+      process_data();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -229,13 +225,13 @@ void SystemClock_Config(void)
 static void MX_NVIC_Init(void)
 {
   /* EXTI2_3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
   /* EXTI4_15_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
   /* TIM7_LPTIM2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM7_LPTIM2_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(TIM7_LPTIM2_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(TIM7_LPTIM2_IRQn);
 }
 
@@ -250,6 +246,7 @@ static void MX_NVIC_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+    __BKPT();
   /* User can add his own implementation to report the HAL error return state */
     while (1);
   /* USER CODE END Error_Handler_Debug */
