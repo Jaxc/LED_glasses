@@ -7,8 +7,6 @@
 
 #include "main.h"
 
-uint32_t pattern_counter;
-uint8_t white_level;
 uint8_t strobe_active = 0;
 
 void lights_strobe_new_frame (void) {
