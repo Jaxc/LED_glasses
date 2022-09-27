@@ -7,7 +7,7 @@
 
 
 
-#include "../../Inc/colours_palette.h"
+#include "colours_palette.h"
 #include "main.h"
 #include "pattern_generate.h"
 

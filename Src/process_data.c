@@ -22,17 +22,16 @@ void process_data(void) {
         uint32_t audio_time = 0;
         uint32_t led_time = 0;
 
-        HAL_TIM_Base_Start(&htim2);
         process_state = PROCESS_ACTIVE;
-
-        __HAL_TIM_SET_COUNTER(&htim2, 0);
+        start_timing();
+#ifdef USE_ADC
         process_audio();
-        audio_time = __HAL_TIM_GET_COUNTER(&htim2);
+#endif
+        audio_time = get_ellapsed_time();
         tx_led_buffer();
-        led_time = __HAL_TIM_GET_COUNTER(&htim2) - audio_time;
+        led_time = get_ellapsed_time() - audio_time;
 
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-        HAL_TIM_Base_Stop(&htim2);
+        stop_timing();
         process_state = PROCESS_IDLE;
     } else if (PROCESS_ACTIVE == process_state) {
         /* This should never happen */

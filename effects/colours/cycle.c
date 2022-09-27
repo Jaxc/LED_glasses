@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "../../Inc/colours_palette.h"
+#include "colours_palette.h"
 #include "main.h"
 
 uint16_t hue = 0;

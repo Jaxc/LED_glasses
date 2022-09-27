@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "../../Inc/colours_palette.h"
+#include "colours_palette.h"
 #include "main.h"
 
 void colour_white_gen_data(struct colours *buffer, uint16_t buffer_index) {

@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "../../Inc/colours_palette.h"
+#include "colours_palette.h"
 #include "led_position.h"
 
 uint32_t hypnosis_flow_hue = 0;

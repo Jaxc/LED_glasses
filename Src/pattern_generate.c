@@ -6,7 +6,6 @@
  */
 
 #include "pattern_generate.h"
-#include "spi.h"
 #include "colour.h"
 #include "lights.h"
 
@@ -231,7 +230,7 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
 }
 
 void tx_led_buffer(void) {
-    HAL_SPI_Transmit_DMA(&hspi2, spi_buffer[active_buffer], FRAME_SIZE);
+    //HAL_SPI_Transmit_DMA(&hspi2, spi_buffer[active_buffer], FRAME_SIZE);
     active_buffer = !active_buffer;
     create_payload(spi_buffer[active_buffer]);
 }

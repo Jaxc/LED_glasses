@@ -88,4 +88,11 @@ static inline void do_nothing(void) {
     return;
 }
 
+
+void start_timing(void);
+
+uint32_t get_ellapsed_time(void);
+
+void stop_timing(void);
+
 #endif /* INC_PATTERN_GENERATE_H_ */

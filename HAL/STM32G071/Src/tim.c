@@ -347,6 +347,22 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
     }
 }
+
+
+void start_timing(void) {
+  HAL_TIM_Base_Start(&htim2);
+  __HAL_TIM_SET_COUNTER(&htim2, 0);
+}
+
+uint32_t get_ellapsed_time(void) {
+  return __HAL_TIM_GET_COUNTER(&htim2);
+}
+
+
+void stop_timing(void) {
+  HAL_TIM_Base_Stop(&htim2);
+}
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

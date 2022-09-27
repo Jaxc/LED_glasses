@@ -4,7 +4,7 @@
  *  Created on: Mar 10, 2019
  *  Author: jaxc
  */
-#include "../../Inc/colours_palette.h"
+#include "colours_palette.h"
 #include "main.h"
 #include "led_position.h"
 
