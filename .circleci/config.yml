@@ -19,10 +19,6 @@ jobs:
           name: build all
           command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir sonar_info make all
 
-      - run:
-          name: build test
-          command: make test
-
       - sonarcloud/scan
 
 
