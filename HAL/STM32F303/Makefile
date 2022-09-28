@@ -36,15 +36,9 @@ BUILD_DIR = $(PROJECT_ROOT)/build/$(HARDWARE)
 ######################################
 # C sources
 C_SOURCES =  \
-Core/Src/main.c \
 $(wildcard $(PROJECT_ROOT)/effects/*/*.c) \
 $(wildcard $(PROJECT_ROOT)/Src/*.c) \
-$(wildcard $(PROJECT_ROOT)/HAL/STM32F303/*/*.c) \
-Core/Src/gpio.c \
-Core/Src/dma.c \
-Core/Src/tim.c \
-Core/Src/stm32f3xx_it.c \
-Core/Src/stm32f3xx_hal_msp.c \
+$(wildcard $(PROJECT_ROOT)/HAL/STM32F303/Core/Src/*.c) \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.c \
@@ -60,8 +54,6 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.c \
-Core/Src/system_stm32f3xx.c \
-Core/Src/adc.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc_ex.c
 
@@ -112,7 +104,8 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F303x8
+-DSTM32F303x8	 \
+-DBOTTLEBLINK
 
 
 # AS includes
@@ -169,7 +162,8 @@ OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
-	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	@$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	$(info Compiling $<)
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
@@ -185,7 +179,7 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(BIN) $< $@	
 	
 $(BUILD_DIR):
-	mkdir $@		
+	mkdir -p $@		
 
 #######################################
 # clean up
