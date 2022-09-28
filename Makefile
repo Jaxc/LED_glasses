@@ -1,7 +1,5 @@
 PROJECT_ROOT = $(shell pwd)
 
-mkdir build
-
 STM32G071:
 	make -C HAL/STM32G071/ PROJECT_ROOT=$(PROJECT_ROOT)
 
