@@ -10,14 +10,14 @@
 #include "lights.h"
 
 #define GLOBAL_POWER_RANGE_REDUCTION 2
-#define COLOUR_POWER_RANGE_REDUCTION 2
+#define COLOUR_POWER_RANGE_REDUCTION 0
 
 uint8_t led_buffer[FRAME_SIZE];
 #ifdef COMPILE_TESTS
 pattern current_effect = test_11;
 #include "tests.h"
 #else
-pattern current_effect = MATRIX;
+pattern current_effect = LED_OFF;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -208,9 +208,11 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
     presets[current_effect].light.light_new_frame();
     presets[current_effect].colour.colour_new_frame();
 
-    for (i = 0; i < FRAME_SIZE; i += 4) {
-        get_current_led(&buffer[i], (i >> 2) - 1);
+    for (i = 0; i < N_LEDS; i += 1) {
+        get_current_led(&buffer[i * BYTES_PER_LED], i);
+#ifdef APA102
         buffer[i] = 0xe0 | ((buffer[i] & 0x1F));
+#endif
     }
 }
 
@@ -228,13 +230,17 @@ void cycle_effects (void) {
 
 void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     struct colours colour = {0};
-
+    uint8_t pos = 0;
+#ifdef APA102
     presets[current_effect].light.light_gen_data(&buffer[0], current_led);
+#endif
     presets[current_effect].colour.colour_gen_data(&colour, current_led);
-    buffer[0] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
-    buffer[1] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
-    buffer[2] = colour.green >> COLOUR_POWER_RANGE_REDUCTION;
-    buffer[3] = colour.red >> COLOUR_POWER_RANGE_REDUCTION;
+#ifdef APA102
+    buffer[pos++] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
+#endif
+    buffer[pos++] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
+    buffer[pos++] = colour.green >> COLOUR_POWER_RANGE_REDUCTION;
+    buffer[pos++] = colour.red >> COLOUR_POWER_RANGE_REDUCTION;
 }
 
 void beat_start(void) {

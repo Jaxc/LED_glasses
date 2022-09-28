@@ -95,11 +95,9 @@ int main(void)
   MX_DMA_Init();
   MX_TIM1_Init();
   MX_ADC1_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
-#ifdef USE_ADC
-  adc_start_sampling();
-#endif
-  HAL_TIM_Base_Start_IT(&htim1);
+  start_transmission();
   /* USER CODE END 2 */
 
   /* Infinite loop */

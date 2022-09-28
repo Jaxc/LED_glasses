@@ -12,12 +12,17 @@
 #ifndef N_LEDS
 # ifdef GLASSESV1
 #define N_LEDS 86
+#define APA102
+#define BYTES_PER_LED 4
 # endif
 # ifdef BOTTLEBLINK
+#define WS2812
 #define N_LEDS 29
+#define BYTES_PER_LED 3
 # endif
 #endif
-#define FRAME_SIZE (N_LEDS * 4)
+
+#define FRAME_SIZE (N_LEDS * BYTES_PER_LED)
 
 void tx_led_buffer(void);
 void create_payload(uint8_t buffer[FRAME_SIZE]);
