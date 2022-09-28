@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: ubuntu-2204:current
+      - image: cimg/base:current
 
     steps:
       - checkout
