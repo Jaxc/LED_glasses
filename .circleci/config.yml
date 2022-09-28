@@ -13,7 +13,7 @@ jobs:
 
       - run: 
           name: install tools
-          command: apt-get -y install make gcc-arm-none-eabi wget unzip curl
+          command: apt-get -y install make gcc-arm-none-eabi wget unzip curl git
 
       - run:
           name: build all
