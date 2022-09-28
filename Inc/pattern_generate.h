@@ -10,9 +10,14 @@
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
 #ifndef N_LEDS
+# ifdef GLASSESV1
 #define N_LEDS 86
+# endif
+# ifdef BOTTLEBLINK
+#define N_LEDS 29
+# endif
 #endif
-#define FRAME_SIZE 12 + (N_LEDS * 4)
+#define FRAME_SIZE (N_LEDS * 4)
 
 void tx_led_buffer(void);
 void create_payload(uint8_t buffer[FRAME_SIZE]);

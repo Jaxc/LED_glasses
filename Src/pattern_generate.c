@@ -12,8 +12,7 @@
 #define GLOBAL_POWER_RANGE_REDUCTION 2
 #define COLOUR_POWER_RANGE_REDUCTION 2
 
-uint8_t spi_buffer[2][FRAME_SIZE];
-uint8_t active_buffer = 0;
+uint8_t led_buffer[FRAME_SIZE];
 #ifdef COMPILE_TESTS
 pattern current_effect = test_11;
 #include "tests.h"
@@ -206,33 +205,18 @@ struct Presets presets[N_EFFECTS] = {
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
     uint16_t i = 0;
 
-    buffer[0] = 0x00;
-    buffer[1] = 0x00;
-    buffer[2] = 0x00;
-    buffer[3] = 0x00;
-
     presets[current_effect].light.light_new_frame();
     presets[current_effect].colour.colour_new_frame();
 
-    for (i = 4; i < ((N_LEDS * 4) + 4); i += 4) {
+    for (i = 0; i < FRAME_SIZE; i += 4) {
         get_current_led(&buffer[i], (i >> 2) - 1);
         buffer[i] = 0xe0 | ((buffer[i] & 0x1F));
     }
-
-    buffer[i]   = 0xff;
-    buffer[i+1] = 0xff;
-    buffer[i+2] = 0xff;
-    buffer[i+3] = 0xff;
-    buffer[i+4] = 0xff;
-    buffer[i+5] = 0xff;
-    buffer[i+6] = 0xff;
-    buffer[i+7] = 0xff;
 }
 
 void tx_led_buffer(void) {
-    //HAL_SPI_Transmit_DMA(&hspi2, spi_buffer[active_buffer], FRAME_SIZE);
-    active_buffer = !active_buffer;
-    create_payload(spi_buffer[active_buffer]);
+    transmit_led(led_buffer, FRAME_SIZE);
+    create_payload(led_buffer);
 }
 
 void cycle_effects (void) {
