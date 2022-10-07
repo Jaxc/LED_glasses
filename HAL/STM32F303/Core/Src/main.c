@@ -87,6 +87,7 @@ int main(void)
 
   /* Freeze all timers when code is paused during debug*/
   __HAL_DBGMCU_FREEZE_TIM1();
+  __HAL_DBGMCU_FREEZE_TIM16();
   __HAL_DBGMCU_FREEZE_TIM17();
   
   /* USER CODE END SysInit */
@@ -97,10 +98,13 @@ int main(void)
   MX_TIM1_Init();
   MX_ADC1_Init();
   MX_TIM17_Init();
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
   
   start_transmission();
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+
+  HAL_TIM_Base_Start_IT(&htim16);
   
   HAL_TIMEx_PWMN_Start_DMA(&htim1, TIM_CHANNEL_3, pwm_buffer2, PWM_BUFFER_DMA_SIZE);
   /* USER CODE END 2 */
