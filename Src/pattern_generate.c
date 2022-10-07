@@ -17,7 +17,7 @@ uint8_t led_buffer[FRAME_SIZE];
 pattern current_effect = test_6;
 #include "tests.h"
 #else
-pattern current_effect = HYPNOSIS;
+pattern current_effect = FLASH_COLOURS;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -199,7 +199,7 @@ struct Presets presets[N_EFFECTS] = {
     {
         /* MATRIX*/
         LIGHTS_RAIN,
-        COLOUR_CYCLE
+        COLOUR_GREEN
     },
 #endif
 };
@@ -249,10 +249,23 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
         buffer[pos++] = 0;
         buffer[pos++] = 0;
     } else {
+        uint16_t light_damping = ((uint16_t)0xFF - light);
         /*light = light >> GLOBAL_POWER_RANGE_REDUCTION;*/
-        buffer[pos++] = (colour.blue >> COLOUR_POWER_RANGE_REDUCTION);
-        buffer[pos++] = (colour.green >> COLOUR_POWER_RANGE_REDUCTION);
-        buffer[pos++] = (colour.red >> COLOUR_POWER_RANGE_REDUCTION);
+        if((colour.green - light_damping) <= 0) {
+            buffer[pos++] = 0;
+        } else {
+            buffer[pos++] = ((colour.green - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
+        if((colour.red - light_damping) <= 0) {
+            buffer[pos++] = 0;
+        } else {
+            buffer[pos++] = ((colour.red - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
+        if((colour.blue - light_damping) <= 0) {
+            buffer[pos++] = 0;
+        } else {
+            buffer[pos++] = ((colour.blue - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
     }
 #endif
 
