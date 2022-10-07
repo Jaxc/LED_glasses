@@ -8,7 +8,7 @@
 #include "colours_palette.h"
 
 
-void green_gen_data(struct colours *buffer, uint16_t buffer_index) {
+void colour_green_gen_data(struct colours *buffer, uint16_t buffer_index) {
     buffer->green = 0xff;
     buffer->blue  = 0x00;
     buffer->red   = 0x00;
