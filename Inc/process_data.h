@@ -12,4 +12,6 @@ void process_data(void);
 
 void start_process_data(void);
 
+void sending_complete(void);
+
 #endif /* INC_PROCESS_DATA_H_ */

@@ -37,7 +37,8 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+#define PWM_BUFFER_SIZE (24)
+#define PWM_BUFFER_DMA_SIZE (PWM_BUFFER_SIZE * 2)
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -54,7 +55,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+extern uint8_t pwm_buffer2[PWM_BUFFER_DMA_SIZE];
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

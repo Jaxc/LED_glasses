@@ -14,10 +14,10 @@
 
 uint8_t led_buffer[FRAME_SIZE];
 #ifdef COMPILE_TESTS
-pattern current_effect = test_11;
+pattern current_effect = test_6;
 #include "tests.h"
 #else
-pattern current_effect = LED_OFF;
+pattern current_effect = HYPNOSIS;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -126,6 +126,7 @@ struct Presets presets[N_EFFECTS] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
+# ifdef USE_ADC
     {
         /* test_10 */
         {.light_new_frame    = &test_10_new_frame,
@@ -148,6 +149,7 @@ struct Presets presets[N_EFFECTS] = {
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
+# endif
 #else
     {
         /* LED_OFF */
@@ -233,14 +235,27 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     uint8_t pos = 0;
 #ifdef APA102
     presets[current_effect].light.light_gen_data(&buffer[0], current_led);
-#endif
     presets[current_effect].colour.colour_gen_data(&colour, current_led);
-#ifdef APA102
     buffer[pos++] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
-#endif
     buffer[pos++] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
     buffer[pos++] = colour.green >> COLOUR_POWER_RANGE_REDUCTION;
     buffer[pos++] = colour.red >> COLOUR_POWER_RANGE_REDUCTION;
+#else if def(WS2812)
+    uint8_t light = 0;
+    presets[current_effect].light.light_gen_data(&light, current_led);
+    presets[current_effect].colour.colour_gen_data(&colour, current_led);
+    if (light == 0x00) {
+        buffer[pos++] = 0;
+        buffer[pos++] = 0;
+        buffer[pos++] = 0;
+    } else {
+        /*light = light >> GLOBAL_POWER_RANGE_REDUCTION;*/
+        buffer[pos++] = (colour.blue >> COLOUR_POWER_RANGE_REDUCTION);
+        buffer[pos++] = (colour.green >> COLOUR_POWER_RANGE_REDUCTION);
+        buffer[pos++] = (colour.red >> COLOUR_POWER_RANGE_REDUCTION);
+    }
+#endif
+
 }
 
 void beat_start(void) {
