@@ -48,7 +48,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t pwm_buffer2[PWM_BUFFER_DMA_SIZE] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,8 +107,7 @@ int main(void)
 
   HAL_TIM_Base_Start_IT(&htim16);
   
-  HAL_TIMEx_PWMN_Start_DMA(&htim1, TIM_CHANNEL_3, pwm_buffer2, PWM_BUFFER_DMA_SIZE);
-  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, pwm_buffer2, PWM_BUFFER_DMA_SIZE);
+  init_pwm();
 
   start_transmission();
   /* USER CODE END 2 */

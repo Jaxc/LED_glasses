@@ -23,8 +23,9 @@
 /* USER CODE BEGIN 0 */
 
 #include "process_data.h"
+#include "led_position.h"
 
-#define BPM 140
+#define BPM 124
 #define COUNTER_VALUE ((60.0 / BPM) * 1000 ) 
 
 /* USER CODE END 0 */
@@ -125,7 +126,7 @@ void MX_TIM17_Init(void)
 {
 
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 20;
+  htim17.Init.Prescaler = 24;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 64000;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -364,19 +365,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
-  if (htim->Instance == TIM1) {
-    if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
-      output_data(&pwm_buffer2[PWM_BUFFER_SIZE]);
-    }    
-  }
+  handle_HAL_TIM_PWM_PulseFinishedCallback(htim);
 }
 
 void HAL_TIM_PWM_PulseFinishedHalfCpltCallback(TIM_HandleTypeDef *htim) {
-  if (htim->Instance == TIM1) {
-    if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
-      output_data(pwm_buffer2);
-    }    
-  }
+  handle_HAL_TIM_PWM_PulseFinishedHalfCpltCallback(htim);
 }
 
 /* USER CODE END 1 */

@@ -14,7 +14,7 @@
 
 uint8_t led_buffer[FRAME_SIZE];
 #ifdef COMPILE_TESTS
-pattern current_effect = test_3;
+pattern current_effect = test_6;
 #include "tests.h"
 #else
 pattern current_effect = HYPNOSIS;
@@ -164,8 +164,8 @@ struct Presets presets[N_EFFECTS] = {
 #else
     {
         /* LED_OFF */
-        LIGHTS_LED_OFF,
-        COLOUR_WHITE
+        LIGHTS_STROBE,
+        COLOUR_FLOWING_HUE
     },
     {
         /* HYPNOSIS */
@@ -278,8 +278,16 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
 }
 
 void beat_start(void) {
+    static uint8_t switch_effect = 0;
     presets[current_effect].light.light_beat_start();
     presets[current_effect].colour.colour_beat_start();
+
+    if ((switch_effect % 16) == 0) {
+        cycle_effects();
+    }
+
+    switch_effect++;
+
     return;
 }
 

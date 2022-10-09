@@ -21,7 +21,7 @@ struct rain_driplet rain_driplets[N_RAIN_DRIPLET] = {[0 ... N_RAIN_DRIPLET-1] = 
 
 void rain_new_frame(void) {
     /* Progress effect every 5 frames*/
-    if (10 == rain_cnt){
+    if (5 == rain_cnt){
         rain_cnt = 0;
         for(uint8_t j = 0; j < N_RAIN_DRIPLET; j++) {
             if((TRAIL_LEN + N_ROWS) < rain_driplets[j].y) {

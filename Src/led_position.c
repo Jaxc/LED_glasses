@@ -159,7 +159,11 @@ uint32_t led_pos_pol_rad [N_LEDS];
 
 uint32_t led_pos_pol_ang [N_LEDS];
 
+uint32_t led_pwm_controller_mapping [N_LEDS];
+
 void led_init_internal(void) {
+   uint8_t single_square_x [LEDS_PER_SQUARE];
+   uint8_t single_square_y [LEDS_PER_SQUARE];
 
    /* Init led_pos_pol_rad */
    float origo_x = ((float)(N_COLS - 1)) / 2;
@@ -178,26 +182,44 @@ void led_init_internal(void) {
    float reference_angle_y = 1;
 #endif
 
+   /* First a map for each square is created */
+#ifdef VERTICAL_MOUNTING
+   for(uint8_t row = 0; row < LEDS_PER_SQUARE_SIDE; row++) {
+      uint32_t row_offset = row * LEDS_PER_SQUARE_SIDE;
+      for(uint8_t col = 0; col < LEDS_PER_SQUARE_SIDE; col++) {
+         if (0 == (row % 2)) {
+            single_square_x[row_offset + col] = col;
+         } else {
+            single_square_x[row_offset + col] = LEDS_PER_SQUARE_SIDE - col - 1;
+         }
+      }
+   }  
+
+   for(uint32_t row = 0; row < LEDS_PER_SQUARE_SIDE; row++) {
+      uint32_t row_offset = row * LEDS_PER_SQUARE_SIDE;
+      /* Value for each led is simply the row number */
+      for(uint32_t j = 0; j < LEDS_PER_SQUARE_SIDE; j ++) {
+         single_square_y[row_offset + j] = row;
+      }   
+   }
+#endif
+
    /* Init led_pos_cart_x */
 #ifdef VERTICAL_MOUNTING
-   for(uint32_t current_square = 0; current_square < N_LEDSQARE_ROWS; current_square++) {
-      /* For each Ledsquare unit: */
-      uint32_t square_offset = current_square * LEDS_PER_SQUARE;
 
-      for(uint32_t square_row = 0; square_row < LEDS_PER_SQUARE_SIDE; square_row++) {
-         uint32_t row_offset = square_offset + square_row * N_COLS;
-         /* For each row in a single row of squares: */
-         if (0 == (square_row % 2) ){
-            /* Even rows are numbered 0 to N_COLS - 1*/
-            for(uint8_t j = 0; j < N_COLS; j ++) {
-               led_pos_cart_x[row_offset + j] = j;
+   for(uint32_t square_col = 0; square_col < N_LEDSQARE_COLS; square_col ++) {
+      uint32_t col_offset = square_col * N_LEDSQARE_ROWS * LEDS_PER_SQUARE;
+
+      for(uint32_t row = 0; row < N_LEDSQARE_ROWS; row++) {
+         uint32_t row_offset = row * LEDS_PER_SQUARE;
+
+
+         for(uint8_t i = 0; i < LEDS_PER_SQUARE_SIDE; i++) {
+            uint32_t internal_row_offset = i * LEDS_PER_SQUARE_SIDE;
+            for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j++) {
+               led_pos_cart_x[row_offset + col_offset + internal_row_offset + j] = single_square_x[internal_row_offset + j] + square_col * LEDS_PER_SQUARE_SIDE ;
             }
-         } else {
-            /* Odd rows are numbered N_COLS to 0*/
-            for(uint8_t j = 0; j < N_COLS; j ++) {
-               led_pos_cart_x[row_offset + j] = N_COLS - j - 1;
-            }
-         }
+         }   
       }
    }
 #else 
@@ -210,14 +232,22 @@ void led_init_internal(void) {
    }
 #endif
 
+/* Init led_pos_cart_y */
 #ifdef VERTICAL_MOUNTING
-   /* Init led_pos_cart_b */
-   for(uint32_t row = 0; row < N_ROWS; row++) {
-      uint32_t row_offset = row * N_COLS;
-      /* Value for each led is simply the row number */
-      for(uint32_t j = 0; j < N_COLS; j ++) {
-         led_pos_cart_y[row_offset + j] = row;
-      }   
+   for(uint32_t square_col = 0; square_col < N_LEDSQARE_COLS; square_col ++) {
+      uint32_t col_offset = square_col * N_LEDSQARE_ROWS * LEDS_PER_SQUARE;
+
+      for(uint32_t row = 0; row < N_LEDSQARE_ROWS; row++) {
+         uint32_t row_offset = row * LEDS_PER_SQUARE;
+
+
+         for(uint8_t i = 0; i < LEDS_PER_SQUARE_SIDE; i++) {
+            uint32_t internal_row_offset = i * LEDS_PER_SQUARE_SIDE;
+            for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j++) {
+               led_pos_cart_y[row_offset + col_offset + internal_row_offset + j] = single_square_y[internal_row_offset + j] + row * LEDS_PER_SQUARE_SIDE ;
+            }
+         }   
+      }
    }
 #else
    for(uint32_t current_square = 0; current_square < N_LEDSQARE_COLS; current_square++) {
@@ -244,15 +274,29 @@ void led_init_internal(void) {
 
 /* Init led_pos_pol_rad */
 #ifdef VERTICAL_MOUNTING
-   for(uint32_t i = 0; i < N_ROWS; i++) {
-      uint32_t row_offset = i * N_COLS;
-      for(uint32_t j = 0; j < N_COLS; j++) {
-         temp_array[row_offset + j] = sqrt(((float)j-origo_x)*((float)j-origo_x) + ((float)i-origo_y) * ((float)i-origo_y));
-         if (temp_array[row_offset + j] > max_distance) {
-            max_distance = temp_array[row_offset + j];
-         }
+
+   for(uint32_t square_col = 0; square_col < N_LEDSQARE_COLS; square_col ++) {
+      uint32_t col_offset = square_col * N_LEDSQARE_ROWS * LEDS_PER_SQUARE;
+
+      for(uint32_t row = 0; row < N_LEDSQARE_ROWS; row++) {
+         uint32_t row_offset = row * LEDS_PER_SQUARE;
+
+
+         for(uint8_t i = 0; i < LEDS_PER_SQUARE_SIDE; i++) {
+            uint32_t internal_row_offset = i * LEDS_PER_SQUARE_SIDE;
+            for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j++) {
+               uint32_t led_index = row_offset + col_offset + internal_row_offset + j;
+
+
+               temp_array[led_index] = sqrt(((float)led_pos_cart_x[led_index]-origo_x)*((float)led_pos_cart_x[led_index]-origo_x) + ((float)led_pos_cart_y[led_index]-origo_y) * ((float)led_pos_cart_y[led_index]-origo_y));
+               if (temp_array[led_index] > max_distance) {
+                  max_distance = temp_array[led_index];
+               }
+            }
+         }   
       }
    }
+   
 
 #else   
    for(uint32_t current_square = 0; current_square < N_LEDSQARE_COLS; current_square++) {
@@ -285,17 +329,31 @@ void led_init_internal(void) {
 
 /* Init led_pos_pol_ang*/
 #ifdef VERTICAL_MOUNTING
-   for(uint32_t i = 0; i < N_ROWS; i++) {
-      uint32_t row_offset = i * N_COLS;
-      for(uint32_t j = 0; j < N_COLS; j++) {
-         /* 0 degrees is a vector where x=1 and y = 0*/
-         float temp_value = atan2( origo_y - (float)i, (float)led_pos_cart_x[row_offset + j] - origo_x);
+   for(uint32_t square_col = 0; square_col < N_LEDSQARE_COLS; square_col ++) {
+      uint32_t col_offset = square_col * N_LEDSQARE_ROWS * LEDS_PER_SQUARE;
 
-         temp_value += M_PI;
+      for(uint32_t row = 0; row < N_LEDSQARE_ROWS; row++) {
+         uint32_t row_offset = row * LEDS_PER_SQUARE;
 
-         temp_value = temp_value / (2 * M_PI);
 
-         led_pos_pol_ang[row_offset + j] = (uint32_t)(temp_value * (float)UINT32_MAX);
+         for(uint8_t i = 0; i < LEDS_PER_SQUARE_SIDE; i++) {
+            uint32_t internal_row_offset = i * LEDS_PER_SQUARE_SIDE;
+            for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j++) {
+               uint32_t led_index = row_offset + col_offset + internal_row_offset + j;
+               
+               volatile float diff_x = origo_x - (float)led_pos_cart_x[led_index];
+               volatile float diff_y = origo_y - (float)led_pos_cart_y[led_index];
+
+
+               float temp_value = atan2(diff_x, diff_y);
+
+               temp_value += M_PI;
+
+               temp_value = temp_value / (2 * M_PI);
+
+               led_pos_pol_ang[led_index] = (uint32_t)(temp_value * (float)UINT32_MAX);
+            }
+         }   
       }
    }
 #else

@@ -104,8 +104,8 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DLEDSQUARE \
--DN_LEDSQARE_ROWS=5 \
--DN_LEDSQARE_COLS=1 \
+-DN_LEDSQARE_ROWS=2 \
+-DN_LEDSQARE_COLS=2 \
 -DVERTICAL_MOUNTING \
 -DUSE_HAL_DRIVER \
 -DSTM32F303x8	 
@@ -136,7 +136,7 @@ endif
 
 
 # Generate dependency information
-CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -g -gdwarf-2
 
 
 #######################################

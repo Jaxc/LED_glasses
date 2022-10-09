@@ -145,7 +145,7 @@ void test_7_gen_data(struct colours *buffer, uint16_t buffer_index) {
 
 /* Checkerboard pattern */
 void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index) {
-    if (0 == buffer_index % 2) {
+    if (0 == ((led_pos_cart_x[buffer_index] % 2) ^ ((led_pos_cart_y[buffer_index] % 2)))) {
         *buffer = 0x00;
     } else {
         *buffer = 0xff;

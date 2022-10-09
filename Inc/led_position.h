@@ -52,6 +52,17 @@
 
 #define led_pos_eye(x) (0)
 
+#if defined(VERTICAL_MOUNTING) && N_LEDSQARE_COLS > 1
+/* Multiple PWM outputs needed*/
+#define PWM_CONTROLLERS_USED N_LEDSQARE_COLS
+
+#elif defined(HORIZONTAL_MOUNTING) && N_LEDSQARE_ROWS > 1
+#define PWM_CONTROLLERS_USED N_LEDSQARE_ROWS
+#else 
+#define PWM_CONTROLLERS_USED (1)
+#endif
+
+
 #define NEEDS_INITIALIZATION
 #endif
 
