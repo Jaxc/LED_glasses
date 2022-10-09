@@ -14,7 +14,7 @@ struct rain_driplet  {
     uint8_t y;
 };
 
-#define N_RAIN_DRIPLET N_ROWS
+#define N_RAIN_DRIPLET N_COLS
 #define TRAIL_LEN 5
 
 struct rain_driplet rain_driplets[N_RAIN_DRIPLET] = {[0 ... N_RAIN_DRIPLET-1] = {TRAIL_LEN + N_ROWS + 1}  };

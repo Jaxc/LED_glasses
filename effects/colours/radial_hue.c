@@ -6,7 +6,7 @@
  */
 
 #include "colours_palette.h"
-#include "led_position.h"
+#include "pattern_generate.h"
 
 uint32_t radial_flow_hue = 0;
 uint32_t hue_boost = 0;

@@ -22,6 +22,8 @@
 
 /* USER CODE BEGIN 0 */
 
+#include "process_data.h"
+
 #define BPM 140
 #define COUNTER_VALUE ((60.0 / BPM) * 1000 ) 
 
@@ -123,7 +125,7 @@ void MX_TIM17_Init(void)
 {
 
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 10;
+  htim17.Init.Prescaler = 20;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 64000;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -155,7 +157,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     hdma_tim1_ch1.Init.MemInc = DMA_MINC_ENABLE;
     hdma_tim1_ch1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
     hdma_tim1_ch1.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
-    hdma_tim1_ch1.Init.Mode = DMA_NORMAL;
+    hdma_tim1_ch1.Init.Mode = DMA_CIRCULAR;
     hdma_tim1_ch1.Init.Priority = DMA_PRIORITY_LOW;
     if (HAL_DMA_Init(&hdma_tim1_ch1) != HAL_OK)
     {
@@ -364,7 +366,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM1) {
     if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
-      void;
       output_data(&pwm_buffer2[PWM_BUFFER_SIZE]);
     }    
   }
@@ -373,7 +374,6 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedHalfCpltCallback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == TIM1) {
     if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
-      void;
       output_data(pwm_buffer2);
     }    
   }

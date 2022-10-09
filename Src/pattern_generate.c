@@ -14,10 +14,10 @@
 
 uint8_t led_buffer[FRAME_SIZE];
 #ifdef COMPILE_TESTS
-pattern current_effect = test_6;
+pattern current_effect = test_3;
 #include "tests.h"
 #else
-pattern current_effect = FLASH_COLOURS;
+pattern current_effect = HYPNOSIS;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -150,6 +150,17 @@ struct Presets presets[N_EFFECTS] = {
         .colour_beat_stop   = &do_nothing,}
     },
 # endif
+    {
+        /* test_12 */
+        {.light_new_frame    = &test_12_new_frame,
+        .light_gen_data     = &test_12_gen_data,
+        .light_beat_start   = &do_nothing,
+        .light_beat_stop    = &do_nothing,},
+        {.colour_new_frame   = &do_nothing,
+        .colour_gen_data    = &colour_white_gen_data,
+        .colour_beat_start  = &do_nothing,
+        .colour_beat_stop   = &do_nothing,}
+    },
 #else
     {
         /* LED_OFF */
@@ -197,7 +208,7 @@ struct Presets presets[N_EFFECTS] = {
         COLOUR_RADIAL_HUE
     },
     {
-        /* MATRIX*/
+        /* MATRIX */
         LIGHTS_RAIN,
         COLOUR_GREEN
     },
@@ -244,28 +255,23 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     uint8_t light = 0;
     presets[current_effect].light.light_gen_data(&light, current_led);
     presets[current_effect].colour.colour_gen_data(&colour, current_led);
-    if (light == 0x00) {
-        buffer[pos++] = 0;
-        buffer[pos++] = 0;
+    
+    uint16_t light_damping = ((uint16_t)0xFF - light);
+
+    if((colour.green - light_damping) <= 0) {
         buffer[pos++] = 0;
     } else {
-        uint16_t light_damping = ((uint16_t)0xFF - light);
-        /*light = light >> GLOBAL_POWER_RANGE_REDUCTION;*/
-        if((colour.green - light_damping) <= 0) {
-            buffer[pos++] = 0;
-        } else {
-            buffer[pos++] = ((colour.green - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-        }
-        if((colour.red - light_damping) <= 0) {
-            buffer[pos++] = 0;
-        } else {
-            buffer[pos++] = ((colour.red - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-        }
-        if((colour.blue - light_damping) <= 0) {
-            buffer[pos++] = 0;
-        } else {
-            buffer[pos++] = ((colour.blue - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-        }
+        buffer[pos++] = ((colour.green - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+    }
+    if((colour.red - light_damping) <= 0) {
+        buffer[pos++] = 0;
+    } else {
+        buffer[pos++] = ((colour.red - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+    }
+    if((colour.blue - light_damping) <= 0) {
+        buffer[pos++] = 0;
+    } else {
+        buffer[pos++] = ((colour.blue - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
     }
 #endif
 

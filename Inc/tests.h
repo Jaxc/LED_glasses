@@ -39,5 +39,8 @@ void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void test_11_new_frame (void);
 void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
+void test_12_new_frame (void);
+void test_12_gen_data(uint8_t *buffer, uint16_t buffer_index);
+
 
 #endif /* INC_TESTS_H_ */

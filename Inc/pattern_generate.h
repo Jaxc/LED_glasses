@@ -6,31 +6,10 @@
  */
 
 #include "colours_palette.h"
+#include "led_position.h"
 
 #ifndef INC_PATTERN_GENERATE_H_
 #define INC_PATTERN_GENERATE_H_
-
-#ifndef N_LEDS
-# ifdef GLASSESV1
-#define N_LEDS 86
-#define APA102
-# endif
-# ifdef BOTTLEBLINK
-#define WS2812
-#define N_LEDS 29
-# endif
-# ifdef LEDSQUARE
-#define WS2812
-#define N_LEDS 25
-# endif
-#endif
-
-#ifdef APA102
-#define BYTES_PER_LED 4
-#endif
-#ifdef WS2812
-#define BYTES_PER_LED 3
-#endif
 
 #define FRAME_SIZE (N_LEDS * BYTES_PER_LED)
 
@@ -56,8 +35,11 @@ typedef enum patterns {
     test_7,
     test_8,
     test_9,
+#ifdef USE_ADC
     test_10,
     test_11,
+#endif
+    test_12,
     N_EFFECTS
 } pattern;
 #else

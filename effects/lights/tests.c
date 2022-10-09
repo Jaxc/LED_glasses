@@ -6,7 +6,7 @@
  */
 #include "stdint.h"
 #include "adc.h"
-#include "led_position.h"
+#include "pattern_generate.h"
 
 #define UNUSED(X) (void)X
 
@@ -198,5 +198,23 @@ void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index) {
         } else {
             *buffer = 0x00;
         }
+    }
+}
+
+/* Order test: test which order LEDs are addressed */
+
+static uint32_t test_12_current_led = 0;
+void test_12_new_frame (void) {
+    test_12_current_led = (test_12_current_led + 1) % N_LEDS;
+}
+
+
+void test_12_gen_data(uint8_t *buffer, uint16_t buffer_index) {
+    
+
+    if (test_12_current_led == buffer_index) {
+        *buffer = 0xff;
+    } else {
+        *buffer = 0x00;
     }
 }

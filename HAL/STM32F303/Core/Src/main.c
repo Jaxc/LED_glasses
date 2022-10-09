@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "process_data.h"
+#include "led_position.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -101,12 +102,16 @@ int main(void)
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
   
-  start_transmission();
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+  led_initialization();
+
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
 
   HAL_TIM_Base_Start_IT(&htim16);
   
   HAL_TIMEx_PWMN_Start_DMA(&htim1, TIM_CHANNEL_3, pwm_buffer2, PWM_BUFFER_DMA_SIZE);
+  HAL_TIM_PWM_Start_DMA(&htim1, TIM_CHANNEL_1, pwm_buffer2, PWM_BUFFER_DMA_SIZE);
+
+  start_transmission();
   /* USER CODE END 2 */
 
   /* Infinite loop */
