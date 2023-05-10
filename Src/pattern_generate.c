@@ -17,7 +17,7 @@ uint8_t led_buffer[FRAME_SIZE];
 pattern current_effect = test_6;
 #include "tests.h"
 #else
-pattern current_effect = HYPNOSIS;
+pattern current_effect = TEXT;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -212,6 +212,11 @@ struct Presets presets[N_EFFECTS] = {
         LIGHTS_RAIN,
         COLOUR_GREEN
     },
+    {
+        /* TEXT */
+        LIGHTS_TEXT,
+        COLOUR_HYPNOSIS
+    },
 #endif
 };
 
@@ -255,7 +260,7 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     uint8_t light = 0;
     presets[current_effect].light.light_gen_data(&light, current_led);
     presets[current_effect].colour.colour_gen_data(&colour, current_led);
-    
+
     uint16_t light_damping = ((uint16_t)0xFF - light);
 
     if((colour.green - light_damping) <= 0) {
@@ -278,12 +283,13 @@ void get_current_led(uint8_t buffer[4], uint16_t current_led) {
 }
 
 void beat_start(void) {
-    static uint8_t switch_effect = 0;
+    static uint8_t switch_effect = 1;
     presets[current_effect].light.light_beat_start();
     presets[current_effect].colour.colour_beat_start();
 
     if ((switch_effect % 16) == 0) {
         cycle_effects();
+
     }
 
     switch_effect++;

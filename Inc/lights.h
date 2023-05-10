@@ -29,6 +29,10 @@ void rain_new_frame (void);
 void rain_gen_data(uint8_t *buffer, uint16_t buffer_index);
 void rain_beat_start (void);
 
+void lights_text_new_frame (void);
+void lights_text_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void lights_text_beat_start (void);
+
 /* Lightning program Macros*/
 
 #define LIGHTS_FLASH {          .light_new_frame    = &lights_flash_new_frame,          \
@@ -59,6 +63,11 @@ void rain_beat_start (void);
 #define LIGHTS_RAIN {           .light_new_frame    = &rain_new_frame,                  \
                                 .light_gen_data     = &rain_gen_data,                   \
                                 .light_beat_start   = &rain_beat_start,                 \
+                                .light_beat_stop    = &do_nothing,}
+
+#define LIGHTS_TEXT {           .light_new_frame    = &lights_text_new_frame,           \
+                                .light_gen_data     = &lights_text_gen_data,            \
+                                .light_beat_start   = &lights_text_beat_start,                      \
                                 .light_beat_stop    = &do_nothing,}
 
 #endif /* EFFECTS_LIGHTS_LIGHTS_H_ */
