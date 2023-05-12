@@ -150,16 +150,14 @@ uint32_t led_pos_pol_rad [N_LEDS] = {
 
 #ifdef LEDSQUARE
 
-uint8_t led_pos_cart_x [N_LEDS];
+uint8_t led_pos_cart_x [N_LEDS] __attribute__ ((section(".ccmram")));
 
-uint8_t led_pos_cart_y [N_LEDS];
+uint8_t led_pos_cart_y [N_LEDS] __attribute__ ((section(".ccmram")));
 
 /* Polar cordinates*/
-uint32_t led_pos_pol_rad [N_LEDS];
+uint32_t led_pos_pol_rad [N_LEDS] __attribute__ ((section(".ccmram")));
 
-uint32_t led_pos_pol_ang [N_LEDS];
-
-uint32_t led_pwm_controller_mapping [N_LEDS];
+uint32_t led_pos_pol_ang [N_LEDS] __attribute__ ((section(".ccmram")));
 
 void led_init_internal(void) {
    uint8_t single_square_x [LEDS_PER_SQUARE];

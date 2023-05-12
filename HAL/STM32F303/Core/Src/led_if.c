@@ -19,11 +19,11 @@ struct pwm_init_params_s {
 #define CHANNEL_N 1
 
 uint8_t pwm_buffer[PWM_FRAME_SIZE];
-uint8_t new_data_available[PWM_CONTROLLERS_USED] = {0};
+uint8_t new_data_available[PWM_CONTROLLERS_USED] __attribute__ ((section("ccmram"))) = {0};
 
-uint8_t pwm_buffer2[PWM_CONTROLLERS_USED][PWM_BUFFER_DMA_SIZE] = {0};
+uint8_t pwm_buffer2[PWM_CONTROLLERS_USED][PWM_BUFFER_DMA_SIZE] __attribute__ ((section("ccmram")))= {0};
 
-struct pwm_init_params_s pwm_init_params[PWM_CONTROLLERS_USED] =
+struct pwm_init_params_s pwm_init_params[PWM_CONTROLLERS_USED]=
 {
   {CHANNEL_N, &htim1, TIM_CHANNEL_3, HAL_TIM_ACTIVE_CHANNEL_3},
   #if PWM_CONTROLLERS_USED > 1
@@ -50,7 +50,7 @@ void transmit_led(uint8_t buffer[FRAME_SIZE]) {
 
 void encode_pwm(uint8_t inbuffer[FRAME_SIZE], uint8_t outbuffer[PWM_FRAME_SIZE]){
 
-    for (uint8_t i = 0; i < N_LEDS; i++) {
+    for (uint16_t i = 0; i < N_LEDS; i++) {
         for (uint8_t j = 0; j < BYTES_PER_LED; j++) {
             uint8_t current_byte = inbuffer[i * 3 + j];
             for (uint8_t k = 0; k < 8; k++) {

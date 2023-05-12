@@ -12,9 +12,9 @@
 #define GLOBAL_POWER_RANGE_REDUCTION 2
 #define COLOUR_POWER_RANGE_REDUCTION 0
 
-uint8_t led_buffer[FRAME_SIZE];
+
 #ifdef COMPILE_TESTS
-pattern current_effect = test_6;
+pattern current_effect = test_3;
 #include "tests.h"
 #else
 pattern current_effect = TEXT;
@@ -235,8 +235,9 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
 }
 
 void tx_led_buffer(void) {
-    transmit_led(led_buffer, FRAME_SIZE);
+    uint8_t led_buffer[FRAME_SIZE];
     create_payload(led_buffer);
+    transmit_led(led_buffer, FRAME_SIZE);
 }
 
 void cycle_effects (void) {

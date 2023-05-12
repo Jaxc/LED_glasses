@@ -22,7 +22,8 @@ HARDWARE = STM32F303
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -Og
+#OPT = -Og
+OPT = -O3
 
 
 #######################################
@@ -105,7 +106,7 @@ AS_DEFS =
 C_DEFS =  \
 -DLEDSQUARE \
 -DN_LEDSQARE_ROWS=2 \
--DN_LEDSQARE_COLS=2 \
+-DN_LEDSQARE_COLS=7 \
 -DHORIZONTAL_MOUNTING \
 -DUSE_HAL_DRIVER \
 -DSTM32F303x8
@@ -128,7 +129,7 @@ C_INCLUDES =  \
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections -DCOMPILE_TESTS
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
@@ -164,8 +165,13 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
+<<<<<<< HEAD
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	@$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+=======
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+>>>>>>> ee56f2b (Add support for larger arrays)
 	$(info Compiling $<)
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
