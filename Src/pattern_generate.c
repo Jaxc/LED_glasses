@@ -215,7 +215,7 @@ struct Presets presets[N_EFFECTS] = {
     {
         /* TEXT */
         LIGHTS_TEXT,
-        COLOUR_HYPNOSIS
+        COLOUR_CYCLE
     },
 #endif
 };

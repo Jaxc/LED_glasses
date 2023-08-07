@@ -275,6 +275,10 @@ void led_init_internal(void) {
 
 /* Init led_pos_pol_rad */
 
+   /* First LED will always be at max distance, so first the value for this is calcualted*/
+   max_distance = sqrt(((float)led_pos_cart_x[0]-origo_x)*((float)led_pos_cart_x[0]-origo_x) + ((float)led_pos_cart_y[0]-origo_y) * ((float)led_pos_cart_y[0]-origo_y));
+   max_distance_reciprocal = 1 / max_distance;
+
    for(uint32_t square_col = 0; square_col < N_LEDSQARE_COLS; square_col ++) {
       uint32_t col_offset = square_col * N_LEDSQARE_ROWS * LEDS_PER_SQUARE;
 
@@ -287,26 +291,27 @@ void led_init_internal(void) {
             for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j++) {
                uint32_t led_index = row_offset + col_offset + internal_row_offset + j;
 
+               float distance_normalized = sqrt(((float)led_pos_cart_x[led_index]-origo_x)*((float)led_pos_cart_x[led_index]-origo_x) + ((float)led_pos_cart_y[led_index]-origo_y) * ((float)led_pos_cart_y[led_index]-origo_y)) * max_distance_reciprocal;
 
-               temp_array[led_index] = sqrt(((float)led_pos_cart_x[led_index]-origo_x)*((float)led_pos_cart_x[led_index]-origo_x) + ((float)led_pos_cart_y[led_index]-origo_y) * ((float)led_pos_cart_y[led_index]-origo_y));
-               if (temp_array[led_index] > max_distance) {
-                  max_distance = temp_array[led_index];
-               }
+               uint32_t int_distance = (uint32_t)floor(distance_normalized * (float)UINT32_MAX);
+
+               led_pos_pol_rad[led_index] = int_distance;
+
             }
          }
       }
    }
 
-   max_distance_reciprocal = 1 / max_distance;
+   
 
-   for(uint32_t i = 0; i < N_COLS; i++) {
+ /*  for(uint32_t i = 0; i < N_COLS; i++) {
       uint32_t row_offset = i * N_ROWS;
       for(uint32_t j = 0; j < N_ROWS; j++) {
          float distance_normalized = temp_array[row_offset + j] * max_distance_reciprocal;
          uint32_t int_distance = (uint32_t)floor(distance_normalized * (float)UINT32_MAX);
          led_pos_pol_rad[row_offset + j] = int_distance;
       }
-   }
+   }*/
 
 
 

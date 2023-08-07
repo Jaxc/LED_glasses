@@ -9,9 +9,9 @@
 #include "led_position.h"
 #include "font_engine.h"
 
-uint8_t display_text[] = "ZERO AUDIENCE";
+uint8_t display_text[] = "   ZERO AUDIENCE   ";
 
-bool display_matrix[N_COLS][N_ROWS];
+bool display_matrix[N_COLS][N_ROWS] __attribute__ ((section(".ccmram")));
 
 uint16_t scrolling_char_start = 0;
 
@@ -24,7 +24,7 @@ void lights_text_new_frame (void) {
 
     if (total_length == 0) {
         for(uint16_t i = 0; i < sizeof(display_text); i++) {
-            total_length += font_data[display_text[i]].length + 2;
+            total_length += font_data[display_text[i]].length;
         }
     }
 

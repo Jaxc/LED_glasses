@@ -19,9 +19,9 @@ struct pwm_init_params_s {
 #define CHANNEL_N 1
 
 uint8_t pwm_buffer[PWM_FRAME_SIZE];
-uint8_t new_data_available[PWM_CONTROLLERS_USED] __attribute__ ((section("ccmram"))) = {0};
+uint8_t new_data_available[PWM_CONTROLLERS_USED] = {0};
 
-uint8_t pwm_buffer2[PWM_CONTROLLERS_USED][PWM_BUFFER_DMA_SIZE] __attribute__ ((section("ccmram")))= {0};
+uint8_t pwm_buffer2[PWM_CONTROLLERS_USED][PWM_BUFFER_DMA_SIZE] = {0};
 
 struct pwm_init_params_s pwm_init_params[PWM_CONTROLLERS_USED]=
 {
