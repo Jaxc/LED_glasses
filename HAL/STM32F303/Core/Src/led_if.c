@@ -29,6 +29,9 @@ struct pwm_init_params_s pwm_init_params[PWM_CONTROLLERS_USED]=
   #if PWM_CONTROLLERS_USED > 1
   {CHANNEL_R, &htim1, TIM_CHANNEL_1, HAL_TIM_ACTIVE_CHANNEL_1},
   #endif
+  #if PWM_CONTROLLERS_USED > 2
+  {CHANNEL_N, &htim1, TIM_CHANNEL_2, HAL_TIM_ACTIVE_CHANNEL_2},
+  #endif
 };
 
 

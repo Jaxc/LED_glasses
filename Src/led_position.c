@@ -155,9 +155,9 @@ uint8_t led_pos_cart_x [N_LEDS] __attribute__ ((section(".ccmram")));
 uint8_t led_pos_cart_y [N_LEDS] __attribute__ ((section(".ccmram")));
 
 /* Polar cordinates*/
-uint32_t led_pos_pol_rad [N_LEDS] __attribute__ ((section(".ccmram")));
+uint16_t led_pos_pol_rad [N_LEDS] __attribute__ ((section(".ccmram")));
 
-uint32_t led_pos_pol_ang [N_LEDS] __attribute__ ((section(".ccmram")));
+uint16_t led_pos_pol_ang [N_LEDS] __attribute__ ((section(".ccmram")));
 
 void led_init_internal(void) {
    uint8_t single_square_x [LEDS_PER_SQUARE];
@@ -293,7 +293,7 @@ void led_init_internal(void) {
 
                float distance_normalized = sqrt(((float)led_pos_cart_x[led_index]-origo_x)*((float)led_pos_cart_x[led_index]-origo_x) + ((float)led_pos_cart_y[led_index]-origo_y) * ((float)led_pos_cart_y[led_index]-origo_y)) * max_distance_reciprocal;
 
-               uint32_t int_distance = (uint32_t)floor(distance_normalized * (float)UINT32_MAX);
+               uint16_t int_distance = (uint16_t)floor(distance_normalized * (float)UINT16_MAX);
 
                led_pos_pol_rad[led_index] = int_distance;
 
@@ -338,7 +338,7 @@ void led_init_internal(void) {
 
                temp_value = temp_value / (2 * M_PI);
 
-               led_pos_pol_ang[led_index] = (uint32_t)(temp_value * (float)UINT32_MAX);
+               led_pos_pol_ang[led_index] = (uint16_t)(temp_value * (float)UINT16_MAX);
             }
          }
       }

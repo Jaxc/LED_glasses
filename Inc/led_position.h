@@ -79,9 +79,9 @@ extern uint8_t led_pos_cart_y [N_LEDS];
 
 
 /* Polar cordinates*/
-extern uint32_t led_pos_pol_ang [N_LEDS];
+extern uint16_t led_pos_pol_ang [N_LEDS];
 
-extern uint32_t led_pos_pol_rad [N_LEDS];
+extern uint16_t led_pos_pol_rad [N_LEDS];
 
 void led_initialization(void);
 

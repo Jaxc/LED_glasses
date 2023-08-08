@@ -1,42 +1,41 @@
 
 
-Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/tim.c:344:3, State=BP_STATE_DISABLED
+Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/tim.c:376:3, State=BP_STATE_DISABLED
 Breakpoint=/home/jaxc/workspace/LED_glasses/Src/pattern_generate.c:261:5, State=BP_STATE_DISABLED
-Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c:77:5, State=BP_STATE_DISABLED
-Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c:86:13, State=BP_STATE_DISABLED
-Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c:89, State=BP_STATE_DISABLED
-Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c:111:21, State=BP_STATE_DISABLED
+Breakpoint=/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c:115:5, State=BP_STATE_DISABLED
+OpenDocument="process_data.c", FilePath="/home/jaxc/workspace/LED_glasses/Src/process_data.c", Line=26
+OpenDocument="stm32f3xx_it.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/stm32f3xx_it.c", Line=83
 OpenDocument="Ozone_debug.jdebug", FilePath="/home/jaxc/workspace/LED_glasses/Ozone_debug.jdebug", Line=0
 OpenDocument="stm32f3xx_hal_tim_ex.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim_ex.c", Line=2408
-OpenDocument="stm32f3xx_hal_dma.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.c", Line=580
-OpenDocument="tim.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/tim.c", Line=308
-OpenDocument="main.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/main.c", Line=70
-OpenDocument="tests.c", FilePath="/home/jaxc/workspace/LED_glasses/effects/lights/tests.c", Line=149
+OpenDocument="stm32f3xx_hal_dma.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.c", Line=557
+OpenDocument="tim.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/tim.c", Line=355
+OpenDocument="main.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/main.c", Line=56
 OpenDocument="led_position.c", FilePath="/home/jaxc/workspace/LED_glasses/Src/led_position.c", Line=295
-OpenDocument="process_data.c", FilePath="/home/jaxc/workspace/LED_glasses/Src/process_data.c", Line=0
-OpenDocument="startup_stm32f303x8.s", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/startup_stm32f303x8.s", Line=45
-OpenDocument="pattern_generate.c", FilePath="/home/jaxc/workspace/LED_glasses/Src/pattern_generate.c", Line=229
-OpenDocument="led_if.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c", Line=75
-OpenDocument="stm32f3xx_it.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/stm32f3xx_it.c", Line=194
+OpenDocument="startup_stm32f303x8.s", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/startup_stm32f303x8.s", Line=49
+OpenDocument="pattern_generate.c", FilePath="/home/jaxc/workspace/LED_glasses/Src/pattern_generate.c", Line=217
+OpenDocument="stm32f3xx_hal_tim.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_tim.c", Line=3941
+OpenDocument="led_if.c", FilePath="/home/jaxc/workspace/LED_glasses/HAL/STM32F303/Core/Src/led_if.c", Line=94
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=0, w=604, h=380, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=604, h=420, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=604, h=380, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=1810, h=168, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x240
-OpenWindow="Global Data", DockArea=RIGHT, x=0, y=1, w=604, h=1022, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Local Data", DockArea=LEFT, x=0, y=1, w=420, h=695, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Watched Data 1", DockArea=BOTTOM, x=1, y=0, w=1810, h=168, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=420, h=1164, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1813, h=199, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Memory 2", DockArea=BOTTOM, x=2, y=0, w=461, h=199, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x864
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[112;100;100;1498]
+OpenWindow="Call Stack", DockArea=RIGHT, x=0, y=0, w=877, h=342, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Registers 1", DockArea=RIGHT, x=0, y=2, w=877, h=380, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, FilteredItems=[], RefreshRate=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=877, h=342, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Memory 1", DockArea=BOTTOM, x=1, y=0, w=2043, h=379, TabPos=0, TopOfStack=1, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, EditorAddress=0x200027B4
+OpenWindow="Global Data", DockArea=RIGHT, x=0, y=1, w=877, h=889, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Local Data", DockArea=LEFT, x=0, y=1, w=721, h=623, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=BOTTOM, x=1, y=0, w=2043, h=379, TabPos=1, TopOfStack=0, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=721, h=1025, FilterBarShown=1, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=2047, h=410, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 TableHeader="Call Stack", SortCol="Function", SortOrder="ASCENDING", VisibleCols=["Function";"Stack Frame";"Source";"PC";"Return Address";"Stack Used"], ColWidths=[357;112;189;77;168;135]
-TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[178;220;70;48;51;434]
-TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[126;225;77;48;56;100]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[248;100;236;1459]
+TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[178;220;70;48;51;295]
+TableHeader="Local Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[126;225;77;48;56;189]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[273;77;49;57;434]
 TableHeader="Power Sampling", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
-TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[139;105;504]
+TableHeader="Registers 1", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Description"], ColWidths=[139;105;618]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
 TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;359]
 WatchedExpression="active_col", Window=Watched Data 1
 WatchedExpression="left", Window=Watched Data 1
+WatchedExpression="pwm_init_params", Window=Watched Data 1
+WatchedExpression="i", Window=Watched Data 1
+WatchedExpression="buffer", Window=Watched Data 1

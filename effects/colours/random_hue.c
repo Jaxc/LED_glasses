@@ -11,13 +11,13 @@
 #include "main.h"
 #include "pattern_generate.h"
 
-uint32_t random_hue[N_LEDS] = {0};
+uint8_t random_hue[N_LEDS] = {0};
 
 uint32_t random = 22222;
 
 void colour_random_offset_hue_beat_start (void) {
     for (uint16_t i = 0; i < N_LEDS; ++i) {
-        random_hue[i] = random % 1024;
+        random_hue[i] = random % 256;
         random = (random * 196314165) + 907633515;
     }
 

@@ -17,7 +17,7 @@
 pattern current_effect = test_3;
 #include "tests.h"
 #else
-pattern current_effect = TEXT;
+pattern current_effect = CYCLE_COLOURS;
 #endif
 
 struct Presets presets[N_EFFECTS] = {
@@ -289,7 +289,7 @@ void beat_start(void) {
     presets[current_effect].colour.colour_beat_start();
 
     if ((switch_effect % 16) == 0) {
-        cycle_effects();
+        //cycle_effects();
 
     }
 
