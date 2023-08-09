@@ -29,6 +29,7 @@
 /* USER CODE BEGIN Includes */
 #include "process_data.h"
 #include "led_position.h"
+#include "pattern_generate.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,7 +70,13 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  static pattern next_effect  __attribute__ ((section(".ccmram")));
 
+  if ((next_effect >= N_EFFECTS) | (next_effect < 0)) {
+    next_effect = 0;
+  }
+  set_effect(next_effect);
+  next_effect++;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -90,7 +97,7 @@ int main(void)
   __HAL_DBGMCU_FREEZE_TIM1();
   __HAL_DBGMCU_FREEZE_TIM16();
   __HAL_DBGMCU_FREEZE_TIM17();
-  
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -102,13 +109,13 @@ int main(void)
   MX_TIM16_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  
+
   led_initialization();
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
 
   HAL_TIM_Base_Start_IT(&htim16);
-  
+
   init_pwm();
 
   start_transmission();

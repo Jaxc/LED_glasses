@@ -247,6 +247,10 @@ void cycle_effects (void) {
     }
 }
 
+void set_effect(pattern new_pattern) {
+    current_effect = new_pattern;
+}
+
 void get_current_led(uint8_t buffer[4], uint16_t current_led) {
     struct colours colour = {0};
     uint8_t pos = 0;

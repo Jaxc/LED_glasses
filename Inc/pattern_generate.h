@@ -98,4 +98,6 @@ uint32_t get_ellapsed_time(void);
 
 void stop_timing(void);
 
+void set_effect(pattern new_pattern);
+
 #endif /* INC_PATTERN_GENERATE_H_ */
