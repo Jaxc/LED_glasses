@@ -112,13 +112,13 @@ int main(void)
 
   led_initialization();
 
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-
   HAL_TIM_Base_Start_IT(&htim16);
 
   init_pwm();
 
   start_transmission();
+
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
