@@ -45,7 +45,7 @@ void test_2_gen_data(uint8_t *buffer, uint16_t buffer_index) {
 uint8_t active_col = 0;
 uint8_t frame_cnt_col = 0;
 void test_3_new_frame (void) {
-    if (10 == frame_cnt_col) {
+    if (1 == frame_cnt_col) {
         frame_cnt_col = 0;
         if ((N_COLS - 1) == active_col ) {
             active_col = 0;
@@ -69,7 +69,7 @@ void test_3_gen_data(uint8_t *buffer, uint16_t buffer_index) {
 uint8_t active_row = 0;
 uint8_t frame_cnt_row = 0;
 void test_4_new_frame (void) {
-    if (10 == frame_cnt_row) {
+    if (1 == frame_cnt_row) {
         frame_cnt_row = 0;
         if ((N_ROWS - 1) == active_row ) {
             active_row = 0;
@@ -96,7 +96,7 @@ void test_5_new_frame (void) {
 }
 
 void test_5_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (test_flow_hue + (led_pos_pol_rad[buffer_index] >> 22 )) % 1024, 0xff);
+    get_colour(buffer, (test_flow_hue + (led_pos_pol_rad[buffer_index] >> 6 )) % 1024, 0xff);
 }
 
 /* angle test */
@@ -105,7 +105,7 @@ void test_6_new_frame (void) {
 }
 
 void test_6_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 22 )) % 1024, 0xff);
+    get_colour(buffer, (test_flow_hue + (led_pos_pol_ang[buffer_index] >> 6 )) % 1024, 0xff);
 }
 
 /* colour test */
@@ -210,7 +210,7 @@ void test_12_new_frame (void) {
 
 
 void test_12_gen_data(uint8_t *buffer, uint16_t buffer_index) {
-    
+
 
     if (test_12_current_led == buffer_index) {
         *buffer = 0xff;

@@ -15,7 +15,7 @@ void colour_hypnosis_new_frame (void) {
 }
 
 void colour_hypnosis_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (hypnosis_flow_hue + (led_pos_pol_rad[buffer_index] >> 22 )) % 1024, 0xff);
+    get_colour(buffer, (hypnosis_flow_hue + (led_pos_pol_rad[buffer_index] >> 6 )) % 1024, 0xff);
 }
 
 

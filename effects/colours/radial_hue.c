@@ -20,7 +20,7 @@ void colour_radial_hue_new_frame (void) {
 }
 
 void colour_radial_hue_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (radial_flow_hue + (led_pos_pol_rad[buffer_index] >> 23 )) % 1024, 0xff);
+    get_colour(buffer, (radial_flow_hue + (led_pos_pol_rad[buffer_index] >> 7 )) % 1024, 0xff);
 }
 
 void colour_radial_hue_beat_start(void) {

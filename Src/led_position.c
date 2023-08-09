@@ -163,6 +163,9 @@ void led_init_internal(void) {
    uint8_t single_square_x [LEDS_PER_SQUARE];
    uint8_t single_square_y [LEDS_PER_SQUARE];
 
+   memset(led_pos_cart_y, 0, N_LEDS);
+   memset(led_pos_cart_x, 0, N_LEDS);
+
    /* Init led_pos_pol_rad */
    float origo_x = ((float)(N_COLS - 1)) / 2;
    float origo_y = ((float)(N_ROWS - 1)) / 2;
@@ -254,18 +257,18 @@ void led_init_internal(void) {
       for(uint32_t current_square = 0; current_square < N_LEDSQARE_COLS; current_square++) {
          /* For each Ledsquare unit: */
          uint32_t square_offset = current_square * LEDS_PER_SQUARE + LEDS_PER_SQUARE * N_LEDSQARE_COLS * square_row;
-         for(uint32_t row = 0; row < LEDS_PER_SQUARE_SIDE; row++) {
-            uint32_t row_offset = square_offset + row * LEDS_PER_SQUARE_SIDE;
-            /* For each row in a single row of squares: */
-            if (1 == (row % 2) ){
-               /* Even rows are numbered 0 to N_ROWS - 1*/
+         for(uint32_t col = 0; col < LEDS_PER_SQUARE_SIDE; col++) {
+            uint32_t col_offset = square_offset + col * LEDS_PER_SQUARE_SIDE;
+            /* For each col in a single col of squares: */
+            if (1 == (col % 2) ){
+               /* Even cols are numbered 0 to N_colS - 1*/
                for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j ++) {
-                  led_pos_cart_y[row_offset + j] = j + (N_ROWS - LEDS_PER_SQUARE_SIDE) * (N_LEDSQARE_ROWS - square_row - 1);
+                  led_pos_cart_y[col_offset + j] = j + (LEDS_PER_SQUARE_SIDE) * (N_LEDSQARE_ROWS - square_row - 1);
                }
             } else {
-               /* Odd rows are numbered N_ROWS to 0*/
+               /* Odd cols are numbered N_COLS to 0*/
                for(uint8_t j = 0; j < LEDS_PER_SQUARE_SIDE; j ++) {
-                  led_pos_cart_y[row_offset + j] = ((N_ROWS - LEDS_PER_SQUARE_SIDE)*(N_LEDSQARE_ROWS - square_row)) - j - 1;
+                  led_pos_cart_y[col_offset + j] = ((LEDS_PER_SQUARE_SIDE)*(N_LEDSQARE_ROWS - square_row)) - j - 1;
                }
             }
          }
@@ -302,7 +305,7 @@ void led_init_internal(void) {
       }
    }
 
-   
+
 
  /*  for(uint32_t i = 0; i < N_COLS; i++) {
       uint32_t row_offset = i * N_ROWS;
