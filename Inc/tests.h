@@ -9,38 +9,30 @@
 #define INC_TESTS_H_
 
 /* Test effect functions */
-void test_1_gen_data(uint8_t *buffer, uint16_t buffer_index);
 
-void test_2_new_frame (void);
-void test_2_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_1_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_3_new_frame (void);
-void test_3_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_2_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_4_new_frame (void);
-void test_4_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_3_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_5_new_frame (void);
-void test_5_gen_data(struct colours *buffer, uint16_t buffer_index);
+void test_4_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_6_new_frame (void);
-void test_6_gen_data(struct colours *buffer, uint16_t buffer_index);
+void test_5_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_7_new_frame (void);
-void test_7_gen_data(struct colours *buffer, uint16_t buffer_index);
+void test_6_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_8_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_7_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_9_gen_data(struct colours *buffer, uint16_t buffer_index);
+void test_8_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_10_new_frame (void);
-void test_10_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_9_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_11_new_frame (void);
-void test_11_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_10_gen_frame (uint8_t *buffer[N_LEDS]);
 
-void test_12_new_frame (void);
-void test_12_gen_data(uint8_t *buffer, uint16_t buffer_index);
+void test_11_gen_frame (uint8_t *buffer[N_LEDS]);
+
+void test_12_gen_frame (uint8_t *buffer[N_LEDS]);
 
 
 #endif /* INC_TESTS_H_ */

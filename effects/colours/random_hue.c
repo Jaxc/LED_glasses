@@ -11,18 +11,31 @@
 #include "main.h"
 #include "pattern_generate.h"
 
-uint8_t random_hue[N_LEDS] = {0};
-
 uint32_t random = 22222;
+
+void colour_random_offset_hue_gen_frame(uint8_t buffer[FRAME_SIZE]) {
+
+    uint16_t current_led = 0;
+    for (uint16_t i = 0; i < FRAME_SIZE; i += 3) {
+        struct colours pixel_hue;
+        uint32_t random_hue = random % 1024;
+        random = (random * 196314165) + 907633515;
+        get_colour(&pixel_hue, random_hue, 0xff);
+
+        buffer[i] = pixel_hue.green; /* Green value */
+        buffer[i+1] = pixel_hue.red; /* Red value */
+        buffer[i+2] = pixel_hue.blue; /* Blue value */
+
+        current_led++;
+    }
+}
+
+
 
 void colour_random_offset_hue_beat_start (void) {
     for (uint16_t i = 0; i < N_LEDS; ++i) {
-        random_hue[i] = random % 256;
-        random = (random * 196314165) + 907633515;
+
     }
 
 }
 
-void colour_random_offset_hue_gen_data(struct colours *buffer, uint16_t buffer_index) {
- get_colour(buffer, random_hue[buffer_index], 0xff);
-}

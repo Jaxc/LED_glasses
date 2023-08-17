@@ -18,7 +18,7 @@ uint16_t scrolling_char_start = 0;
 uint16_t total_length = 0;
 
 
-void lights_text_new_frame (void) {
+void lights_text_gen_frame (uint8_t buffer[N_LEDS]) {
     uint16_t current_char = 0;
     uint16_t current_char_col = 0;
 
@@ -55,15 +55,14 @@ void lights_text_new_frame (void) {
         }
     }
 
-}
-
-void lights_text_gen_data(uint8_t *buffer, uint16_t buffer_index){
-
-    if (display_matrix[led_pos_cart_x[buffer_index]][led_pos_cart_y[buffer_index]] == true) {
-        *buffer = 0xff;
-    } else {
-        *buffer = 0x00;
+    for (uint16_t current_led = 0; current_led < N_LEDS; current_led += 1) {
+        if (display_matrix[led_pos_cart_x[current_led]][led_pos_cart_y[current_led]] == true) {
+            buffer[current_led] = 0xff;
+        } else {
+            buffer[current_led] = 0x00;
+        }
     }
+
 }
 
 void lights_text_beat_start(void) {

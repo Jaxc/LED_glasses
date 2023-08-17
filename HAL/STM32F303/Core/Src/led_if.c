@@ -62,7 +62,7 @@ void encode_pwm(uint8_t inbuffer[FRAME_SIZE], uint8_t outbuffer[PWM_FRAME_SIZE])
                 } else {
                     outbuffer[((i * BYTES_PER_LED) + j) * 8 + k] = DUTY_0;
                 }
-                
+
                 current_byte = current_byte << 1;
             }
         }
@@ -93,12 +93,12 @@ void output_data(uint8_t *buffer, uint8_t pwm_controller) {
             memcpy(buffer, &pwm_buffer[left[pwm_controller] + offset], PWM_BUFFER_SIZE);
             left[pwm_controller] += PWM_BUFFER_SIZE;
         }
-        
+
     } else {
         memcpy(buffer, empty_buffer, PWM_BUFFER_SIZE);
     }
 
-    
+
     uint8_t all_channels_complete = 0;
     for(uint8_t i = 0; i < PWM_CONTROLLERS_USED; i++) {
         all_channels_complete |= new_data_available[i];
@@ -107,7 +107,7 @@ void output_data(uint8_t *buffer, uint8_t pwm_controller) {
     if( 0 == all_channels_complete) {
         sending_complete();
     }
-    
+
 
 }
 
@@ -120,28 +120,28 @@ void init_pwm(void) {
         }
 
     }
-  
-  
+
+
 }
 
 void handle_HAL_TIM_PWM_PulseFinishedHalfCpltCallback(TIM_HandleTypeDef *htim) {
     for(uint8_t i = 0; i < PWM_CONTROLLERS_USED; i++) {
         if (htim->Instance == pwm_init_params[i].timer->Instance) {
- 
+
             if (htim->Channel == pwm_init_params[i].active_channel) {
                 output_data(pwm_buffer2[i], i);
             }
-        }    
+        }
     }
 }
 
 void handle_HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
     for(uint8_t i = 0; i < PWM_CONTROLLERS_USED; i++) {
         if (htim->Instance == pwm_init_params[i].timer->Instance) {
- 
+
             if (htim->Channel == pwm_init_params[i].active_channel) {
                 output_data(&pwm_buffer2[i][PWM_BUFFER_SIZE], i);
-            }    
+            }
         }
     }
 }

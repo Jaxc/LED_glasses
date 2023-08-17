@@ -61,24 +61,20 @@ typedef enum patterns {
 
 #endif
 
-typedef void (*new_frame)(void);
-typedef void (*gen_light_data)(uint8_t *buffer, uint16_t buffer_index);
-typedef void (*gen_colour_data)(struct colours *buffer, uint16_t buffer_index);
+typedef void (*gen_frame)(uint8_t buffer[FRAME_SIZE]);
 typedef void (*beat_start_func)(void);
 typedef void (*beat_stop_func)(void);
 
 struct colour_preset {
-    new_frame       colour_new_frame;
-    gen_colour_data colour_gen_data;
-    beat_start_func      colour_beat_start;
-    beat_stop_func       colour_beat_stop;
+    gen_frame           colour_gen_frame;
+    beat_start_func     colour_beat_start;
+    beat_stop_func      colour_beat_stop;
 };
 
 struct light_preset {
-    new_frame       light_new_frame;
-    gen_light_data  light_gen_data;
-    beat_start_func      light_beat_start;
-    beat_stop_func       light_beat_stop;
+    gen_frame           light_gen_frame;
+    beat_start_func     light_beat_start;
+    beat_stop_func      light_beat_stop;
 };
 
 struct Presets {

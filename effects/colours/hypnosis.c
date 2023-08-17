@@ -10,12 +10,19 @@
 
 uint32_t hypnosis_flow_hue = 0;
 
-void colour_hypnosis_new_frame (void) {
+void colour_hypnosis_gen_frame (uint8_t buffer[FRAME_SIZE]) {
     hypnosis_flow_hue = (hypnosis_flow_hue + 10 ) % 1024;
-}
 
-void colour_hypnosis_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    get_colour(buffer, (hypnosis_flow_hue + (led_pos_pol_rad[buffer_index] >> 6 )) % 1024, 0xff);
-}
+    uint16_t current_led = 0;
+    for (uint16_t i = 0; i < FRAME_SIZE; i += 3) {
+        struct colours pixel_hue;
+        get_colour(&pixel_hue, (hypnosis_flow_hue + (led_pos_pol_rad[current_led] >> 6 )) % 1024, 0xff);
+        /* example */
+        buffer[i] = pixel_hue.green; /* Green value */
+        buffer[i+1] = pixel_hue.red; /* Red value */
+        buffer[i+2] = pixel_hue.blue; /* Blue value */
 
+        current_led++;
+    }
+}
 

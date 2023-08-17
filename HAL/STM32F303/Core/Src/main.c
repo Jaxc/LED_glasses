@@ -76,6 +76,7 @@ int main(void)
     next_effect = 0;
   }
   set_effect(next_effect);
+  //set_effect(MATRIX);
   next_effect++;
   /* USER CODE END 1 */
 

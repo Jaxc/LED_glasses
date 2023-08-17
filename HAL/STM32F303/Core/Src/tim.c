@@ -26,7 +26,7 @@
 #include "led_position.h"
 
 #define BPM 124
-#define COUNTER_VALUE ((60.0 / BPM) * 1000 ) 
+#define COUNTER_VALUE ((60.0 / BPM) * 1000 )
 
 /* USER CODE END 0 */
 
@@ -131,7 +131,7 @@ void MX_TIM17_Init(void)
 {
 
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 640;
+  htim17.Init.Prescaler = 64;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 64000;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

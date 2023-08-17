@@ -13,12 +13,16 @@ uint16_t single_flow_active_led;
 
 #define SNAKE_LEN 7
 
-void lights_single_flow_gen_data(uint8_t *buffer, uint16_t buffer_index) {
-    *buffer = 0x00;
-    for (uint16_t i = 0; i < SNAKE_LEN; ++i) {
-        if ((buffer_index + i) % (N_LEDS >> 1) == single_flow_active_led) {
-            *buffer = 0xff;
+void lights_single_flow_gen_frame(uint8_t buffer[N_LEDS]) {
+    for (uint16_t current_led = 0; current_led < N_LEDS; current_led += 1) {
+
+        buffer[current_led] = 0x00;
+        for (uint16_t i = 0; i < SNAKE_LEN; ++i) {
+            if ((current_led + i) % (N_LEDS >> 1) == single_flow_active_led) {
+                buffer[current_led] = 0xff;
+            }
         }
+
     }
 }
 

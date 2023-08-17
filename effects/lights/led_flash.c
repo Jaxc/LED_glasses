@@ -5,11 +5,12 @@
  *      Author: jaxc
  */
 #include "main.h"
+#include "led_position.h"
 
 uint32_t flash_pattern_counter;
 uint8_t flash_white_level;
 
-void lights_flash_new_frame (void) {
+void lights_flash_gen_frame (uint8_t buffer[N_LEDS]) {
     if (flash_pattern_counter == 0) {
         flash_pattern_counter = 0;
         flash_white_level = 0;
@@ -17,11 +18,10 @@ void lights_flash_new_frame (void) {
         flash_white_level = flash_pattern_counter;
         flash_pattern_counter += 1;
     }
-}
 
-void lights_flash_gen_data(uint8_t *buffer, uint16_t buffer_index) {
-    UNUSED(buffer_index);
-    *buffer = flash_white_level;
+    for(uint16_t i = 0; i < N_LEDS; i++) {
+        buffer[i] = flash_white_level;
+    }
 }
 
 void lights_flash_beat_start (void) {

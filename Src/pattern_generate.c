@@ -12,6 +12,8 @@
 #define GLOBAL_POWER_RANGE_REDUCTION 2
 #define COLOUR_POWER_RANGE_REDUCTION 0
 
+uint8_t light_buffer[N_LEDS] __attribute__ ((section(".ccmram")));
+uint8_t led_buffer[FRAME_SIZE];
 
 #ifdef COMPILE_TESTS
 pattern current_effect = test_3;
@@ -20,7 +22,7 @@ pattern current_effect = test_3;
 pattern current_effect = CYCLE_COLOURS;
 #endif
 
-struct Presets presets[N_EFFECTS] = {
+const struct Presets presets[N_EFFECTS] = {
 #ifdef COMPILE_TESTS
     {
         /* LED_OFF */
@@ -29,135 +31,111 @@ struct Presets presets[N_EFFECTS] = {
     },
     {
         /* test_1 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &test_1_gen_data,
+        {.light_gen_frame    = &test_1_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_2 */
-        {.light_new_frame    = &test_2_new_frame,
-        .light_gen_data     = &test_2_gen_data,
+        {.light_gen_frame    = &test_2_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_3 */
-        {.light_new_frame    = &test_3_new_frame,
-        .light_gen_data     = &test_3_gen_data,
+        {.light_gen_frame    = &test_3_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_4 */
-        {.light_new_frame    = &test_4_new_frame,
-        .light_gen_data     = &test_4_gen_data,
+        {.light_gen_frame    = &test_4_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_5 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &lights_led_on_gen_data,
+        {.light_gen_frame    = &lights_led_on_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &test_5_new_frame,
-        .colour_gen_data    = &test_5_gen_data,
+        {.colour_gen_frame   = &test_5_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_6 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &lights_led_on_gen_data,
+        {.light_gen_frame    = &lights_led_on_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &test_6_new_frame,
-        .colour_gen_data    = &test_6_gen_data,
+        {.colour_gen_frame   = &test_6_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_7 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &lights_led_on_gen_data,
+        {.light_gen_frame    = &lights_led_on_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &test_7_new_frame,
-        .colour_gen_data    = &test_7_gen_data,
+        {.colour_gen_frame   = &test_7_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_8 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &test_8_gen_data,
+        {.light_gen_frame    = &test_8_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_9 */
-        {.light_new_frame    = &do_nothing,
-        .light_gen_data     = &lights_led_on_gen_data,
+        {.light_gen_frame    = &lights_led_on_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &test_9_gen_data,
+        {.colour_gen_frame   = &test_9_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
 # ifdef USE_ADC
     {
         /* test_10 */
-        {.light_new_frame    = &test_10_new_frame,
-        .light_gen_data     = &test_10_gen_data,
+        {.light_gen_frame    = &test_10_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
     {
         /* test_11 */
-        {.light_new_frame    = &test_11_new_frame,
-        .light_gen_data     = &test_11_gen_data,
+        {.light_gen_frame    = &test_11_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
 # endif
     {
         /* test_12 */
-        {.light_new_frame    = &test_12_new_frame,
-        .light_gen_data     = &test_12_gen_data,
+        {.light_gen_frame    = &test_12_gen_frame,
         .light_beat_start   = &do_nothing,
         .light_beat_stop    = &do_nothing,},
-        {.colour_new_frame   = &do_nothing,
-        .colour_gen_data    = &colour_white_gen_data,
+        {.colour_gen_frame   = &colour_white_gen_frame,
         .colour_beat_start  = &do_nothing,
         .colour_beat_stop   = &do_nothing,}
     },
@@ -221,27 +199,41 @@ struct Presets presets[N_EFFECTS] = {
 };
 
 void create_payload(uint8_t buffer[FRAME_SIZE]) {
-    uint16_t i = 0;
 
-    presets[current_effect].light.light_new_frame();
-    presets[current_effect].colour.colour_new_frame();
+    /* buffer is reused to save RAM */
+    presets[current_effect].light.light_gen_frame(&light_buffer);
+    presets[current_effect].colour.colour_gen_frame(buffer);
 
-    for (i = 0; i < N_LEDS; i += 1) {
-        get_current_led(&buffer[i * BYTES_PER_LED], i);
-#ifdef APA102
-        buffer[i] = 0xe0 | ((buffer[i] & 0x1F));
-#endif
+    uint16_t j = 0;
+    for (uint16_t i = 0; i < FRAME_SIZE; i += 3) {
+        uint16_t light_damping = ((uint16_t)0xFF - light_buffer[j]);
+
+        if((buffer[i] - light_damping) <= 0) {
+            buffer[i] = 0;
+        } else {
+            buffer[i] = ((buffer[i] - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
+        if((buffer[i+1] - light_damping) <= 0) {
+            buffer[i+1] = 0;
+        } else {
+            buffer[i+1] = ((buffer[i+1] - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
+        if((buffer[i+2]- light_damping) <= 0) {
+            buffer[i+2] = 0;
+        } else {
+            buffer[i+2] = ((buffer[i+2] - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
+        }
+        j++;
     }
 }
 
 void tx_led_buffer(void) {
-    uint8_t led_buffer[FRAME_SIZE];
-    create_payload(led_buffer);
+    create_payload(&led_buffer);
     transmit_led(led_buffer, FRAME_SIZE);
 }
 
 void cycle_effects (void) {
-    current_effect += 1;
+    set_effect(current_effect + 1);
     if (current_effect >= N_EFFECTS) {
         current_effect = LED_OFF;
     }
@@ -249,42 +241,6 @@ void cycle_effects (void) {
 
 void set_effect(pattern new_pattern) {
     current_effect = new_pattern;
-}
-
-void get_current_led(uint8_t buffer[4], uint16_t current_led) {
-    struct colours colour = {0};
-    uint8_t pos = 0;
-#ifdef APA102
-    presets[current_effect].light.light_gen_data(&buffer[0], current_led);
-    presets[current_effect].colour.colour_gen_data(&colour, current_led);
-    buffer[pos++] = (buffer[0] & 0x1F) >> GLOBAL_POWER_RANGE_REDUCTION;
-    buffer[pos++] = colour.blue >> COLOUR_POWER_RANGE_REDUCTION;
-    buffer[pos++] = colour.green >> COLOUR_POWER_RANGE_REDUCTION;
-    buffer[pos++] = colour.red >> COLOUR_POWER_RANGE_REDUCTION;
-#else if def(WS2812)
-    uint8_t light = 0;
-    presets[current_effect].light.light_gen_data(&light, current_led);
-    presets[current_effect].colour.colour_gen_data(&colour, current_led);
-
-    uint16_t light_damping = ((uint16_t)0xFF - light);
-
-    if((colour.green - light_damping) <= 0) {
-        buffer[pos++] = 0;
-    } else {
-        buffer[pos++] = ((colour.green - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-    }
-    if((colour.red - light_damping) <= 0) {
-        buffer[pos++] = 0;
-    } else {
-        buffer[pos++] = ((colour.red - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-    }
-    if((colour.blue - light_damping) <= 0) {
-        buffer[pos++] = 0;
-    } else {
-        buffer[pos++] = ((colour.blue - light_damping) >> COLOUR_POWER_RANGE_REDUCTION);
-    }
-#endif
-
 }
 
 void beat_start(void) {

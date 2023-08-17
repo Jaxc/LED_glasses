@@ -6,18 +6,23 @@
  */
 
 #include "colours_palette.h"
-#include "main.h"
+#include "pattern_generate.h"
 
 uint16_t hue = 0;
 
 
-void colour_cycle_new_frame (void) {
+void colour_cycle_gen_frame (uint8_t buffer[FRAME_SIZE]) {
     hue = (hue + 2) % 1024;
-}
+    uint16_t current_led = 0;
+    for (uint16_t i = 0; i < FRAME_SIZE; i += 3) {
+        struct colours pixel_hue;
+        get_colour(&pixel_hue, hue, 0xff);
 
-void colour_cycle_gen_data(struct colours *buffer, uint16_t buffer_index) {
-    UNUSED(buffer_index);
-    get_colour(buffer, hue, 0xff);
-}
+        buffer[i] = pixel_hue.green; /* Green value */
+        buffer[i+1] = pixel_hue.red; /* Red value */
+        buffer[i+2] = pixel_hue.blue; /* Blue value */
 
+        current_led++;
+    }
+}
 
