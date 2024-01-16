@@ -4,7 +4,7 @@
  *  Created on: Feb 16, 2019
  *      Author: jaxc
  */
-#include "main.h"
+
 #include "led_position.h"
 
 uint32_t flash_pattern_counter;

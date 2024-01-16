@@ -6,6 +6,9 @@ STM32G071:
 STM32F303:
 	make -C HAL/STM32F303/ PROJECT_ROOT=$(PROJECT_ROOT) -j $(nproc)
 
+PATTERN_TEST:
+	make -C python_test PROJECT_ROOT=$(PROJECT_ROOT) -j $(nproc)
+
 all: STM32G071 STM32F303
 
 clean:

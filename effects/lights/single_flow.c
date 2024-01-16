@@ -5,7 +5,6 @@
  *      Author: jaxc
  */
 
-#include "main.h"
 #include "pattern_generate.h"
 
 uint32_t single_flow_pattern_counter;

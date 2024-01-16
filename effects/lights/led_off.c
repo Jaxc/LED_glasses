@@ -5,10 +5,13 @@
  *      Author: jaxc
  */
 
-#include "main.h"
+#include "pattern_generate.h"
 
-void lights_led_off_gen_data(uint8_t *buffer, uint16_t buffer_index) {
-    UNUSED(buffer_index);
-    *buffer = 0x00;
+#define UNUSED(X) (void)X
+
+void lights_led_off_gen_frame(uint8_t *buffer, uint16_t buffer_index) {
+    for (uint16_t current_led = 0; current_led < N_LEDS; current_led += 1) {
+        buffer[current_led] = 0; /* Full light */
+    }
 }
 

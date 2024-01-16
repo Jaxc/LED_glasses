@@ -11,6 +11,8 @@
 /* Lightning effect functions */
 void lights_led_on_gen_frame (uint8_t buffer[FRAME_SIZE]);
 
+void lights_led_off_gen_frame (uint8_t buffer[FRAME_SIZE]);
+
 void lights_flash_gen_frame (uint8_t buffer[FRAME_SIZE]);
 void lights_flash_beat_start (void);
 

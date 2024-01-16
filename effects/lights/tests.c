@@ -5,7 +5,6 @@
  *      Author: jaxc
  */
 #include "stdint.h"
-#include "adc.h"
 #include "pattern_generate.h"
 
 #define UNUSED(X) (void)X
@@ -195,6 +194,7 @@ void test_9_gen_frame(uint8_t *buffer) {
 }
 
 /* Microphone test */
+
 uint32_t current_power = 0;
 void test_10_gen_frame (void) {
     current_power = get_audio_power();
