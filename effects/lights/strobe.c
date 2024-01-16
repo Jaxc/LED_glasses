@@ -5,7 +5,7 @@
  *      Author: jaxc
  */
 
-#include "main.h"
+
 #include "led_position.h"
 
 uint8_t strobe_active = 0;

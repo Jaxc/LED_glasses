@@ -6,6 +6,7 @@
  */
 
 #include "pattern_generate.h"
+#include "led_position.h"
 
 #ifdef NEEDS_INITIALIZATION
 #include <math.h>
@@ -175,6 +176,13 @@ void led_init_internal(void) {
 
    float max_distance_reciprocal;
 
+#ifdef HOST_TESTING
+   for(uint16_t led_id = 0; led_id < N_LEDS; led_id++) {
+      led_pos_cart_x[led_id] = led_id%N_COLS;
+      led_pos_cart_y[led_id] = led_id/N_COLS;
+   }
+#else
+
 #ifdef VERTICAL_MOUNTING
    float reference_angle_x = 1;
    float reference_angle_y = 0;
@@ -274,6 +282,7 @@ void led_init_internal(void) {
          }
       }
    }
+#endif
 #endif
 
 /* Init led_pos_pol_rad */

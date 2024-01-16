@@ -5,8 +5,7 @@
  *      Author: jaxc
  */
 
-
-#include "main.h"
+#include "stdint.h"
 
 typedef enum State {
     YELLOW,

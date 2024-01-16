@@ -1,7 +1,7 @@
 
 #include "pattern_generate.h"
 
- void template_colour_gen_frame (uint8_t buffer[FRAME_SIZE]) {
+void template_colour_gen_frame (uint8_t buffer[FRAME_SIZE]) {
     /* Frame init code goes here, things like incrementing counters etc*/
 
 
@@ -20,4 +20,17 @@
         /* LED done, prepare to calculate next LED. */
         current_led++;
     }
+
+    return
  }
+
+void template_colour_beat_start(void) {
+    /* This is called when a beat is detected, so effects that are beat dependent uses this.
+       This function is optional */
+    return;
+}
+
+void template_colour_beat_stop(void) {
+    /* Not yet implemented, can be omitted as it will never be called */
+    return;
+}
