@@ -8,7 +8,6 @@
 
 
 #include "colours_palette.h"
-#include "main.h"
 #include "pattern_generate.h"
 
 uint32_t random = 22222;
@@ -23,6 +22,7 @@ void colour_random_offset_hue_gen_frame(uint8_t buffer[FRAME_SIZE]) {
         get_colour(&pixel_hue, random_hue, 0xff);
 
         buffer[i] = pixel_hue.green; /* Green value */
+        
         buffer[i+1] = pixel_hue.red; /* Red value */
         buffer[i+2] = pixel_hue.blue; /* Blue value */
 

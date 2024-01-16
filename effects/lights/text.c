@@ -5,7 +5,6 @@
  *      Author: jaxc
  */
 #include <stdbool.h>
-#include "main.h"
 #include "led_position.h"
 #include "font_engine.h"
 

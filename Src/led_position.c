@@ -6,6 +6,7 @@
  */
 
 #include "pattern_generate.h"
+#include "led_position.h"
 
 #ifdef NEEDS_INITIALIZATION
 #include <math.h>

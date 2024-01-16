@@ -5,6 +5,8 @@
  *      Author: jaxc
  */
 
+ #include "stdint.h"
+
 #ifndef INC_LED_POSITION_H_
 #define INC_LED_POSITION_H_
 

@@ -19,7 +19,7 @@ uint8_t led_buffer[FRAME_SIZE];
 pattern current_effect = test_3;
 #include "tests.h"
 #else
-pattern current_effect = CYCLE_COLOURS;
+pattern current_effect = RANDOM_OFFSET_HUE;
 #endif
 
 const struct Presets presets[N_EFFECTS] = {
@@ -225,11 +225,14 @@ void create_payload(uint8_t buffer[FRAME_SIZE]) {
         }
         j++;
     }
+    buffer[0] = 100;
+    buffer[3] = 200;
 }
 
 void tx_led_buffer(void) {
     create_payload(&led_buffer);
     transmit_led(led_buffer, FRAME_SIZE);
+
 }
 
 void cycle_effects (void) {
