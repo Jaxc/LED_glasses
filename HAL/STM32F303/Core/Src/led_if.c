@@ -11,8 +11,8 @@ struct pwm_init_params_s {
 
 #define PWM_FRAME_SIZE (FRAME_SIZE * 8)
 #define PWM_CONTROLLER_SIZE (PWM_FRAME_SIZE / PWM_CONTROLLERS_USED)
-#define DUTY_0 (htim1.Init.Period * (0.3))
-#define DUTY_1 (htim1.Init.Period * (0.53))
+#define DUTY_0 (htim1.Init.Period * (float)(0.3))
+#define DUTY_1 (htim1.Init.Period * (float)(0.53))
 #define EMPTY_BUFFER_SIZE (24)
 
 #define CHANNEL_R 0
@@ -53,18 +53,33 @@ void transmit_led(uint8_t buffer[FRAME_SIZE]) {
 
 void encode_pwm(uint8_t inbuffer[FRAME_SIZE], uint8_t outbuffer[PWM_FRAME_SIZE]){
 
-    for (uint16_t i = 0; i < N_LEDS; i++) {
+    uint16_t i = 0;
+    uint16_t o = 0;
+
+    uint8_t duty_0_local = (uint8_t)DUTY_0;
+    uint8_t duty_1_local = (uint8_t)DUTY_1;
+
+
+    while (i < FRAME_SIZE ) {
         for (uint8_t j = 0; j < BYTES_PER_LED; j++) {
-            uint8_t current_byte = inbuffer[i * 3 + j];
+            
+            uint8_t current_byte = inbuffer[i];
+
+            /* Super assembler */
+
+
+
+
             for (uint8_t k = 0; k < 8; k++) {
                 if ((current_byte & 0x80) == 0x80) {
-                    outbuffer[((i * BYTES_PER_LED) + j) * 8 + k] = DUTY_1;
+                    outbuffer[o] = duty_1_local;
                 } else {
-                    outbuffer[((i * BYTES_PER_LED) + j) * 8 + k] = DUTY_0;
+                    outbuffer[o] = duty_0_local;
                 }
-
+                o++;
                 current_byte = current_byte << 1;
             }
+            i++;
         }
     }
 }
