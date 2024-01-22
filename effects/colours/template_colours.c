@@ -21,7 +21,7 @@ void template_colour_gen_frame (uint8_t buffer[FRAME_SIZE]) {
         current_led++;
     }
 
-    return
+    return;
  }
 
 void template_colour_beat_start(void) {
@@ -30,7 +30,7 @@ void template_colour_beat_start(void) {
     return;
 }
 
-void template_colour_beat_stop(void) {
+void template_colour_ebeat_stop(void) {
     /* Not yet implemented, can be omitted as it will never be called */
     return;
 }
