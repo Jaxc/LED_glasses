@@ -28,8 +28,8 @@ void process_data(void) {
     case PROCESS_ACTIVATE:
 
         {
-            uint32_t audio_time = 0;
-            uint32_t led_time = 0;
+            volatile uint32_t audio_time = 0;
+            volatile uint32_t led_time = 0;
 
             process_state = PROCESS_ACTIVE;
             start_timing();
@@ -69,7 +69,7 @@ void start_process_data(void) {
     if (PROCESS_IDLE == process_state) {
         process_state = PROCESS_ACTIVATE;
     } else if (PROCESS_SENDING == process_state) {
-        /* Do nothing*/ 
+        /* Do nothing*/
     } else {
         /* New interrupt before last one is processed */
         Error_Handler();
