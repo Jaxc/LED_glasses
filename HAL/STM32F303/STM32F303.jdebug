@@ -33,7 +33,7 @@ void OnProjectLoad (void) {
   //
   // User settings
   //
-  File.Open ("/home/jaxc/workspace/LED_glasses/build/STM32F303/STM32F303.elf");
+  File.Open ("./../../build/STM32F303/STM32F303.elf");
 }
 
 /*********************************************************************
