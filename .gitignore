@@ -42,6 +42,9 @@
 *.idb
 *.pdb
 
+# Jlink user data
+*.jdebug.user
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
