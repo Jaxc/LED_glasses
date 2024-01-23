@@ -7,7 +7,7 @@
 
 #include "led_position.h"
 
-uint8_t rain_cnt = 0;
+uint8_t rain_cnt  __attribute__ ((section(".ccmram"))) = 0;
 
 struct rain_driplet  {
     uint8_t y;
@@ -16,7 +16,7 @@ struct rain_driplet  {
 #define N_RAIN_DRIPLET N_COLS
 #define TRAIL_LEN 5
 
-struct rain_driplet rain_driplets[N_RAIN_DRIPLET] = {[0 ... N_RAIN_DRIPLET-1] = {TRAIL_LEN + N_ROWS + 1}  };
+struct rain_driplet rain_driplets[N_RAIN_DRIPLET] __attribute__ ((section(".ccmram"))) = {[0 ... N_RAIN_DRIPLET-1] = {TRAIL_LEN + N_ROWS + 1}  };
 
 void rain_gen_frame(uint8_t buffer[N_LEDS]) {
 

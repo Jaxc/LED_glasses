@@ -16,11 +16,11 @@ typedef enum State {
     GREEN
 } state;
 
-uint32_t colours_pattern_counter;
-uint8_t colours_white_level;
-uint8_t flash_red_level = 0;
-uint8_t flash_blue_level = 0;
-uint8_t flash_green_level = 0xff;
+uint32_t colours_pattern_counter __attribute__ ((section(".ccmram")));
+uint8_t colours_white_level __attribute__ ((section(".ccmram")));
+uint8_t flash_red_level __attribute__ ((section(".ccmram"))) = 0;
+uint8_t flash_blue_level __attribute__ ((section(".ccmram"))) = 0;
+uint8_t flash_green_level __attribute__ ((section(".ccmram"))) = 0xff;
 state flash_colour_state = YELLOW;
 
 void flash_colour_new_frame (void) {

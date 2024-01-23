@@ -119,6 +119,8 @@ int main(void)
   init_pwm();
 
   start_transmission();
+  start_uart();
+  
 
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
   /* USER CODE END 2 */

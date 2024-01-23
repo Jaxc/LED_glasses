@@ -8,7 +8,7 @@
 #include "colours_palette.h"
 #include "pattern_generate.h"
 
-uint32_t hypnosis_flow_hue = 0;
+uint32_t hypnosis_flow_hue __attribute__ ((section(".ccmram"))) = 0;
 
 void colour_hypnosis_gen_frame (uint8_t buffer[FRAME_SIZE]) {
     hypnosis_flow_hue = (hypnosis_flow_hue + 10 ) % 1024;

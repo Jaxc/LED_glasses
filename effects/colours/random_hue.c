@@ -10,7 +10,7 @@
 #include "colours_palette.h"
 #include "pattern_generate.h"
 
-uint32_t random_seed = 22222;
+uint32_t random_seed __attribute__ ((section(".ccmram"))) = 22222;
 
 void colour_random_offset_hue_gen_frame(uint8_t buffer[FRAME_SIZE]) {
 

@@ -8,7 +8,7 @@
 #include "colours_palette.h"
 #include "pattern_generate.h"
 
-uint16_t hue_beats = 0;
+uint16_t hue_beats __attribute__ ((section(".ccmram"))) = 0;
 
 void colour_cycle_beats_gen_frame(uint8_t buffer[FRAME_SIZE]) {
 

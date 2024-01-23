@@ -7,7 +7,7 @@
 #include "colours_palette.h"
 #include "pattern_generate.h"
 
-uint32_t flow_hue = 0;
+uint32_t flow_hue  __attribute__ ((section(".ccmram"))) = 0;
 
 void colour_flowing_hue_gen_frame (uint8_t *buffer) {
     flow_hue = (flow_hue + 10) % 1024;

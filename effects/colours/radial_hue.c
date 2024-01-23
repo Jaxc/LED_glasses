@@ -8,8 +8,8 @@
 #include "colours_palette.h"
 #include "pattern_generate.h"
 
-uint32_t radial_flow_hue = 0;
-uint32_t hue_boost = 0;
+uint32_t radial_flow_hue __attribute__ ((section(".ccmram"))) = 0;
+uint32_t hue_boost __attribute__ ((section(".ccmram"))) = 0;
 
 
 void colour_radial_hue_gen_frame (uint8_t *buffer) {

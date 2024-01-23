@@ -12,9 +12,9 @@ uint8_t display_text[] = "   ZERO AUDIENCE   ";
 
 bool display_matrix[N_COLS][N_ROWS] __attribute__ ((section(".ccmram")));
 
-uint16_t scrolling_char_start = 0;
+uint16_t scrolling_char_start __attribute__ ((section(".ccmram"))) = 0;
 
-uint16_t total_length = 0;
+uint16_t total_length __attribute__ ((section(".ccmram"))) = 0;
 
 
 void lights_text_gen_frame (uint8_t buffer[N_LEDS]) {

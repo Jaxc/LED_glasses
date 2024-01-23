@@ -7,8 +7,8 @@
 
 #include "pattern_generate.h"
 
-uint32_t single_flow_pattern_counter;
-uint16_t single_flow_active_led;
+uint32_t single_flow_pattern_counter __attribute__ ((section(".ccmram")));
+uint16_t single_flow_active_led __attribute__ ((section(".ccmram")));
 
 #define SNAKE_LEN 7
 

@@ -16,10 +16,10 @@ uint8_t light_buffer[N_LEDS] __attribute__ ((section(".ccmram")));
 uint8_t led_buffer[FRAME_SIZE];
 
 #ifdef COMPILE_TESTS
-pattern current_effect = test_3;
+pattern current_effect __attribute__ ((section(".ccmram"))) = test_3;
 #include "tests.h"
 #else
-pattern current_effect = RANDOM_OFFSET_HUE;
+pattern current_effect __attribute__ ((section(".ccmram"))) = RANDOM_OFFSET_HUE;
 #endif
 
 const struct Presets presets[N_EFFECTS] = {

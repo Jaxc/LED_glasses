@@ -8,7 +8,7 @@
 
 #include "led_position.h"
 
-uint8_t strobe_active = 0;
+uint8_t strobe_active __attribute__ ((section(".ccmram"))) = 0;
 
 void lights_strobe_gen_frame (uint8_t *buffer) {
     if (strobe_active > 0) {

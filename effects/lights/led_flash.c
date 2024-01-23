@@ -7,8 +7,8 @@
 
 #include "led_position.h"
 
-uint32_t flash_pattern_counter;
-uint8_t flash_white_level;
+uint32_t flash_pattern_counter __attribute__ ((section(".ccmram")));
+uint8_t flash_white_level __attribute__ ((section(".ccmram")));
 
 void lights_flash_gen_frame (uint8_t buffer[N_LEDS]) {
     if (flash_pattern_counter == 0) {
