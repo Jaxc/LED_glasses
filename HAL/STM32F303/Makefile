@@ -23,7 +23,7 @@ HARDWARE = STM32F303
 DEBUG = 1
 # optimization
 OPT_DEBUG = -Og
-OPT_PERFORMANCE = -O3
+OPT_PERFORMANCE = -Og
 
 
 #######################################

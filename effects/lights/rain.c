@@ -66,7 +66,7 @@ void rain_beat_start(void) {
     for(uint8_t i = 0; i < 2 ; i++) {
         uint8_t next_drip = random_rain % N_RAIN_DRIPLET;
         random_rain = (random_rain * 196314165) + 907633515;
-        if ((TRAIL_LEN + N_ROWS + 1) == rain_driplets[next_drip].y) {
+        if ((TRAIL_LEN + N_ROWS + 1) <= rain_driplets[next_drip].y) {
             rain_driplets[next_drip].y = 0;
             break;
         }

@@ -21,9 +21,10 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include "tim.h"
 #include "pattern_generate.h"
 
-uint8_t uart_data;
+uint8_t uart_data[2];
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart2;
@@ -110,13 +111,19 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 void start_uart(void) {
-  HAL_UART_Receive_IT(&huart2, &uart_data, sizeof(uart_data));
+  HAL_UART_Receive_IT(&huart2, uart_data, sizeof(uart_data));
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  if (uart_data < N_EFFECTS) {
-    set_effect(uart_data);
+  if (uart_data[0] == 1) {
+    if (uart_data[1] < N_EFFECTS) {
+      set_effect(uart_data[1]);
+    }
+  } else if (uart_data[0] == 2) {
+    __HAL_TIM_SET_AUTORELOAD(&htim16, ((60.0 * 1000 / uart_data[1])));
+    __HAL_TIM_SET_COUNTER(&htim16, 0);
   }
+  HAL_UART_Receive_IT(&huart2, uart_data, sizeof(uart_data));
 }
 /* USER CODE END 1 */
 

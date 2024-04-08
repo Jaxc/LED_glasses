@@ -4,9 +4,9 @@
 *                         www.segger.com                             *
 **********************************************************************
 
-File          : /home/jaxc/workspace/LED_glasses/HAL/STM32F303/STM32F303.jdebug
-Created       : 28 Sep 2022 19:08
-Ozone Version : V3.26i
+File          : /home/jaxc/work/LED_glasses/HAL/STM32F303/STM32F303.jdebug
+Created       : 27 Feb 2024 20:46
+Ozone Version : V3.30c
 */
 
 /*********************************************************************
@@ -22,18 +22,18 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
+  Project.AddPathSubstitute ("/home/jaxc/work/LED_glasses/HAL/STM32F303", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/jaxc/work/led_glasses/hal/stm32f303", "$(ProjectDir)");
   Project.SetDevice ("STM32F303K8");
   Project.SetHostIF ("USB", "776550491");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
-  Project.AddPathSubstitute ("/home/jaxc/workspace/LED_glasses/HAL/STM32F303", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/home/jaxc/workspace/led_glasses/hal/stm32f303", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
-  Project.AddSvdFile ("/home/jaxc/workspace/LED_glasses/HAL/STM32F303/STM32F303.svd");
+  Project.AddSvdFile ("/home/jaxc/work/LED_glasses/HAL/STM32F303/STM32F303.svd");
   //
   // User settings
   //
-  File.Open ("./../../build/STM32F303/STM32F303.elf");
+  File.Open ("/home/jaxc/work/LED_glasses/build/STM32F303/STM32F303.elf");
 }
 
 /*********************************************************************
