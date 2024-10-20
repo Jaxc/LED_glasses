@@ -45,6 +45,9 @@ void lights_text_beat_start (void);
 #define LIGHTS_SINGLE_FLOW {    .light_gen_frame    = &lights_single_flow_gen_frame,                      \
                                 .light_beat_start   = &lights_single_flow_beat_start,   \
                                 .light_beat_stop    = &do_nothing,}
+#define LIGHTS_COL_TO_MID {     .light_gen_frame    = &lights_col_to_mid_gen_frame,                      \
+                                .light_beat_start   = &lights_col_to_mid_beat_start,   \
+                                .light_beat_stop    = &do_nothing,}
 
 #define LIGHTS_STROBE {         .light_gen_frame    = &lights_strobe_gen_frame,         \
                                 .light_beat_start   = &lights_strobe_beat_start,        \

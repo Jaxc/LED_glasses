@@ -120,7 +120,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
       set_effect(uart_data[1]);
     }
   } else if (uart_data[0] == 2) {
-    __HAL_TIM_SET_AUTORELOAD(&htim16, ((60.0 * 1000 / uart_data[1])));
+    __HAL_TIM_SET_AUTORELOAD(&htim16, (uint16_t)((60.0 * 1000 / uart_data[1])));
     __HAL_TIM_SET_COUNTER(&htim16, 0);
   }
   HAL_UART_Receive_IT(&huart2, uart_data, sizeof(uart_data));

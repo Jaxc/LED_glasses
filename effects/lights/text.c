@@ -8,7 +8,7 @@
 #include "led_position.h"
 #include "font_engine.h"
 
-uint8_t display_text[] = "   ZERO AUDIENCE   ";
+uint8_t display_text[] = "   ITS GOOD TO BE BACK   ";
 
 bool display_matrix[N_COLS][N_ROWS] __attribute__ ((section(".ccmram")));
 

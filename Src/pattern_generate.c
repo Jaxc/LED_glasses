@@ -161,10 +161,20 @@ const struct Presets presets[N_EFFECTS] = {
         COLOUR_CYCLE
     },
     {
+        /* BEAT_RADIAL_HUE */
+        LIGHTS_LED_ON,
+        COLOUR_BEAT_RADIAL_HUE
+    },  
+    {
+        /* BEAT_HYPNOSIS */
+        LIGHTS_FLASH,
+        COLOUR_HYPNOSIS
+    },     
+    //{
         /* STROBE */
-        LIGHTS_STROBE,
-        COLOUR_WHITE
-    },
+    //    LIGHTS_STROBE,
+  //      COLOUR_WHITE
+//    },
     {
         /* CYCLE_COLOURS_BEATS */
         LIGHTS_LED_ON,

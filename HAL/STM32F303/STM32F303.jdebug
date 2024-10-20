@@ -22,12 +22,12 @@ void OnProjectLoad (void) {
   //
   // Dialog-generated settings
   //
-  Project.AddPathSubstitute ("/home/jaxc/work/LED_glasses/HAL/STM32F303", "$(ProjectDir)");
-  Project.AddPathSubstitute ("/home/jaxc/work/led_glasses/hal/stm32f303", "$(ProjectDir)");
   Project.SetDevice ("STM32F303K8");
-  Project.SetHostIF ("USB", "776550491");
+  Project.SetHostIF ("USB", "775943440");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
+  Project.AddPathSubstitute ("/home/jaxc/work/LED_glasses/HAL/STM32F303", "$(ProjectDir)");
+  Project.AddPathSubstitute ("/home/jaxc/work/led_glasses/hal/stm32f303", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
   Project.AddSvdFile ("/home/jaxc/work/LED_glasses/HAL/STM32F303/STM32F303.svd");
   //
